@@ -18,7 +18,6 @@ public abstract class Game extends Observable implements Runnable{
 	//Effectue un tour de jeu
 	public void step() {
 		++turn;
-		
 		if(gameContinue())
 			takeTurn();
 		else {
@@ -34,13 +33,15 @@ public abstract class Game extends Observable implements Runnable{
 			step();
 			this.setChanged();
 			this.notifyObservers();
-			try {
+      try {
 				Thread.sleep((long) time);
 			} catch (InterruptedException e) {
 				e.printStackTrace();
 			}
 		}
 	}
+		
+	
 	
 	//Met le jeu en pause
 	public void stop() {
@@ -50,6 +51,8 @@ public abstract class Game extends Observable implements Runnable{
 	
 	//Lancement du thread
 	public void launch() {
+		init();
+		step();
 		isRunning=true;
 		thread = new Thread(this);
 		thread.start();

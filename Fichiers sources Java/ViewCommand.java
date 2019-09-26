@@ -46,6 +46,7 @@ public class ViewCommand implements Observer{
 	public void update(Observable o, Object arg) {
 		tours = game.getTurn(); 
 		jLabel.setText(Integer.toString(tours));
+
 	}
 
 }
