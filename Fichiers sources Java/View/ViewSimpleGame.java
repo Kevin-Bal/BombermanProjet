@@ -1,3 +1,4 @@
+package View;
 import java.awt.Dimension;
 import java.awt.GraphicsEnvironment;
 import java.awt.Point;
@@ -7,6 +8,8 @@ import java.util.Observer;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+
+import Model.Game;
 
 
 public class ViewSimpleGame  implements Observer {
@@ -61,4 +64,6 @@ public class ViewSimpleGame  implements Observer {
 		System.out.println("test");
 		tour.setText( Integer.toString(this.game.getTurn()));
 	}
+	
+}
 

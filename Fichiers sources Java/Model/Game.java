@@ -1,3 +1,4 @@
+package Model;
 import java.util.Observable;
 
 public abstract class Game extends Observable implements Runnable{

@@ -1,3 +1,7 @@
+package Main;
+import Model.SimpleGame;
+import View.ViewCommand;
+import View.ViewSimpleGame;
 
 public class Test {
 

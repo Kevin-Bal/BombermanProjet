@@ -1,3 +1,4 @@
+package View;
 import java.awt.Dimension;
 import java.awt.GraphicsEnvironment;
 import java.awt.Point;
@@ -6,6 +7,8 @@ import java.util.Observer;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+
+import Model.Game;
 
 
 public class ViewCommand implements Observer{
