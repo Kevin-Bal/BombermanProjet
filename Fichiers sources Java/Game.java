@@ -1,8 +1,8 @@
-import  java.util.Observable;
+import java.util.Observable;
 
 public abstract class Game extends Observable implements Runnable{
 	private int turn;
-	private int maxturn=100;
+	private int maxturn=50;
 	private boolean isRunning;
 	private Thread thread;
 	private double time =100;
@@ -33,12 +33,12 @@ public abstract class Game extends Observable implements Runnable{
 			step();
 			this.setChanged();
 			this.notifyObservers();
-		}
-			try {
+      try {
 				Thread.sleep((long) time);
 			} catch (InterruptedException e) {
 				e.printStackTrace();
 			}
+		}
 	}
 		
 	

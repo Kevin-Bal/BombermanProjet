@@ -62,4 +62,3 @@ public class ViewSimpleGame  implements Observer {
 		tour.setText( Integer.toString(this.game.getTurn()));
 	}
 
-}
