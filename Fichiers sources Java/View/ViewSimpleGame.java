@@ -78,7 +78,7 @@ public class ViewSimpleGame  implements Observer {
 		
 		//Permet de réaliser l'affichage d'information sur le jeu
 		if(game.gameContinue()) {
-			info.setText("Le jeu est en cour ...");
+			info.setText("Le jeu est en cours ...");
 		}
 		else info.setText("Le jeu est fini");
 		
