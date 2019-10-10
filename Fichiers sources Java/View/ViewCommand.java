@@ -18,13 +18,13 @@ import javax.swing.JSlider;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
-import Controler.ControleurSimpleGame;
+import Controler.ControleurBombermanGame;
 import Model.Game;
 
 
 public class ViewCommand implements Observer{
 
-	private ControleurSimpleGame controleurSimpleGame;
+	private ControleurBombermanGame ControleurBombermanGame;
 	private JFrame jFrame;
 	private JPanel jPanelView;
 	private JPanel jPanelButtons;
@@ -34,10 +34,10 @@ public class ViewCommand implements Observer{
 	Game game;
 	
 	//Constructeur + Ouvre la fenetre JFrame
-	public ViewCommand(Game game){
+	public ViewCommand(Game game) throws Exception{
 		tours = 0;
 		this.game=game;
-		this.controleurSimpleGame=new ControleurSimpleGame(game, this);
+		this.ControleurBombermanGame=new ControleurBombermanGame(game, this);
 		this.game.addObserver(this);
 		
 		jFrame = new JFrame();
@@ -91,7 +91,7 @@ public class ViewCommand implements Observer{
 		jb_restart.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent evenement) {
 				System.out.println("Restart Game");
-				controleurSimpleGame.restart();
+				ControleurBombermanGame.restart();
 			}
 		});
 		jPanelButtons.add(jb_restart);
@@ -102,7 +102,7 @@ public class ViewCommand implements Observer{
 		jb_run.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent evenement) {
 				System.out.println("Start");
-				controleurSimpleGame.start();
+				ControleurBombermanGame.start();
 			}
 		});
 		jPanelButtons.add(jb_run);
@@ -113,7 +113,7 @@ public class ViewCommand implements Observer{
 		jb_step.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent evenement) {
 				System.out.println("Step");
-				controleurSimpleGame.step();
+				ControleurBombermanGame.step();
 			}
 		});
 		jPanelButtons.add(jb_step);	
@@ -125,7 +125,7 @@ public class ViewCommand implements Observer{
 		jb_pause.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent evenement) {
 				System.out.println("Pause Game");
-				controleurSimpleGame.stop();
+				ControleurBombermanGame.stop();
 			}
 		});
 		jPanelButtons.add(jb_pause);
@@ -151,7 +151,7 @@ public class ViewCommand implements Observer{
 		js.addChangeListener(new ChangeListener() {
 			public void stateChanged(ChangeEvent event) {
 				int time = js.getValue();
-				controleurSimpleGame.setTime(time);
+				ControleurBombermanGame.setTime(time);
 			}
 		});
 		
