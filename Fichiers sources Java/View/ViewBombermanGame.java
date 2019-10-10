@@ -13,7 +13,7 @@ import javax.swing.JPanel;
 import Model.Game;
 
 
-public class ViewSimpleGame  implements Observer {
+public class ViewBombermanGame  implements Observer {
 	
 	/**
 	 * Classe d'affichage pour le jeu : 
@@ -25,7 +25,8 @@ public class ViewSimpleGame  implements Observer {
 	private JFrame jFrame;
 	
 	//jpanel du JFrame -> permet l'organisation du layout
-	private JPanel jPanel;
+	private PanelBomberman jPanel;
+	private Map map;
 	
 	//Information de l'etat du jeu
 	private JLabel tour;
@@ -36,14 +37,17 @@ public class ViewSimpleGame  implements Observer {
 	
 	////////////////////////////////////////////////
 	
-	public ViewSimpleGame(Game game) {
+	public ViewBombermanGame(Game game) throws Exception {
 		//ajout de l'observer dans l'api 
 		game.addObserver(this);
+		map = new Map("./layouts/alone.lay");
+		
+		jPanel = new PanelBomberman(map);
 		
 		this.game =game;
 		jFrame = new JFrame();
 		jFrame.setTitle("Game");
-		jFrame.setSize(new Dimension(400, 100));
+		jFrame.setSize(new Dimension(jPanel.getTaille_x()*40+600, jPanel.getTaille_y()*40+400));
 		
 		Dimension windowSize = jFrame.getSize();
 		
@@ -55,16 +59,17 @@ public class ViewSimpleGame  implements Observer {
 		int dy = centerPoint.y - windowSize.height / 2 - 350;
 		jFrame.setLocation(dx, dy);
 		
-		jPanel = new JPanel();
 		
-		jPanel.setLayout(new GridLayout(1,2));
 		
-		tour = new JLabel();
-		info = new JLabel();
-		
-		jPanel.add(tour);
-		jPanel.add(info);
-		
+		jFrame.add(jPanel);
+//		jPanel.setLayout(new GridLayout(1,2));
+//		
+//		tour = new JLabel();
+//		info = new JLabel();
+//		
+//		jPanel.add(tour);
+//		jPanel.add(info);
+//		
 		jFrame.add(jPanel);
 		
 		jFrame.setVisible(true);
@@ -77,13 +82,13 @@ public class ViewSimpleGame  implements Observer {
 		//System.out.println("test");
 		
 		//Permet de réaliser l'affichage d'information sur le jeu
-		if(game.gameContinue()) {
-			info.setText("Le jeu est en cours ...");
-		}
-		else info.setText("Le jeu est fini");
+//		if(game.gameContinue()) {
+//			//info.setText("Le jeu est en cours ...");
+//		}
+//		else info.setText("Le jeu est fini");
 		
 		//mise à jour du nombre de tour dans le jFrame
-		tour.setText("Nombre de tours :"+ Integer.toString(this.game.getTurn()));
+		//tour.setText("Nombre de tours :"+ Integer.toString(this.game.getTurn()));
 	}
 	
 }

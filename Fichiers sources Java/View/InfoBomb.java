@@ -1,22 +1,22 @@
-package graphics;
+package View;
+import Controler.StateBomb;
 
 public class InfoBomb {
 	
 	private int x;
 	private int y;
-
-	private int time;
 	private int range;
-		 
+		
+	StateBomb stateBomb;
 
-
-	public InfoBomb(int x, int y, int range, int time) {
+	public InfoBomb(int x, int y, int range, StateBomb stateBomb) {
 		this.x=x;
 		this.y=y;
 		this.range=range;
-		this.time = time;
+		this.stateBomb = stateBomb;
 
 	}
+
 
 	
 	public int getX() {
@@ -35,14 +35,18 @@ public class InfoBomb {
 		this.y = y;
 	}
 
-	public int getTime() {
-		return time;
+
+
+	public StateBomb getStateBomb() {
+		return stateBomb;
 	}
 
 
-	public void setTime(int time) {
-		this.time = time;
+
+	public void setStateBomb(StateBomb stateBomb) {
+		this.stateBomb = stateBomb;
 	}
+
 
 
 	public int getRange() {

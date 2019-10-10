@@ -3,7 +3,7 @@ import java.util.Observable;
 
 public abstract class Game extends Observable implements Runnable{
 	private int turn;
-	private int maxturn=50;
+	private int maxturn=500;
 	private boolean isRunning;
 	private Thread thread;
 	private double time =100;
@@ -18,9 +18,11 @@ public abstract class Game extends Observable implements Runnable{
 	
 	//Effectue un tour de jeu
 	public void step() {
-		++turn;
-		if(gameContinue())
+		
+		if(gameContinue()) {
+			++turn;
 			takeTurn();
+		}
 		else {
 			isRunning=false;
 			gameOver();
@@ -52,7 +54,6 @@ public abstract class Game extends Observable implements Runnable{
 	
 	//Lancement du thread
 	public void launch() {
-		init();
 		step();
 		isRunning=true;
 		thread = new Thread(this);
