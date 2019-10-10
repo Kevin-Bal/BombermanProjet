@@ -1,26 +1,26 @@
-package graphics;
+package Agent;
+import Controler.AgentAction;
 
 public class InfoAgent {
 	
 	private int x;
 	private int y;
-	private int dir;
-	private Color color;
+	private AgentAction agentAction;
+	private ColorAgent color;
 	private char type;
 	
 	private boolean isInvincible;
 	private boolean isSick;
 	
-	
-	public InfoAgent(int x, int y, int dir, Color color, char type) {
+	public InfoAgent(int x, int y, AgentAction agentAction, char type, ColorAgent color, boolean isInvincible, boolean isSick) {
 		this.x=x;
 		this.y=y;
-		this.dir=dir;
+		this.agentAction = agentAction;
 		this.color = color;
 		this.type = type;
 		
-		this.isInvincible = false;
-		this.isSick = false;
+		this.isInvincible = isInvincible;
+		this.isSick = isSick;
 	}
 
 	
@@ -40,19 +40,13 @@ public class InfoAgent {
 		this.y = y;
 	}
 
-	public int getDir() {
-		return dir;
-	}
 
-	public void setDir(int dir) {
-		this.dir = dir;
-	}
 	
-	public Color getColor() {
+	public ColorAgent getColor() {
 		return color;
 	}
 
-	public void setColor(Color color) {
+	public void setColor(ColorAgent color) {
 		this.color = color;
 	}
 	
@@ -86,7 +80,15 @@ public class InfoAgent {
 	}
 
 
+	public AgentAction getAgentAction() {
+		return agentAction;
+	}
 
-	
+
+	public void setAgentAction(AgentAction agentAction) {
+		this.agentAction = agentAction;
+	}
+
+
 }
 	

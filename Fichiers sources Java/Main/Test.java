@@ -1,14 +1,14 @@
 package Main;
-import Model.SimpleGame;
+import Model.BombermanGame;
+import View.ViewBombermanGame;
 import View.ViewCommand;
-import View.ViewSimpleGame;
 
 public class Test {
 
-	public static void main(String[] args) {
-		SimpleGame sg = new SimpleGame();
-		//ViewSimpleGame game = new ViewSimpleGame(sg);
-		ViewCommand vc = new ViewCommand(sg);
+	public static void main(String[] args) throws Exception {
+		BombermanGame sg = new BombermanGame();
+		ViewBombermanGame game = new ViewBombermanGame(sg);
+		//ViewCommand vc = new ViewCommand(sg);
 
 		sg.init();
 		sg.run();

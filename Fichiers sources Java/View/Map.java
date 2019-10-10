@@ -1,4 +1,5 @@
-package graphics;
+package View;
+
 
 import java.io.BufferedReader;
 import java.io.FileInputStream;
@@ -8,10 +9,11 @@ import java.io.Serializable;
 
 import java.util.ArrayList;
 
-import agent.Bird;
-import agent.Bomberman;
-import agent.BasicEnnemy;
-import agent.Rajion;
+import Agent.ColorAgent;
+import Agent.InfoAgent;
+import Controler.AgentAction;
+
+
 
 /** 
  * Classe qui permet de charger une carte de Bomberman à partir d'un fichier de layout d'extension .lay
@@ -24,12 +26,6 @@ public class Map implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 	
-	public static final int NORTH = 0;
-	public static final int SOUTH = 1;
-	public static final int EAST = 2;
-	public static final int WEST = 3;
-	public static final int STOP = 4;
-
 
 	private String filename;
 	private int size_x;
@@ -76,7 +72,7 @@ public class Map implements Serializable {
 		tampon = new BufferedReader(lecture);
 		int y=0;
 	
-		Color[] Couleurs= Color.values();
+		ColorAgent[] color = ColorAgent.values();
 		int cpt_col = 0;
 		
 		start_agents = new ArrayList<InfoAgent>();
@@ -98,14 +94,14 @@ public class Map implements Serializable {
 				else start_brokable_walls[x][y]=false;
 				
 				if (ligne.charAt(x)=='E' || ligne.charAt(x)=='V' || ligne.charAt(x)=='R') {
-					start_agents.add(new InfoAgent(x,y,STOP,null,ligne.charAt(x)));
+					start_agents.add(new InfoAgent(x,y,AgentAction.STOP,ligne.charAt(x),ColorAgent.DEFAULT,false,false));	
 				}
 				
 				if (ligne.charAt(x)=='B') {
-					Color col;
-					if (cpt_col < Couleurs.length) col = Couleurs[cpt_col];
-					else col = Color.DEFAULT;	
-					start_agents.add(new InfoAgent(x,y,STOP, col,ligne.charAt(x)));
+					ColorAgent col;
+					if (cpt_col < color.length) col = color[cpt_col];
+					else col = ColorAgent.DEFAULT;	
+					start_agents.add(new InfoAgent(x,y,AgentAction.STOP, ligne.charAt(x),col,false,false));
 					cpt_col++;
 				}
 					

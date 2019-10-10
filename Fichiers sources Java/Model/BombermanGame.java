@@ -1,6 +1,6 @@
 package Model;
 
-public class SimpleGame extends Game{
+public class BombermanGame extends Game{
 			
 	@Override
 	public boolean gameContinue() {

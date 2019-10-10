@@ -1,7 +1,4 @@
-package graphics;
-
-import objets.ItemType;
-
+package View;
 public class InfoItem {
 	
 	private int x;
