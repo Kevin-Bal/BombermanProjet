@@ -15,12 +15,16 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JSlider;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
 
+import Controler.ControleurSimpleGame;
 import Model.Game;
 
 
 public class ViewCommand implements Observer{
 
+	private ControleurSimpleGame controleurSimpleGame;
 	private JFrame jFrame;
 	private JPanel jPanelView;
 	private JPanel jPanelButtons;
@@ -33,6 +37,7 @@ public class ViewCommand implements Observer{
 	public ViewCommand(Game game){
 		tours = 0;
 		this.game=game;
+		this.controleurSimpleGame=new ControleurSimpleGame(game, this);
 		this.game.addObserver(this);
 		
 		jFrame = new JFrame();
@@ -86,7 +91,7 @@ public class ViewCommand implements Observer{
 		jb_restart.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent evenement) {
 				System.out.println("Restart Game");
-				game.init();
+				controleurSimpleGame.restart();
 			}
 		});
 		jPanelButtons.add(jb_restart);
@@ -97,7 +102,7 @@ public class ViewCommand implements Observer{
 		jb_run.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent evenement) {
 				System.out.println("Start");
-				game.run();
+				controleurSimpleGame.start();
 			}
 		});
 		jPanelButtons.add(jb_run);
@@ -108,7 +113,7 @@ public class ViewCommand implements Observer{
 		jb_step.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent evenement) {
 				System.out.println("Step");
-				game.step();
+				controleurSimpleGame.step();
 			}
 		});
 		jPanelButtons.add(jb_step);	
@@ -120,7 +125,7 @@ public class ViewCommand implements Observer{
 		jb_pause.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent evenement) {
 				System.out.println("Pause Game");
-				game.stop();
+				controleurSimpleGame.stop();
 			}
 		});
 		jPanelButtons.add(jb_pause);
@@ -139,9 +144,16 @@ public class ViewCommand implements Observer{
 		
 		JSlider js = new JSlider(1,10,2);
 		// paint the ticks and tracks 
-		js.setPaintTrack(true); 
+		js.setMajorTickSpacing(1);
+		js.setMinorTickSpacing(1);
 		js.setPaintTicks(true); 
 		js.setPaintLabels(true);
+		js.addChangeListener(new ChangeListener() {
+			public void stateChanged(ChangeEvent event) {
+				int time = js.getValue();
+				controleurSimpleGame.setTime(time);
+			}
+		});
 		
 		jPanelHor.add(js);
 		jPanelSlider.add(jPanelHor);

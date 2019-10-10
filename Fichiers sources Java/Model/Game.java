@@ -3,10 +3,12 @@ import java.util.Observable;
 
 public abstract class Game extends Observable implements Runnable{
 	private int turn;
-	private int maxturn=500;
+
+	private int maxturn=1000;
 	private boolean isRunning;
 	private Thread thread;
-	private double time =100;
+	private double default_time =200;
+	private double time =default_time;
 		
 	//Initialise le jeu
 	public void init() {
@@ -18,7 +20,6 @@ public abstract class Game extends Observable implements Runnable{
 	
 	//Effectue un tour de jeu
 	public void step() {
-		
 		if(gameContinue()) {
 			++turn;
 			takeTurn();
@@ -60,6 +61,11 @@ public abstract class Game extends Observable implements Runnable{
 		thread.start();
 	}
 	
+	
+	//Controle le nombre de tours par secondes
+	public void setTime(double coef) {
+		this.time=default_time/coef;
+	}
 	
 	public abstract boolean gameContinue();		//Vérifie que le jeu soit fini ou non
 	public abstract void gameOver();			//Affiche le message de fin du jeu
