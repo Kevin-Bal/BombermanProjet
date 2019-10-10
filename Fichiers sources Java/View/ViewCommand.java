@@ -88,28 +88,44 @@ public class ViewCommand implements Observer{
 		//Bouton Restart
 		Icon icon_restart = new ImageIcon("Icones/icon_restart.png");
 		JButton jb_restart= new JButton(icon_restart);
+		//Bouton Run
+		Icon icon_run = new ImageIcon("Icones/icon_run.png");
+		JButton jb_run= new JButton(icon_run);
+		//Bouton Step		
+		Icon icon_step = new ImageIcon("Icones/icon_step.png");
+		JButton jb_step = new JButton(icon_step);
+		//Bouton Pause
+		Icon icon_pause = new ImageIcon("Icones/icon_pause.png");
+		JButton jb_pause = new JButton(icon_pause);
+		
+		
+		//Listeners
+		//Bouton Restart
 		jb_restart.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent evenement) {
 				System.out.println("Restart Game");
 				ControleurBombermanGame.restart();
+				jb_restart.setEnabled(false);
+				jb_pause.setEnabled(true);
+				jb_run.setEnabled(false);
+				jb_step.setEnabled(true);
 			}
 		});
 		jPanelButtons.add(jb_restart);
 
 		//Bouton Run
-		Icon icon_run = new ImageIcon("Icones/icon_run.png");
-		JButton jb_run= new JButton(icon_run);
 		jb_run.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent evenement) {
 				System.out.println("Start");
 				ControleurBombermanGame.start();
+				jb_pause.setEnabled(true);
+				jb_restart.setEnabled(false);
+				jb_run.setEnabled(false);
 			}
 		});
 		jPanelButtons.add(jb_run);
-		
-		//Bouton Step		
-		Icon icon_step = new ImageIcon("Icones/icon_step.png");
-		JButton jb_step = new JButton(icon_step);
+
+		//Bouton Step
 		jb_step.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent evenement) {
 				System.out.println("Step");
@@ -118,18 +134,23 @@ public class ViewCommand implements Observer{
 		});
 		jPanelButtons.add(jb_step);	
 		
-		
 		//Bouton Pause
-		Icon icon_pause = new ImageIcon("Icones/icon_pause.png");
-		JButton jb_pause = new JButton(icon_pause);
 		jb_pause.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent evenement) {
 				System.out.println("Pause Game");
 				ControleurBombermanGame.stop();
+				jb_pause.setEnabled(false);
+				jb_restart.setEnabled(true);
+				jb_run.setEnabled(true);
 			}
 		});
 		jPanelButtons.add(jb_pause);
 		
+		//Default button state
+		jb_restart.setEnabled(true);
+		jb_pause.setEnabled(false);
+		jb_step.setEnabled(false);
+		jb_run.setEnabled(false);
 		
 	//SliderPanelButtons.setLayout(new GridLayout(1,4));
 		JPanel jPanelHor = new JPanel();
