@@ -1,18 +1,16 @@
 package Agent;
-
-import java.util.ArrayList;
+import Controler.AgentAction;
 
 public class BombermanFactory implements AgentFactory {
-	ColorAgent[] colors = {ColorAgent.BLEU, ColorAgent.ROUGE, ColorAgent.VERT, ColorAgent.JAUNE, ColorAgent.BLANC, ColorAgent.DEFAULT};
-	private Bomberman bbm;
-	static int color_id =0;
+
+	static int id_color=0;
+	ColorAgent[] tabColor= {ColorAgent.BLANC,ColorAgent.BLEU,ColorAgent.JAUNE,ColorAgent.ROUGE,ColorAgent.VERT,ColorAgent.DEFAULT};
+	
 	@Override
-	public Agent createAgent(int x, int y) {
-		
-		bbm = new Bomberman(x,y,colors[color_id]);
-		color_id ++;
-		return bbm;
-		
+	public Agent createAgent(int x, int y, AgentAction agentAction) {
+    	Agent agent = new Bomberman(x, y, tabColor[id_color]);
+    	id_color++;
+    	return agent;
 	}
 
 }

@@ -1,20 +1,22 @@
 package Agent;
 
-public abstract class Agent  {
-	
-	private int x;
-	private int y;
-	private AgentAction agentAction;
-	
+public abstract class Agent{
+	protected int x;
+	protected int y;
 	private int id;
 	
-	static int cpt_id = 0;
-	
+	static int iter_id = 0;
+			
 	public Agent(int x, int y) {
-		this.x=x;
-		this.y=y;
-		this.setId(cpt_id);
-		cpt_id++;
+		this.x = x;
+		this.y = y;
+		this.id = iter_id;
+		iter_id++;
+	}
+
+	
+	public void executeAction() {
+		System.out.println("Agent " + id + " en position (" + x + "," + y + ")");		
 	}
 	
 	public int getX() {

@@ -1,14 +1,18 @@
 package Agent;
 
-import java.util.ArrayList;
+public class Bomberman extends Agent{
 
-public class Bomberman extends Agent {
+	ColorAgent color;
+	//StrategyAgent strategyAgent;
 	
-	private ColorAgent color;
-	
-	public Bomberman(int x, int y,ColorAgent color) {
+	public Bomberman(int x, int y, ColorAgent color) {
 		super(x, y);
-		this.color = color;
+		this.color = color;	
 	}
 	
+	public void executeAction() {
+		super.executeAction();
+		System.out.println("My color is " + color);
+		//this.strategyAgent.executeMove();
+	}
 }
