@@ -13,8 +13,8 @@ import javax.imageio.ImageIO;
 import java.util.ArrayList;
 import javax.swing.JPanel;
 
+import Agent.AgentAction;
 import Agent.InfoAgent;
-import Controler.AgentAction;
 import Controler.StateBomb;
 
 /** 
