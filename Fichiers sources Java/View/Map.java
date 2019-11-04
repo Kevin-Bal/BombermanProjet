@@ -9,9 +9,9 @@ import java.io.Serializable;
 
 import java.util.ArrayList;
 
+import Agent.AgentAction;
 import Agent.ColorAgent;
 import Agent.InfoAgent;
-import Controler.AgentAction;
 
 
 
