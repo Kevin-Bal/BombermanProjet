@@ -16,7 +16,7 @@ import Model.BombermanGame;
 import Model.Game;
 
 
-public class ViewBombermanGame  implements Observer {
+public class ViewBombermanGame implements Observer {
 	
 	/**
 	 * Classe d'affichage pour le jeu : 
@@ -30,8 +30,6 @@ public class ViewBombermanGame  implements Observer {
 	//jpanel du JFrame -> permet l'organisation du layout
 	private PanelBomberman jPanel;
 	
-	//Jeu en cours
-	private BombermanGame game;
 	
 	////////////////////////////////////////////////
 	
@@ -41,7 +39,7 @@ public class ViewBombermanGame  implements Observer {
 		
 		jPanel = new PanelBomberman(this.game.getMap());
 		
-		this.game =game;
+		this.game = game;
 		jFrame = new JFrame();
 		jFrame.setTitle("Game");
 		jFrame.setSize(new Dimension(jPanel.getTaille_x()*40+600, jPanel.getTaille_y()*40+400));
@@ -59,6 +57,14 @@ public class ViewBombermanGame  implements Observer {
 		
 		jFrame.add(jPanel);
 		jFrame.setVisible(true);
+	}
+
+	public Map getMap() {
+		return map;
+	}
+
+	public void setMap(Map map) {
+		this.map = map;
 	}
 
 	@Override
