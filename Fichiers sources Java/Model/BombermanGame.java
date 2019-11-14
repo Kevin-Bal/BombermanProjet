@@ -29,16 +29,7 @@ public class BombermanGame extends Game{
 	public void initializeGame() {
 		this.etatJeu = new GameState(this.map,this);
 	}
-	
-	public Map getMap() {
-		return map;
-	}
 
-	public void setMap(Map map) {
-		this.map = map;
-	}
-
-	
 	
 	//################################################################################
 	//			Getters and Setters

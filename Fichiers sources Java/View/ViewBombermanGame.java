@@ -37,9 +37,9 @@ public class ViewBombermanGame implements Observer {
 		//ajout de l'observer dans l'api 
 		game.addObserver(this);
 		
-		jPanel = new PanelBomberman(this.game.getMap());
+		jPanel = new PanelBomberman(game.getMap());
 		
-		this.game = game;
+		
 		jFrame = new JFrame();
 		jFrame.setTitle("Game");
 		jFrame.setSize(new Dimension(jPanel.getTaille_x()*40+600, jPanel.getTaille_y()*40+400));
@@ -57,14 +57,6 @@ public class ViewBombermanGame implements Observer {
 		
 		jFrame.add(jPanel);
 		jFrame.setVisible(true);
-	}
-
-	public Map getMap() {
-		return map;
-	}
-
-	public void setMap(Map map) {
-		this.map = map;
 	}
 
 	@Override
