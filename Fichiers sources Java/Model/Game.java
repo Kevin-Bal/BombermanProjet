@@ -22,10 +22,12 @@ public abstract class Game extends Observable implements Runnable{
 	public void step() {
 		if(gameContinue()) {
 			++turn;
+			this.notifyObservers();
 			takeTurn();
 		}
 		else {
 			isRunning=false;
+			this.notifyObservers();
 			gameOver();
 		}
 		

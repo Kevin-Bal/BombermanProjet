@@ -6,7 +6,7 @@ import View.Map;
 public class BombermanGame extends Game{
 
 	private Map map;
-	private GameState etatJeu;
+	public GameState etatJeu;
 	
 	@Override
 	public boolean gameContinue() {
@@ -23,6 +23,7 @@ public class BombermanGame extends Game{
 	public void takeTurn() {		
 		//System.out.println("Tour"+ this.getTurn()+"du jeu en cours");
 		this.etatJeu.takeTurn();
+		this.notifyObservers();	
 	}
 
 	@Override
