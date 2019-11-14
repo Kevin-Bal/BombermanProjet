@@ -22,11 +22,12 @@ import javax.swing.event.ChangeListener;
 
 import Controler.ControleurBombermanGame;
 import Model.BombermanGame;
-import Model.Game;
 
 
 public class ViewCommand implements Observer{
 
+	
+///////////----Attributs de la classe----///////////
 	private ControleurBombermanGame ControleurBombermanGame;
 	private JFrame jFrame;
 	private JPanel jPanelView;
@@ -35,25 +36,26 @@ public class ViewCommand implements Observer{
 	private JLabel jLabel;
 	int tours;
 	BombermanGame game;
+////////////////////////////////////////////////////
+	
 	
 	//Constructeur + Ouvre la fenetre JFrame
 	public ViewCommand(BombermanGame game) throws Exception{
 		tours = 0;
 		this.game=game;
-		this.ControleurBombermanGame=new ControleurBombermanGame(game, this);
-		this.game.addObserver(this);
 		
 		//Interface pour choisir la map
 		JFileChooser choix = new JFileChooser(new File("layouts"));
 		choix.setMultiSelectionEnabled(true) ;
 		int retour = choix.showOpenDialog(null);
 		if(retour == JFileChooser.APPROVE_OPTION){
-		   // Un fichier a été choisis
-			System.out.println(choix.getSelectedFile().getName());
 			this.game.setMap(new Map("./layouts/"+choix.getSelectedFile().getName()));
 		}	
 		
-		
+		this.ControleurBombermanGame=new ControleurBombermanGame(game, this);
+		this.game.addObserver(this);
+
+		//Instanciation du JFrame
 		jFrame = new JFrame();
 		jFrame.setTitle("Game");
 		jFrame.setSize(new Dimension(600, 200));
@@ -80,7 +82,6 @@ public class ViewCommand implements Observer{
 		jPanelView.add(jPanelSlider);
 		jFrame.add(jPanelView);
 
-		
 		jFrame.setVisible(true);
 	}
 	

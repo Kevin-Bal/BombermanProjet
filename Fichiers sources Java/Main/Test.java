@@ -1,6 +1,5 @@
 package Main;
 import Model.BombermanGame;
-import View.ViewBombermanGame;
 import View.ViewCommand;
 
 public class Test {
