@@ -3,9 +3,11 @@ import java.awt.Dimension;
 import java.awt.GraphicsEnvironment;
 import java.awt.GridLayout;
 import java.awt.Point;
+import java.io.File;
 import java.util.Observable;
 import java.util.Observer;
 
+import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -27,23 +29,15 @@ public class ViewBombermanGame implements Observer {
 	
 	//jpanel du JFrame -> permet l'organisation du layout
 	private PanelBomberman jPanel;
-	private Map map;
 	
-	//Information de l'etat du jeu
-	private JLabel tour;
-	private JLabel info;
-
-	//Jeu en en cour
-	private BombermanGame game;
 	
 	////////////////////////////////////////////////
 	
 	public ViewBombermanGame(BombermanGame game) throws Exception {
 		//ajout de l'observer dans l'api 
 		game.addObserver(this);
-		map = new Map("./layouts/alone.lay");
 		
-		jPanel = new PanelBomberman(map);
+		jPanel = new PanelBomberman(this.game.getMap());
 		
 		this.game = game;
 		jFrame = new JFrame();
@@ -61,21 +55,8 @@ public class ViewBombermanGame implements Observer {
 		jFrame.setLocation(dx, dy);
 		
 		
-		
 		jFrame.add(jPanel);
-//		jPanel.setLayout(new GridLayout(1,2));
-//		
-//		tour = new JLabel();
-//		info = new JLabel();
-//		
-//		jPanel.add(tour);
-//		jPanel.add(info);
-//		
-		jFrame.add(jPanel);
-		
 		jFrame.setVisible(true);
-		
-		
 	}
 
 	public Map getMap() {
@@ -88,17 +69,7 @@ public class ViewBombermanGame implements Observer {
 
 	@Override
 	public void update(Observable o, Object arg) {
-		//System.out.println("test");
-		
-		//Permet de réaliser l'affichage d'information sur le jeu
-//		if(game.gameContinue()) {
-//			//info.setText("Le jeu est en cours ...");
-//		}
-//		else info.setText("Le jeu est fini");
-		
-		//mise à jour du nombre de tour dans le jFrame
-		//tour.setText("Nombre de tours :"+ Integer.toString(this.game.getTurn()));
+
 	}
-	
 }
 

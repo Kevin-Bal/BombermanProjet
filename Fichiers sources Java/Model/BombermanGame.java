@@ -1,6 +1,5 @@
 package Model;
 
-
 import Controler.GameState;
 import View.Map;
 
@@ -39,4 +38,16 @@ public class BombermanGame extends Game{
 		this.map = map;
 	}
 
+	
+	
+	//################################################################################
+	//			Getters and Setters
+	public Map getMap() {
+		return map;
+	}
+
+	public void setMap(Map map) {
+		this.map = map;
+	}
+	//################################################################################
 }
