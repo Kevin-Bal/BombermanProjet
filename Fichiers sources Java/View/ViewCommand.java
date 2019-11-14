@@ -44,7 +44,7 @@ public class ViewCommand implements Observer{
 		tours = 0;
 		this.game=game;
 		this.game.addObserver(this);
-		
+		 
 		//Interface pour choisir la map
 		JFileChooser choix = new JFileChooser(new File("layouts"));
 		choix.setMultiSelectionEnabled(true) ;
@@ -53,7 +53,8 @@ public class ViewCommand implements Observer{
 			this.game.setMap(new Map("./layouts/"+choix.getSelectedFile().getName()));
 		}	
 		
-		this.ControleurBombermanGame=new ControleurBombermanGame(game, this);
+		this.ControleurBombermanGame = new ControleurBombermanGame(game, this);
+		
 		jFrame = new JFrame();
 		jFrame.setTitle("Game");
 		jFrame.setSize(new Dimension(600, 200));

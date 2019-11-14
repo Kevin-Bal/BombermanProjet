@@ -459,8 +459,4 @@ public class PanelBomberman extends JPanel{
 	}
 
 
-
-
-
-
 }

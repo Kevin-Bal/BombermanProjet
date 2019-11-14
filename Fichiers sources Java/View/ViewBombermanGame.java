@@ -3,6 +3,7 @@ import java.awt.Dimension;
 import java.awt.GraphicsEnvironment;
 import java.awt.Point;
 import java.io.File;
+import java.util.ArrayList;
 import java.util.Observable;
 import java.util.Observer;
 
@@ -59,7 +60,9 @@ public class ViewBombermanGame implements Observer {
 
 	@Override
 	public void update(Observable o, Object arg) {
-
+		System.out.println("deplacement en x : "+game.etatJeu.getBombermans().get(0).getX());
+		jPanel.setInfoGame(game.etatJeu.getMap().getStart_brokable_walls(), game.etatJeu.getAgents(), new ArrayList<InfoItem>(), new ArrayList<InfoBomb>());
+		this.jPanel.repaint();
 	}
 }
 

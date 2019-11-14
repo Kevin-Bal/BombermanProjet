@@ -11,7 +11,7 @@ import Model.BombermanGame;
 import View.Map;
 
 public class GameState {
-	private ArrayList<Bomberman> bombermans = new ArrayList<>();
+	private ArrayList<Agent> bombermans = new ArrayList<>();
 	private ArrayList<Agent> enemies = new ArrayList<>();
 	private BombermanGame game;
 	private Map map;
@@ -19,6 +19,7 @@ public class GameState {
 	public GameState(Map map, BombermanGame game) {
 		this.game = game;
 		this.map = map;
+		
 		ArrayList<Agent> agent = map.getStart_agents();
 		BombermanFactory bFactory = new BombermanFactory();
 		EnemyFactory eFactory = new EnemyFactory();
@@ -27,7 +28,7 @@ public class GameState {
 			
 			switch(a.getType()) {
 			case 'B':
-				bombermans.add( (Bomberman) bFactory.createAgent(a.getX(),a.getY(),a.getType(),a.getAgentAction(),a.getColor()));
+				bombermans.add( bFactory.createAgent(a.getX(),a.getY(),a.getType(),a.getAgentAction(),a.getColor()));
 				break;
 			default:
 				enemies.add( eFactory.createAgent(a.getX(),a.getY(),a.getType(),a.getAgentAction(),a.getColor()));
@@ -38,15 +39,15 @@ public class GameState {
 	
 	public boolean isLegalMove(AgentAction action, Agent agent, int x, int y) {
 		
-		if(map.get_walls()[agent.getX()+x][ agent.getY()+y] || map.getStart_brokable_walls()[agent.getX()+x][ agent.getY()+y] )
+		if(map.get_walls()[x][y] || map.getStart_brokable_walls()[x][y] )
 			return false;
 		else return true;
 	}
 	
-	public void moovAgent(AgentAction action, Agent agent) {
+	public void moveAgent(AgentAction action, Agent agent) {
 		
-		int x = 0;
-		int y = 0;
+		int x = agent.getX();
+		int y = agent.getY();
 		switch(action) {
 		case MOVE_UP: 
 			x --;
@@ -70,6 +71,7 @@ public class GameState {
 		if(isLegalMove( action, agent, x, y)) {
 			agent.setX(x);
 			agent.setY(y);
+			agent.setAgentAction(action);
 		}
 	}
 	
@@ -81,21 +83,54 @@ public class GameState {
 	public void takeTurn() {
 		takeTurnEnemies();
 		takeTurnBomberman();
+		game.notifyObservers();
 	}
 	
 	public void takeTurnEnemies() {
 		for (Agent enemie : enemies) {
 			AgentAction aa=GenerateRandomMove();
-			System.out.println(aa);
-			moveAgent(enemie,aa);
+			//System.out.println(aa);
+			moveAgent(aa,enemie);
 		}		
 	}
 	
 	public void takeTurnBomberman() {
-		for (Bomberman bomberman : bombermans) {
+		for (Agent bomberman : bombermans) {
 			AgentAction aa=GenerateRandomMove();
-			System.out.println(aa);
-			moveAgent(bomberman,aa);
+			//System.out.println(aa);
+			moveAgent(aa,bomberman);
 		}		
 	}
+
+	public ArrayList<Agent> getBombermans() {
+		return bombermans;
+	}
+
+	public void setBombermans(ArrayList<Agent> bombermans) {
+		this.bombermans = bombermans;
+	}
+
+	public ArrayList<Agent> getEnemies() {
+		return enemies;
+	}
+
+	public void setEnemies(ArrayList<Agent> enemies) {
+		this.enemies = enemies;
+	}
+	
+	public ArrayList<Agent> getAgents(){
+		ArrayList<Agent> all = new ArrayList<>();
+		all.addAll(this.getBombermans());
+		all.addAll(this.getEnemies());
+		return all;
+	}
+
+	public Map getMap() {
+		return map;
+	}
+
+	public void setMap(Map map) {
+		this.map = map;
+	}
+	
 }
