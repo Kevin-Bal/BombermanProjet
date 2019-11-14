@@ -3,12 +3,25 @@ package Agent;
 import Controler.AgentAction;
 
 public class EnemyFactory implements AgentFactory {
+	private Agent agent;
 	
-	private Enemy enemy;
 	@Override
-	public Agent createAgent(int x, int y, AgentAction agentAction) {
-		enemy = new Enemy(x,y);
-		return enemy;
+	public Agent createAgent(int x, int y, char type, AgentAction agentAction, ColorAgent col) {
+		switch(type) {
+			case 'E' : 
+				agent = new Enemy(x, y, agentAction);
+				break;
+			case 'V' :
+				agent = new Bird(x, y, agentAction);
+				break;
+			case 'R' :
+				agent = new Rajion(x, y, agentAction);
+				break;
+			default :
+				break;
+		}
+		
+		return agent;
 	}
 
 }
