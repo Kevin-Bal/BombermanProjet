@@ -10,10 +10,11 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
+import Model.BombermanGame;
 import Model.Game;
 
 
-public class ViewBombermanGame  implements Observer {
+public class ViewBombermanGame implements Observer {
 	
 	/**
 	 * Classe d'affichage pour le jeu : 
@@ -33,18 +34,18 @@ public class ViewBombermanGame  implements Observer {
 	private JLabel info;
 
 	//Jeu en en cour
-	private Game game;
+	private BombermanGame game;
 	
 	////////////////////////////////////////////////
 	
-	public ViewBombermanGame(Game game) throws Exception {
+	public ViewBombermanGame(BombermanGame game) throws Exception {
 		//ajout de l'observer dans l'api 
 		game.addObserver(this);
 		map = new Map("./layouts/alone.lay");
 		
 		jPanel = new PanelBomberman(map);
 		
-		this.game =game;
+		this.game = game;
 		jFrame = new JFrame();
 		jFrame.setTitle("Game");
 		jFrame.setSize(new Dimension(jPanel.getTaille_x()*40+600, jPanel.getTaille_y()*40+400));
@@ -75,6 +76,14 @@ public class ViewBombermanGame  implements Observer {
 		jFrame.setVisible(true);
 		
 		
+	}
+
+	public Map getMap() {
+		return map;
+	}
+
+	public void setMap(Map map) {
+		this.map = map;
 	}
 
 	@Override

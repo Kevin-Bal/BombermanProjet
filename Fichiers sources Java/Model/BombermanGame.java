@@ -1,7 +1,14 @@
 package Model;
 
+
+import Controler.GameState;
+import View.Map;
+
 public class BombermanGame extends Game{
-			
+
+	private Map map;
+	private GameState etatJeu;
+	
 	@Override
 	public boolean gameContinue() {
 		//System.out.println("Jeu en cours...");
@@ -16,11 +23,20 @@ public class BombermanGame extends Game{
 	@Override
 	public void takeTurn() {		
 		//System.out.println("Tour"+ this.getTurn()+"du jeu en cours");
+		this.etatJeu.takeTurn();
 	}
 
 	@Override
 	public void initializeGame() {
-		//System.out.println("Jeu initialisé");
+		this.etatJeu = new GameState(this.map,this);
+	}
+	
+	public Map getMap() {
+		return map;
+	}
+
+	public void setMap(Map map) {
+		this.map = map;
 	}
 
 }

@@ -11,9 +11,6 @@ public class Test {
 		ViewCommand vc = new ViewCommand(sg);
 
 		sg.init();
-
-		
-		
 	}
 
 }
