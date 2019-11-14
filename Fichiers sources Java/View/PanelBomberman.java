@@ -13,8 +13,8 @@ import javax.imageio.ImageIO;
 import java.util.ArrayList;
 import javax.swing.JPanel;
 
-import Agent.AgentAction;
-import Agent.InfoAgent;
+import Agent.Agent;
+import Controler.AgentAction;
 import Controler.StateBomb;
 
 /** 
@@ -60,7 +60,7 @@ public class PanelBomberman extends JPanel{
 	private Map map;
 
 
-	protected ArrayList<InfoAgent> listInfoAgents;
+	protected ArrayList<Agent> listInfoAgents;
 	protected ArrayList<InfoItem> listInfoItems;
 	protected ArrayList<InfoBomb> listInfoBombs;
 	
@@ -157,7 +157,7 @@ public class PanelBomberman extends JPanel{
 	}
 
 
-	void dessine_Agent(Graphics g, InfoAgent infoAgent)
+	void dessine_Agent(Graphics g, Agent infoAgent)
 	{
 		
 		int fen_x = getSize().width;
@@ -449,7 +449,7 @@ public class PanelBomberman extends JPanel{
 
 
 
-	public void setInfoGame(boolean[][] breakable_walls, ArrayList<InfoAgent> listInfoAgents, ArrayList<InfoItem> listInfoItems, ArrayList<InfoBomb> listInfoBombs) {
+	public void setInfoGame(boolean[][] breakable_walls, ArrayList<Agent> listInfoAgents, ArrayList<InfoItem> listInfoItems, ArrayList<InfoBomb> listInfoBombs) {
 		
 		this.listInfoAgents = listInfoAgents;
 		this.listInfoItems = listInfoItems;
