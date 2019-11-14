@@ -5,12 +5,14 @@ import java.awt.GridLayout;
 import java.awt.Point;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.File;
 import java.util.Observable;
 import java.util.Observer;
 
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
+import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -19,6 +21,7 @@ import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
 import Controler.ControleurBombermanGame;
+import Model.BombermanGame;
 import Model.Game;
 
 
@@ -31,14 +34,25 @@ public class ViewCommand implements Observer{
 	private JPanel jPanelSlider;
 	private JLabel jLabel;
 	int tours;
-	Game game;
+	BombermanGame game;
 	
 	//Constructeur + Ouvre la fenetre JFrame
-	public ViewCommand(Game game) throws Exception{
+	public ViewCommand(BombermanGame game) throws Exception{
 		tours = 0;
 		this.game=game;
 		this.ControleurBombermanGame=new ControleurBombermanGame(game, this);
 		this.game.addObserver(this);
+		
+		//Interface pour choisir la map
+		JFileChooser choix = new JFileChooser(new File("layouts"));
+		choix.setMultiSelectionEnabled(true) ;
+		int retour = choix.showOpenDialog(null);
+		if(retour == JFileChooser.APPROVE_OPTION){
+		   // Un fichier a été choisis
+			System.out.println(choix.getSelectedFile().getName());
+			this.game.setMap(new Map("./layouts/"+choix.getSelectedFile().getName()));
+		}	
+		
 		
 		jFrame = new JFrame();
 		jFrame.setTitle("Game");

@@ -1,7 +1,10 @@
 package Model;
 
+import View.Map;
+
 public class BombermanGame extends Game{
-			
+	private Map map;
+	
 	@Override
 	public boolean gameContinue() {
 		//System.out.println("Jeu en cours...");
@@ -23,4 +26,16 @@ public class BombermanGame extends Game{
 		//System.out.println("Jeu initialisé");
 	}
 
+	
+	
+	//################################################################################
+	//			Getters and Setters
+	public Map getMap() {
+		return map;
+	}
+
+	public void setMap(Map map) {
+		this.map = map;
+	}
+	//################################################################################
 }
