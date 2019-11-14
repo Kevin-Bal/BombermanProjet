@@ -30,6 +30,7 @@ public class ViewBombermanGame implements Observer {
 	private PanelBomberman jPanel;
 	
 	private BombermanGame game;
+
 	////////////////////////////////////////////////
 	
 	public ViewBombermanGame(BombermanGame game) throws Exception {
@@ -37,6 +38,7 @@ public class ViewBombermanGame implements Observer {
 		this.game.addObserver(this);
 		
 		//Instanciations des JPanels/JLabels
+
 		jPanel = new PanelBomberman(this.game.getMap());
 		
 		//Instanciation du JFrame

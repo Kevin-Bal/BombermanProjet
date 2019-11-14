@@ -11,7 +11,6 @@ public class Agent {
 	private char type;
 	
 	private int id;
-	
 	static int iter_id = 0;
 			
 	
