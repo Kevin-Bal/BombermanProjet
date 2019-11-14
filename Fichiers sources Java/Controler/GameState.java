@@ -1,6 +1,7 @@
 package Controler;
 
 import java.util.ArrayList;
+import java.util.Random;
 
 import Agent.Agent;
 import Agent.Bomberman;
@@ -72,6 +73,29 @@ public class GameState {
 		}
 	}
 	
+	public AgentAction GenerateRandomMove() {
+	    int pick = new Random().nextInt(AgentAction.values().length); 
+	    return AgentAction.values()[pick];
+	}
+
 	public void takeTurn() {
+		takeTurnEnemies();
+		takeTurnBomberman();
+	}
+	
+	public void takeTurnEnemies() {
+		for (Agent enemie : enemies) {
+			AgentAction aa=GenerateRandomMove();
+			System.out.println(aa);
+			moveAgent(enemie,aa);
+		}		
+	}
+	
+	public void takeTurnBomberman() {
+		for (Bomberman bomberman : bombermans) {
+			AgentAction aa=GenerateRandomMove();
+			System.out.println(aa);
+			moveAgent(bomberman,aa);
+		}		
 	}
 }

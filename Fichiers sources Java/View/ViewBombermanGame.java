@@ -1,7 +1,6 @@
 package View;
 import java.awt.Dimension;
 import java.awt.GraphicsEnvironment;
-import java.awt.GridLayout;
 import java.awt.Point;
 import java.io.File;
 import java.util.Observable;
@@ -13,9 +12,9 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 import Model.BombermanGame;
-import Model.Game;
 
 
+@SuppressWarnings("unused")
 public class ViewBombermanGame implements Observer {
 	
 	/**
@@ -31,26 +30,24 @@ public class ViewBombermanGame implements Observer {
 	private PanelBomberman jPanel;
 	
 	private BombermanGame game;
-	
+
 	////////////////////////////////////////////////
 	
 	public ViewBombermanGame(BombermanGame game) throws Exception {
-		//ajout de l'observer dans l'api 
-		this.game = game;
+		this.game=game;
 		this.game.addObserver(this);
 		
+		//Instanciations des JPanels/JLabels
+
 		jPanel = new PanelBomberman(this.game.getMap());
 		
+		//Instanciation du JFrame
 		jFrame = new JFrame();
 		jFrame.setTitle("Game");
 		jFrame.setSize(new Dimension(jPanel.getTaille_x()*40+600, jPanel.getTaille_y()*40+400));
-		
 		Dimension windowSize = jFrame.getSize();
-		
 		GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
-		
 		Point centerPoint = ge.getCenterPoint();
-		
 		int dx = centerPoint.x - windowSize.width / 2 ;
 		int dy = centerPoint.y - windowSize.height / 2 - 350;
 		jFrame.setLocation(dx, dy);
