@@ -30,15 +30,16 @@ public class ViewBombermanGame implements Observer {
 	//jpanel du JFrame -> permet l'organisation du layout
 	private PanelBomberman jPanel;
 	
+	private BombermanGame game;
 	
 	////////////////////////////////////////////////
 	
 	public ViewBombermanGame(BombermanGame game) throws Exception {
 		//ajout de l'observer dans l'api 
-		game.addObserver(this);
+		this.game = game;
+		this.game.addObserver(this);
 		
-		jPanel = new PanelBomberman(game.getMap());
-		
+		jPanel = new PanelBomberman(this.game.getMap());
 		
 		jFrame = new JFrame();
 		jFrame.setTitle("Game");
