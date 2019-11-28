@@ -3,15 +3,14 @@ package Agent;
 
 import java.util.ArrayList;
 
-import Controler.AgentAction;
-import View.InfoItem;
+import Item.InfoItem;
 import View.Map;
 
 public class Bomberman extends Agent{
 	private int range;
 	public Bomberman(int x, int y, AgentAction agentAction, ColorAgent color) {
 		super(x, y, agentAction, 'B', color, false, false);
-		this.setRange(1);
+		this.setRange(6);
 		// TODO Auto-generated constructor stub
 	}
 	

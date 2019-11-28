@@ -11,14 +11,11 @@ import Agent.EnemyFactory;
 import Item.InfoBomb;
 import Item.StateBomb;
 import Model.BombermanGame;
-import View.InfoBomb;
-import View.InfoItem;
 import View.Map;
 
 public class GameState {
-	private ArrayList<Bomberman> bombermans = new ArrayList<>();
+	private ArrayList<Agent> bombermans = new ArrayList<>();
 	private ArrayList<Agent> enemies = new ArrayList<>();
-	public ArrayList<InfoItem> items = new ArrayList<>();
 	private ArrayList<InfoBomb> bombs = new ArrayList<>();
 	private ArrayList<InfoBomb> bombsSupprime = new ArrayList<>();
 	private boolean brokable_walls[][];
@@ -39,7 +36,7 @@ public class GameState {
 			
 			switch(a.getType()) {
 			case 'B':
-				bombermans.add( (Bomberman) bFactory.createAgent(a.getX(),a.getY(),a.getType(),a.getAgentAction(),a.getColor()));
+				bombermans.add( bFactory.createAgent(a.getX(),a.getY(),a.getType(),a.getAgentAction(),a.getColor()));
 				break;
 			default:
 				enemies.add( eFactory.createAgent(a.getX(),a.getY(),a.getType(),a.getAgentAction(),a.getColor()));
@@ -48,32 +45,7 @@ public class GameState {
 		}
 	}
 	
-	/*
-	public boolean isLegalMove(AgentAction action, Agent agent) {
-		int x = agent.getX();
-		int y = agent.getY();
-		
-		switch(action) {
-		case MOVE_UP: 
-			x --;
-			checkForItem(agent);
-			break;
-		case MOVE_DOWN:
-			x ++;
-			break;
-		case MOVE_LEFT:
-			y--;
-			break;
-		case MOVE_RIGHT:
-			y++;
-			break;
-		case STOP:
-			break;
-		case PUT_BOMB:
-			break;
-		default :
-			break;
-		}
+	public boolean isLegalMove(AgentAction action, Agent agent, int x, int y) {
 		
 		if(map.get_walls()[x][y] || map.getStart_brokable_walls()[x][y] )
 			return false;
@@ -87,7 +59,6 @@ public class GameState {
 		switch(action) {
 		case MOVE_UP: 
 			x --;
-			checkForItem(agent);
 			break;
 		case MOVE_DOWN:
 			x ++;
@@ -104,9 +75,13 @@ public class GameState {
 			break;
 		default :
 			break;
-		}		
+		}
+		if(isLegalMove( action, agent, x, y)) {
+			agent.setX(x);
+			agent.setY(y);
+			agent.setAgentAction(action);
+		}
 	}
-	*/
 	
 	public AgentAction GenerateRandomMove() {
 	    int pick = new Random().nextInt(AgentAction.values().length); 
@@ -123,26 +98,20 @@ public class GameState {
 	public void takeTurnEnemies() {
 		for (Agent enemie : enemies) {
 			AgentAction aa=GenerateRandomMove();
-			enemie.setAgentAction(aa);
-			enemie.setAgentAction(aa);
-			if(enemie.isLegalMove(map)) {
-				enemie.executeAction();
-			}
+			//System.out.println(aa);
+			moveAgent(aa,enemie);
 		}		
 	}
 	
 	public void takeTurnBomberman() {
-		for (Bomberman bomberman : bombermans) {
-			AgentAction aa=GenerateRandomMove();
-			bomberman.setAgentAction(aa);
-			if(bomberman.isLegalMove(map)) {
-				bomberman.executeAction();
-				bomberman.checkForItem(items);
-			}
-      if(aa == AgentAction.PUT_BOMB) {
+		for (Agent bomberman : bombermans) {
+			Bomberman b = (Bomberman) bomberman;
+			AgentAction aa = GenerateRandomMove();
+			if(aa == AgentAction.PUT_BOMB) {
 				bombs.add(new InfoBomb(bomberman.getX(), bomberman.getY(), b.getRange(), StateBomb.Step1));
 			}
-				
+			else
+				moveAgent(aa,bomberman);
 		}		
 	}
 	
@@ -165,6 +134,9 @@ public class GameState {
 		for(int i = x; i >= x-range; i--) {
 			
 			if( i > 0 && i < map.getSizeX() ) {
+				if(map.get_walls()[i][y]) {
+					break;
+				}
 				if(this.brokable_walls[i][y]) {
 					this.brokable_walls[i][y] =false;
 					break;
@@ -175,6 +147,9 @@ public class GameState {
 		for(int i = y; i <= y+range; i++ ) {
 			
 			if( i > 0 && i < map.getSizeY() ) {
+				if(map.get_walls()[i][y]) {
+					break;
+				}
 				if(this.brokable_walls[x][i]) {
 					this.brokable_walls[x][i] =false;
 					break;
@@ -185,6 +160,9 @@ public class GameState {
 		for(int i = y; i >= y-range; i-- ) {
 			
 			if( i > 0 && i < map.getSizeY() ) {
+				if(map.get_walls()[i][y]) {
+					break;
+				}
 				if(this.brokable_walls[x][i]) {
 					this.brokable_walls[x][i] =false;
 					break;
@@ -193,7 +171,6 @@ public class GameState {
 		}
 	}
 
-  
 	public void bombTurn() {
 		for(InfoBomb bomb : bombs) {
 			switch(bomb.getStateBomb()) {
@@ -222,14 +199,11 @@ public class GameState {
 		bombsSupprime.clear();
 	}
 	
-	//##################################################################################################
-	//				GETTERS AND SETTERS
-  
-  public ArrayList<Bomberman> getBombermans() {
+	public ArrayList<Agent> getBombermans() {
 		return bombermans;
 	}
-  
-	public void setBombermans(ArrayList<Bomberman> bombermans) {
+
+	public void setBombermans(ArrayList<Agent> bombermans) {
 		this.bombermans = bombermans;
 	}
 
@@ -255,7 +229,7 @@ public class GameState {
 	public void setMap(Map map) {
 		this.map = map;
 	}
-  
+	
 	public ArrayList<InfoBomb> getBombs() {
 		return bombs;
 	}
@@ -271,5 +245,5 @@ public class GameState {
 	public void setBrokable_walls(boolean[][] brokable_walls) {
 		this.brokable_walls = brokable_walls;
 	}
-	//##################################################################################################	
+	
 }

@@ -1,6 +1,5 @@
 package Agent;
 
-import Controler.AgentAction;
 import View.Map;
 
 public class Bird extends Agent {
