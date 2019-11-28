@@ -7,7 +7,7 @@ public abstract class Game extends Observable implements Runnable{
 	private int maxturn=1000;
 	private boolean isRunning;
 	private Thread thread;
-	private double default_time =200;
+	private double default_time =1000;
 	private double time =default_time;
 		
 	//Initialise le jeu
@@ -22,23 +22,20 @@ public abstract class Game extends Observable implements Runnable{
 	public void step() {
 		if(gameContinue()) {
 			++turn;
-			this.notifyObservers();
 			takeTurn();
 		}
 		else {
 			isRunning=false;
-			this.notifyObservers();
 			gameOver();
 		}
-		
+		this.setChanged();
+		this.notifyObservers();
 	}
 
 	//Lance le jeu en tour par tour 
 	public void run() {
 		while(isRunning) {
 			step();
-			this.setChanged();
-			this.notifyObservers();
       try {
 				Thread.sleep((long) time);
 			} catch (InterruptedException e) {
@@ -57,7 +54,6 @@ public abstract class Game extends Observable implements Runnable{
 	
 	//Lancement du thread
 	public void launch() {
-		step();
 		isRunning=true;
 		thread = new Thread(this);
 		thread.start();
