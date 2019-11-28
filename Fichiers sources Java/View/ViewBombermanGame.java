@@ -62,7 +62,7 @@ public class ViewBombermanGame implements Observer {
 
 	@Override
 	public void update(Observable o, Object arg) {
-		jPanel.setInfoGame(game.etatJeu.getMap().getStart_brokable_walls(), game.etatJeu.getAgents(), new ArrayList<InfoItem>(), game.etatJeu.getBombs());
+		jPanel.setInfoGame(game.etatJeu.getBrokable_walls(), game.etatJeu.getAgents(), new ArrayList<InfoItem>(), game.etatJeu.getBombs());
 		this.jPanel.repaint();
 	}
 }

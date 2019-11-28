@@ -18,6 +18,7 @@ public class GameState {
 	private ArrayList<Agent> enemies = new ArrayList<>();
 	private ArrayList<InfoBomb> bombs = new ArrayList<>();
 	private ArrayList<InfoBomb> bombsSupprime = new ArrayList<>();
+	private boolean brokable_walls[][];
 
 	private BombermanGame game;
 	private Map map;
@@ -29,6 +30,7 @@ public class GameState {
 		ArrayList<Agent> agent = map.getStart_agents();
 		BombermanFactory bFactory = new BombermanFactory();
 		EnemyFactory eFactory = new EnemyFactory();
+		brokable_walls = map.getStart_brokable_walls();
 		
 		for(Agent a : agent) {
 			
@@ -127,6 +129,18 @@ public class GameState {
 				break;
 			case Boom :
 				bombsSupprime.add(bomb);
+				if(this.brokable_walls[bomb.getX()+bomb.getRange()][bomb.getY()]);
+					this.brokable_walls[bomb.getX()+bomb.getRange()][bomb.getY()] = false;
+					
+				if(this.brokable_walls[bomb.getX()-bomb.getRange()][bomb.getY()]);
+					this.brokable_walls[bomb.getX()-bomb.getRange()][bomb.getY()] = false;
+					
+				if(this.brokable_walls[bomb.getX()][bomb.getY()+bomb.getRange()]);
+					this.brokable_walls[bomb.getX()][bomb.getY()+bomb.getRange()] = false;
+				
+				if(this.brokable_walls[bomb.getX()][bomb.getY()-bomb.getRange()]);
+					this.brokable_walls[bomb.getX()][bomb.getY()-bomb.getRange()] = false;
+					
 				break;
 			default :
 				break;
@@ -138,6 +152,7 @@ public class GameState {
 		}
 		bombsSupprime.clear();
 	}
+	
 	public ArrayList<Agent> getBombermans() {
 		return bombermans;
 	}
@@ -175,6 +190,14 @@ public class GameState {
 
 	public void setBombs(ArrayList<InfoBomb> bombs) {
 		this.bombs = bombs;
+	}
+	
+	public boolean[][] getBrokable_walls() {
+		return brokable_walls;
+	}
+
+	public void setBrokable_walls(boolean[][] brokable_walls) {
+		this.brokable_walls = brokable_walls;
 	}
 	
 }
