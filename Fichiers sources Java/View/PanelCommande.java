@@ -24,13 +24,15 @@ import Controler.ControleurBombermanGame;
 import Model.BombermanGame;
 
 
-public class ViewCommand implements Observer{
+public class PanelCommande implements Observer{
 
 	
 ///////////----Attributs de la classe----///////////
 	private ControleurBombermanGame ControleurBombermanGame;
-	private JFrame jFrame;
 	private JPanel jPanelView;
+	
+
+
 	private JPanel jPanelButtons;
 	private JPanel jPanelSlider;
 	private JLabel jLabel;
@@ -40,30 +42,13 @@ public class ViewCommand implements Observer{
 	
 	
 	//Constructeur + Ouvre la fenetre JFrame
-	public ViewCommand(BombermanGame game) throws Exception{
+	public PanelCommande(BombermanGame game) throws Exception{
 		tours = 0;
 		this.game=game;
 		this.game.addObserver(this);
 		 
-		//Interface pour choisir la map
-		JFileChooser choix = new JFileChooser(new File("layouts"));
-		choix.setMultiSelectionEnabled(true) ;
-		int retour = choix.showOpenDialog(null);
-		if(retour == JFileChooser.APPROVE_OPTION){
-			this.game.setMap(new Map("./layouts/"+choix.getSelectedFile().getName()));
-		}	
-		
-		this.ControleurBombermanGame = new ControleurBombermanGame(game, this);
-		
-		jFrame = new JFrame();
-		jFrame.setTitle("Game");
-		jFrame.setSize(new Dimension(600, 200));
-		Dimension windowSize = jFrame.getSize();
-		GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
-		Point centerPoint = ge.getCenterPoint();		
-		int dx = centerPoint.x - windowSize.width / 2 ;
-		int dy = centerPoint.y - windowSize.height / 2 - 350;
-		jFrame.setLocation(dx, dy);
+			
+		this.ControleurBombermanGame = new ControleurBombermanGame(game);
 		
 		//Instanciations des JPanels/JLabels
 		jPanelView = new JPanel();
@@ -79,9 +64,6 @@ public class ViewCommand implements Observer{
 		//Ajouter tous les JPanels à la Frame
 		jPanelView.add(jPanelButtons);
 		jPanelView.add(jPanelSlider);
-		jFrame.add(jPanelView);
-
-		jFrame.setVisible(true);
 	}
 	
 	//afficher le compteur de tours à chaque fois qu'il est notifié
@@ -197,5 +179,12 @@ public class ViewCommand implements Observer{
 		jPanelSlider.add(jLabel);
 	}
 	
+	public JPanel getjPanelView() {
+		return jPanelView;
+	}
+
+	public void setjPanelView(JPanel jPanelView) {
+		this.jPanelView = jPanelView;
+	}
 
 }
