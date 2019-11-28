@@ -1,7 +1,9 @@
 package Agent;
 
+
 import Controler.AgentAction;
 import View.Map;
+
 
 public class Enemy extends Agent {
 

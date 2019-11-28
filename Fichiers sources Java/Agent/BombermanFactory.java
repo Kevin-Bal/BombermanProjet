@@ -1,5 +1,4 @@
 package Agent;
-import Controler.AgentAction;
 
 public class BombermanFactory implements AgentFactory {
 
