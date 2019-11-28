@@ -4,15 +4,21 @@ import java.util.ArrayList;
 import java.util.Random;
 
 import Agent.Agent;
+import Agent.AgentAction;
 import Agent.Bomberman;
 import Agent.BombermanFactory;
 import Agent.EnemyFactory;
+import Item.InfoBomb;
+import Item.StateBomb;
 import Model.BombermanGame;
 import View.Map;
 
 public class GameState {
 	private ArrayList<Agent> bombermans = new ArrayList<>();
 	private ArrayList<Agent> enemies = new ArrayList<>();
+	private ArrayList<InfoBomb> bombs = new ArrayList<>();
+	private ArrayList<InfoBomb> bombsSupprime = new ArrayList<>();
+
 	private BombermanGame game;
 	private Map map;
 	
@@ -83,6 +89,7 @@ public class GameState {
 	public void takeTurn() {
 		takeTurnEnemies();
 		takeTurnBomberman();
+		bombTurn();
 		game.notifyObservers();
 	}
 	
@@ -96,12 +103,41 @@ public class GameState {
 	
 	public void takeTurnBomberman() {
 		for (Agent bomberman : bombermans) {
-			AgentAction aa=GenerateRandomMove();
-			//System.out.println(aa);
-			moveAgent(aa,bomberman);
+			Bomberman b = (Bomberman) bomberman;
+			AgentAction aa = GenerateRandomMove();
+			if(aa == AgentAction.PUT_BOMB) {
+				bombs.add(new InfoBomb(bomberman.getX(), bomberman.getY(), b.getRange(), StateBomb.Step1));
+			}
+			else
+				moveAgent(aa,bomberman);
 		}		
 	}
 
+	public void bombTurn() {
+		for(InfoBomb bomb : bombs) {
+			switch(bomb.getStateBomb()) {
+			case Step1 :
+				bomb.setStateBomb(StateBomb.Step2);
+				break;
+			case Step2 :
+				bomb.setStateBomb(StateBomb.Step3);
+				break;
+			case Step3 :
+				bomb.setStateBomb(StateBomb.Boom);
+				break;
+			case Boom :
+				bombsSupprime.add(bomb);
+				break;
+			default :
+				break;
+			}
+		}
+		
+		for(InfoBomb bomb : bombsSupprime) {
+			bombs.remove(bomb);
+		}
+		bombsSupprime.clear();
+	}
 	public ArrayList<Agent> getBombermans() {
 		return bombermans;
 	}
@@ -131,6 +167,14 @@ public class GameState {
 
 	public void setMap(Map map) {
 		this.map = map;
+	}
+	
+	public ArrayList<InfoBomb> getBombs() {
+		return bombs;
+	}
+
+	public void setBombs(ArrayList<InfoBomb> bombs) {
+		this.bombs = bombs;
 	}
 	
 }

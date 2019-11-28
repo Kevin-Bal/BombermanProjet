@@ -1,7 +1,5 @@
 package Agent;
 
-import Controler.AgentAction;
-
 public class EnemyFactory implements AgentFactory {
 	private Agent agent;
 	

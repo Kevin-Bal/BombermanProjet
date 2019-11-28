@@ -1,4 +1,4 @@
-package Controler;
+package Item;
 
 
 public enum StateBomb {
