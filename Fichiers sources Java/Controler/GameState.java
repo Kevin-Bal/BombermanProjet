@@ -114,6 +114,53 @@ public class GameState {
 				moveAgent(aa,bomberman);
 		}		
 	}
+	
+	public void isLegalExplosion(int x, int y, int range) {
+		
+		for(int i = x; i <= x+range; i++ ) {
+			
+			if( i > 0 && i < map.getSizeX() ) {
+				if(map.get_walls()[i][y]) {
+					break;
+				}
+				else if(this.brokable_walls[i][y]) {
+					this.brokable_walls[i][y] =false;
+					break;
+				}
+			}
+			
+		}
+		
+		for(int i = x; i >= x-range; i--) {
+			
+			if( i > 0 && i < map.getSizeX() ) {
+				if(this.brokable_walls[i][y]) {
+					this.brokable_walls[i][y] =false;
+					break;
+				}
+			}
+		}
+		
+		for(int i = y; i <= y+range; i++ ) {
+			
+			if( i > 0 && i < map.getSizeY() ) {
+				if(this.brokable_walls[x][i]) {
+					this.brokable_walls[x][i] =false;
+					break;
+				}
+			}
+		}
+		
+		for(int i = y; i >= y-range; i-- ) {
+			
+			if( i > 0 && i < map.getSizeY() ) {
+				if(this.brokable_walls[x][i]) {
+					this.brokable_walls[x][i] =false;
+					break;
+				}
+			}
+		}
+	}
 
 	public void bombTurn() {
 		for(InfoBomb bomb : bombs) {
@@ -129,17 +176,7 @@ public class GameState {
 				break;
 			case Boom :
 				bombsSupprime.add(bomb);
-				if(this.brokable_walls[bomb.getX()+bomb.getRange()][bomb.getY()]);
-					this.brokable_walls[bomb.getX()+bomb.getRange()][bomb.getY()] = false;
-					
-				if(this.brokable_walls[bomb.getX()-bomb.getRange()][bomb.getY()]);
-					this.brokable_walls[bomb.getX()-bomb.getRange()][bomb.getY()] = false;
-					
-				if(this.brokable_walls[bomb.getX()][bomb.getY()+bomb.getRange()]);
-					this.brokable_walls[bomb.getX()][bomb.getY()+bomb.getRange()] = false;
-				
-				if(this.brokable_walls[bomb.getX()][bomb.getY()-bomb.getRange()]);
-					this.brokable_walls[bomb.getX()][bomb.getY()-bomb.getRange()] = false;
+				isLegalExplosion(bomb.getX(),bomb.getY(),bomb.getRange());
 					
 				break;
 			default :

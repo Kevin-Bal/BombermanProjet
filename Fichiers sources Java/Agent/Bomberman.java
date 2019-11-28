@@ -4,7 +4,7 @@ public class Bomberman extends Agent{
 	private int range;
 	public Bomberman(int x, int y, AgentAction agentAction, ColorAgent color) {
 		super(x, y, agentAction, 'B', color, false, false);
-		this.setRange(6);
+		this.setRange(1);
 		// TODO Auto-generated constructor stub
 	}
 	
