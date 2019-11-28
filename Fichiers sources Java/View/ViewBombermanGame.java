@@ -45,7 +45,7 @@ public class ViewBombermanGame implements Observer {
 		//Instanciation du JFrame
 		jFrame = new JFrame();
 		jFrame.setTitle("Game");
-		jFrame.setSize(new Dimension(jPanel.getTaille_x()*40+600, jPanel.getTaille_y()*40+400));
+		jFrame.setSize(new Dimension(jPanel.getTaille_x()*40+1024, jPanel.getTaille_y()*40+600));
 		Dimension windowSize = jFrame.getSize();
 		GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
 		Point centerPoint = ge.getCenterPoint();
@@ -60,7 +60,6 @@ public class ViewBombermanGame implements Observer {
 
 	@Override
 	public void update(Observable o, Object arg) {
-		System.out.println("deplacement en x : "+game.etatJeu.getBombermans().get(0).getX());
 		jPanel.setInfoGame(game.etatJeu.getMap().getStart_brokable_walls(), game.etatJeu.getAgents(), new ArrayList<InfoItem>(), new ArrayList<InfoBomb>());
 		this.jPanel.repaint();
 	}

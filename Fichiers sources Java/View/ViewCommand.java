@@ -90,8 +90,8 @@ public class ViewCommand implements Observer{
 		tours = game.getTurn(); 
 		jLabel.setText("Tours : "+Integer.toString(tours));
 		jLabel.setHorizontalAlignment(JLabel.CENTER);
-
 	}
+	
 	
 	//Ajoute les boutons et le slider à la vue
 	public void createView(){
@@ -113,7 +113,7 @@ public class ViewCommand implements Observer{
 		JButton jb_pause = new JButton(icon_pause);
 		
 		
-		//Listeners
+	//Listeners
 		//Bouton Restart
 		jb_restart.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent evenement) {
@@ -166,7 +166,7 @@ public class ViewCommand implements Observer{
 		jb_step.setEnabled(false);
 		jb_run.setEnabled(false);
 		
-	//SliderPanelButtons.setLayout(new GridLayout(1,4));
+		//SliderPanelButtons.setLayout(new GridLayout(1,4));
 		JPanel jPanelHor = new JPanel();
 		
 		jPanelSlider.setLayout(new GridLayout(1,2));
@@ -195,8 +195,6 @@ public class ViewCommand implements Observer{
 		
 	//Turn
 		jPanelSlider.add(jLabel);
-		
-		
 	}
 	
 
