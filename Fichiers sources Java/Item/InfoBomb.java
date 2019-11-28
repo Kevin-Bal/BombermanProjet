@@ -1,5 +1,4 @@
-package View;
-import Controler.StateBomb;
+package Item;
 
 public class InfoBomb {
 	

@@ -1,7 +1,5 @@
 package Agent;
 
-import Controler.AgentAction;
-
 public class Rajion extends Agent {
 
 	public Rajion(int x, int y, AgentAction agentAction) {

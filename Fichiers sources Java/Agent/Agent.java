@@ -1,7 +1,5 @@
 package Agent;
 
-import Controler.AgentAction;
-
 public class Agent {
 	
 	private int x;
@@ -9,6 +7,7 @@ public class Agent {
 	private AgentAction agentAction;
 	private ColorAgent color;
 	private char type;
+	
 	
 	private int id;
 	static int iter_id = 0;
@@ -110,7 +109,5 @@ public class Agent {
 	public void setId(int id) {
 		this.id = id;
 	}
-
-
 }
 	

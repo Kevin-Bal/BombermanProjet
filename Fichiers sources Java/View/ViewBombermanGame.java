@@ -12,6 +12,8 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
+import Item.InfoBomb;
+import Item.InfoItem;
 import Model.BombermanGame;
 
 
@@ -60,8 +62,7 @@ public class ViewBombermanGame implements Observer {
 
 	@Override
 	public void update(Observable o, Object arg) {
-		System.out.println("deplacement en x : "+game.etatJeu.getBombermans().get(0).getX());
-		jPanel.setInfoGame(game.etatJeu.getMap().getStart_brokable_walls(), game.etatJeu.getAgents(), new ArrayList<InfoItem>(), new ArrayList<InfoBomb>());
+		jPanel.setInfoGame(game.etatJeu.getMap().getStart_brokable_walls(), game.etatJeu.getAgents(), new ArrayList<InfoItem>(), game.etatJeu.getBombs());
 		this.jPanel.repaint();
 	}
 }

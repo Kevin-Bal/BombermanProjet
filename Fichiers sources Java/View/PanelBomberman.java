@@ -14,8 +14,11 @@ import java.util.ArrayList;
 import javax.swing.JPanel;
 
 import Agent.Agent;
-import Controler.AgentAction;
-import Controler.StateBomb;
+import Agent.AgentAction;
+import Item.InfoBomb;
+import Item.InfoItem;
+import Item.ItemType;
+import Item.StateBomb;
 
 /** 
  * Classe qui permet de charger d'afficher le panneau du jeu à partir d'une carte et de listes d'agents avec leurs positions.

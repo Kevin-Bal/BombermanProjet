@@ -1,7 +1,5 @@
 package Agent;
 
-import Controler.AgentAction;
-
 public class Enemy extends Agent {
 
 	public Enemy(int x, int y, AgentAction agentAction) {
