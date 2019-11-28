@@ -5,19 +5,22 @@ public class InfoBomb {
 	private int x;
 	private int y;
 	private int range;
+	private int bombermanId;
 		
 	StateBomb stateBomb;
 
-	public InfoBomb(int x, int y, int range, StateBomb stateBomb) {
+	public InfoBomb(int x, int y, int range, StateBomb stateBomb, int bId) {
 		this.x=x;
 		this.y=y;
 		this.range=range;
 		this.stateBomb = stateBomb;
+		this.setBombermanId(bId);
 
 	}
 
 
-	
+	//#########################################################################
+	//			GETTERS AND SETTERS
 	public int getX() {
 		return x;
 	}
@@ -34,19 +37,13 @@ public class InfoBomb {
 		this.y = y;
 	}
 
-
-
 	public StateBomb getStateBomb() {
 		return stateBomb;
 	}
 
-
-
 	public void setStateBomb(StateBomb stateBomb) {
 		this.stateBomb = stateBomb;
 	}
-
-
 
 	public int getRange() {
 		return range;
@@ -57,7 +54,14 @@ public class InfoBomb {
 		this.range = range;
 	}
 
+	public int getBombermanId() {
+		return bombermanId;
+	}
 
+	public void setBombermanId(int bombermanId) {
+		this.bombermanId = bombermanId;
+	}
+	//#########################################################################
 	
 }
 	

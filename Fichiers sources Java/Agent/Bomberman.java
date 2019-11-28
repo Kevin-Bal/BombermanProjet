@@ -3,17 +3,20 @@ package Agent;
 
 import java.util.ArrayList;
 
+import Item.InfoBomb;
 import Item.InfoItem;
+import Item.StateBomb;
 import View.Map;
 
 public class Bomberman extends Agent{
 	private int range;
+	int numberOfBombs;
+	
 	public Bomberman(int x, int y, AgentAction agentAction, ColorAgent color) {
 		super(x, y, agentAction, 'B', color, false, false);
 		this.setRange(1);
-		// TODO Auto-generated constructor stub
+		numberOfBombs =1;
 	}
-	
 	
 	public void executeAction() {
 		super.executeAction();
@@ -37,8 +40,6 @@ public class Bomberman extends Agent{
 			break;
 		case STOP:
 			break;
-		case PUT_BOMB:
-			break;
 		default :
 			break;
 		}
@@ -47,6 +48,7 @@ public class Bomberman extends Agent{
 		
 	}
 	
+	//Vérifie si on le déplacement est possible ou non, en fonction des murs
 	public boolean isLegalMove(Map map) {
 		int x = getX();
 		int y = getY();
@@ -66,8 +68,6 @@ public class Bomberman extends Agent{
 			break;
 		case STOP:
 			break;
-		case PUT_BOMB:
-			break;
 		default :
 			break;
 		}
@@ -85,12 +85,18 @@ public class Bomberman extends Agent{
 			if(getX()==item.getX() && getY()==item.getY()) {
 				switch(item.getType()) {
 				case FIRE_UP:
+					setRange(getRange()+1);
 					break;
 				case FIRE_DOWN:
+					if(getRange()>1)
+						setRange(getRange()-1);
 					break;
 				case BOMB_UP:
+					setNumberOfBombs(getNumberOfBombs()+1);
 					break;
 				case BOMB_DOWN:
+					if(getNumberOfBombs()>1)
+						setNumberOfBombs(getNumberOfBombs()-1);
 					break;
 				case FIRE_SUIT:
 					setInvincible(true);
@@ -107,7 +113,8 @@ public class Bomberman extends Agent{
 	}
 
 
-
+	//##########################################################
+	//				GETTERS AND SETTERS
 	public int getRange() {
 		return range;
 	}
@@ -117,4 +124,11 @@ public class Bomberman extends Agent{
 		this.range = range;
 	}
 
+	public int getNumberOfBombs() {
+		return numberOfBombs;
+	}
+	public void setNumberOfBombs(int numberOfBombs) {
+		this.numberOfBombs = numberOfBombs;
+	}
+	//##########################################################
 }
