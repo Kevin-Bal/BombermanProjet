@@ -22,19 +22,15 @@ public class ViewGame extends JFrame implements Observer{
 	
 	private BombermanGame game;
 	
-	public ViewGame(BombermanGame game, PanelCommande vc) throws Exception {
+	public ViewGame(String map, BombermanGame game, PanelCommande vc) throws Exception {
 		super();
 		
 		this.game = game;
 		this.game.addObserver(this);
 		
 		//Interface pour choisir la map
-		JFileChooser choix = new JFileChooser(new File("layouts"));
-		choix.setMultiSelectionEnabled(true) ;
-		int retour = choix.showOpenDialog(null);
-		if(retour == JFileChooser.APPROVE_OPTION){
-			this.game.setMap(new Map("./layouts/"+choix.getSelectedFile().getName()));
-		}
+		this.game.setMap(new Map(map));
+
 		
 		this.jeu_bomberman = new PanelBomberman(this.game.getMap());;
 		this.jeu_commande = vc;
