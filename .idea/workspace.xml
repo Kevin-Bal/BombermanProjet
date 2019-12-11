@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="b163a7b8-e234-446a-8418-a7c19757e2e5" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+    <list default="true" id="9a503e73-10f0-42f5-8c10-9e4fa72101a1" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Fichiers sources Java/View/Menu.java" beforeDir="false" afterPath="$PROJECT_DIR$/Fichiers sources Java/View/Menu.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -22,6 +22,8 @@
   </component>
   <component name="PropertiesComponent">
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
+    <property name="WebServerToolWindowFactoryState" value="false" />
+    <property name="aspect.path.notification.shown" value="true" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$/../Bomberman" />
     <property name="project.structure.last.edited" value="Project" />
     <property name="project.structure.proportion" value="0.0" />
@@ -64,15 +66,23 @@
   </component>
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
-      <changelist id="b163a7b8-e234-446a-8418-a7c19757e2e5" name="Default Changelist" comment="" />
+      <changelist id="9a503e73-10f0-42f5-8c10-9e4fa72101a1" name="Default Changelist" comment="" />
       <created>1576005502390</created>
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1576005502390</updated>
+      <workItem from="1576050356605" duration="899000" />
     </task>
     <servers />
   </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="1" />
+  </component>
   <component name="WindowStateProjectService">
+    <state x="590" y="201" key="#Project_Structure" timestamp="1576050215903">
+      <screen x="61" y="24" width="1859" height="1056" />
+    </state>
+    <state x="590" y="201" key="#Project_Structure/61.24.1859.1056@61.24.1859.1056" timestamp="1576050215903" />
     <state x="1301" y="637" key="#com.intellij.ide.util.projectWizard.JdkChooserPanel.MyDialog" timestamp="1576006951987">
       <screen x="0" y="0" width="2560" height="1400" />
     </state>
@@ -85,29 +95,50 @@
       <screen x="0" y="0" width="2560" height="1400" />
     </state>
     <state x="1233" y="503" key="FileChooserDialogImpl/0.0.2560.1400@0.0.2560.1400" timestamp="1576007904417" />
-    <state width="1234" height="400" key="GridCell.Tab.0.bottom" timestamp="1576009513380">
-      <screen x="0" y="0" width="2560" height="1400" />
+    <state width="1813" height="296" key="GridCell.Tab.0.bottom" timestamp="1576050985436">
+      <screen x="61" y="24" width="1859" height="1056" />
     </state>
     <state width="1234" height="400" key="GridCell.Tab.0.bottom/0.0.2560.1400@0.0.2560.1400" timestamp="1576009513380" />
-    <state width="1234" height="400" key="GridCell.Tab.0.center" timestamp="1576009513380">
-      <screen x="0" y="0" width="2560" height="1400" />
+    <state width="1813" height="296" key="GridCell.Tab.0.bottom/61.24.1859.1056@61.24.1859.1056" timestamp="1576050985436" />
+    <state width="1813" height="296" key="GridCell.Tab.0.center" timestamp="1576050985436">
+      <screen x="61" y="24" width="1859" height="1056" />
     </state>
     <state width="1234" height="400" key="GridCell.Tab.0.center/0.0.2560.1400@0.0.2560.1400" timestamp="1576009513380" />
-    <state width="1234" height="400" key="GridCell.Tab.0.left" timestamp="1576009513380">
-      <screen x="0" y="0" width="2560" height="1400" />
+    <state width="1813" height="296" key="GridCell.Tab.0.center/61.24.1859.1056@61.24.1859.1056" timestamp="1576050985436" />
+    <state width="1813" height="296" key="GridCell.Tab.0.left" timestamp="1576050985435">
+      <screen x="61" y="24" width="1859" height="1056" />
     </state>
     <state width="1234" height="400" key="GridCell.Tab.0.left/0.0.2560.1400@0.0.2560.1400" timestamp="1576009513380" />
-    <state width="1234" height="400" key="GridCell.Tab.0.right" timestamp="1576009513380">
-      <screen x="0" y="0" width="2560" height="1400" />
+    <state width="1813" height="296" key="GridCell.Tab.0.left/61.24.1859.1056@61.24.1859.1056" timestamp="1576050985435" />
+    <state width="1813" height="296" key="GridCell.Tab.0.right" timestamp="1576050985436">
+      <screen x="61" y="24" width="1859" height="1056" />
     </state>
     <state width="1234" height="400" key="GridCell.Tab.0.right/0.0.2560.1400@0.0.2560.1400" timestamp="1576009513380" />
+    <state width="1813" height="296" key="GridCell.Tab.0.right/61.24.1859.1056@61.24.1859.1056" timestamp="1576050985436" />
+    <state width="1813" height="365" key="GridCell.Tab.1.bottom" timestamp="1576050657341">
+      <screen x="61" y="24" width="1859" height="1056" />
+    </state>
+    <state width="1813" height="365" key="GridCell.Tab.1.bottom/61.24.1859.1056@61.24.1859.1056" timestamp="1576050657341" />
+    <state width="1813" height="365" key="GridCell.Tab.1.center" timestamp="1576050657341">
+      <screen x="61" y="24" width="1859" height="1056" />
+    </state>
+    <state width="1813" height="365" key="GridCell.Tab.1.center/61.24.1859.1056@61.24.1859.1056" timestamp="1576050657341" />
+    <state width="1813" height="365" key="GridCell.Tab.1.left" timestamp="1576050657341">
+      <screen x="61" y="24" width="1859" height="1056" />
+    </state>
+    <state width="1813" height="365" key="GridCell.Tab.1.left/61.24.1859.1056@61.24.1859.1056" timestamp="1576050657341" />
+    <state width="1813" height="365" key="GridCell.Tab.1.right" timestamp="1576050657341">
+      <screen x="61" y="24" width="1859" height="1056" />
+    </state>
+    <state width="1813" height="365" key="GridCell.Tab.1.right/61.24.1859.1056@61.24.1859.1056" timestamp="1576050657341" />
     <state x="933" y="323" key="SettingsEditor" timestamp="1576006690394">
       <screen x="0" y="0" width="2560" height="1400" />
     </state>
     <state x="933" y="323" key="SettingsEditor/0.0.2560.1400@0.0.2560.1400" timestamp="1576006690394" />
-    <state x="976" y="523" key="com.intellij.ide.util.TipDialog" timestamp="1576006916142">
-      <screen x="0" y="0" width="2560" height="1400" />
+    <state x="770" y="418" key="com.intellij.ide.util.TipDialog" timestamp="1576050357636">
+      <screen x="61" y="24" width="1859" height="1056" />
     </state>
     <state x="976" y="523" key="com.intellij.ide.util.TipDialog/0.0.2560.1400@0.0.2560.1400" timestamp="1576006916142" />
+    <state x="770" y="418" key="com.intellij.ide.util.TipDialog/61.24.1859.1056@61.24.1859.1056" timestamp="1576050357636" />
   </component>
 </project>

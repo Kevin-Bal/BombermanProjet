@@ -25,7 +25,7 @@ public class Menu extends JFrame {
         this.setTitle("Menu Jeu Bomberman");
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setLayout(new BorderLayout());
-        setSize(400, 500);
+        this.setLocationRelativeTo(null);
         top = new JPanel();
         top.setLayout(new GridLayout(2,1));
         game = new BombermanGame();
@@ -56,7 +56,7 @@ public class Menu extends JFrame {
             e.printStackTrace();
         }
 
-        //setSize(reviewMap.getX()*40+5*25, reviewMap.getY()*40+50);
+        setSize(map.getSizeX()*40, map.getSizeY()*40+50);
         creer_button(this);
         this.setVisible(true);
 
@@ -68,16 +68,19 @@ public class Menu extends JFrame {
             @Override
             public void actionPerformed(ActionEvent actionEvent) {
                 content = liste_lay.getSelectedItem().toString();
+                menu.remove(reviewMap);
                 try {
                     Map map = new Map(content);
                     reviewMap = new PanelBomberman(map);
+                    System.out.println(map.getSizeX()*40+" "+ map.getSizeY()*40+50);
+                    setSize(map.getSizeX()*40, map.getSizeY()*40+50);
+                    menu.add("Center",reviewMap);
+                    menu.setLocationRelativeTo(null);
+                    menu.revalidate();
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
-                setLocationRelativeTo(null);
-                System.out.println(reviewMap.getX()*40+" "+ reviewMap.getY()*40+50);
-                setSize(reviewMap.getX()*40+5*25, reviewMap.getY()*40+50);
-                revalidate();
+
             }
         });
 
