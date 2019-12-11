@@ -1,8 +1,9 @@
 package Strtegies;
 
+import Agent.Agent;
 import Agent.AgentAction;
 import Controler.GameState;
 
 public interface Strategy {
-	public AgentAction chooseAction(GameState game);
+	public AgentAction chooseAction(Agent agent, GameState game);
 }

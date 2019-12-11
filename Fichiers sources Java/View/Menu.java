@@ -56,7 +56,7 @@ public class Menu extends JFrame {
             e.printStackTrace();
         }
 
-        setSize(map.getSizeX()*40, map.getSizeY()*40+50);
+        setSize(map.getSizeX()*40, map.getSizeY()*40+100);
         creer_button(this);
         this.setVisible(true);
 
@@ -72,8 +72,7 @@ public class Menu extends JFrame {
                 try {
                     Map map = new Map(content);
                     reviewMap = new PanelBomberman(map);
-                    System.out.println(map.getSizeX()*40+" "+ map.getSizeY()*40+50);
-                    setSize(map.getSizeX()*40, map.getSizeY()*40+50);
+                    setSize(map.getSizeX()*40, map.getSizeY()*40+100);
                     menu.add("Center",reviewMap);
                     menu.setLocationRelativeTo(null);
                     menu.revalidate();
