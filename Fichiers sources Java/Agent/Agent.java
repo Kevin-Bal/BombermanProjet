@@ -18,6 +18,7 @@ public class Agent {
 	
 	private boolean isInvincible;
 	private boolean isSick;
+	private boolean isDead;
 	
 	public Agent(int x, int y, AgentAction agentAction, char type, ColorAgent color, boolean isInvincible, boolean isSick) {
 		this.x=x;
@@ -28,14 +29,13 @@ public class Agent {
 		
 		this.isInvincible = isInvincible;
 		this.isSick = isSick;
+		this.isDead=false;
 		
 		this.id = iter_id;
 		iter_id++;
 	}
 	
-	public void executeAction() {
-        System.out.println("Agent " + id + " en position (" + x + "," + y + ")");        
-    }
+	public void executeAction() {}
 
 	
 	public int getX() { return x;}
@@ -69,5 +69,12 @@ public class Agent {
 
 
 	public boolean isLegalMove(Map map) {return false;}
+
+	public boolean isDead() {return isDead;}
+	public void setDead(boolean isDead) {this.isDead = isDead;}
 }
 	
+
+
+
+

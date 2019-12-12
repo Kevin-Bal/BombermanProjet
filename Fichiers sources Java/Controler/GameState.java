@@ -9,15 +9,20 @@ import Agent.Bomberman;
 import Agent.BombermanFactory;
 import Agent.EnemyFactory;
 import Item.InfoBomb;
+import Item.InfoItem;
+import Item.ItemType;
 import Item.StateBomb;
 import Model.BombermanGame;
 import View.Map;
 
 public class GameState {
+	private int MAX_RANDOM_GENERATE_ITEM=20;
+	
 	private ArrayList<Agent> bombermans = new ArrayList<>();
 	private ArrayList<Agent> enemies = new ArrayList<>();
 	private ArrayList<InfoBomb> bombs = new ArrayList<>();
 	private ArrayList<InfoBomb> bombsSupprime = new ArrayList<>();
+	private ArrayList<InfoItem> items = new ArrayList<>();
 	private boolean brokable_walls[][];
 
 	private BombermanGame game;
@@ -31,6 +36,8 @@ public class GameState {
 		BombermanFactory bFactory = new BombermanFactory();
 		EnemyFactory eFactory = new EnemyFactory();
 		brokable_walls = map.getStart_brokable_walls();
+		items = new ArrayList<>();
+		
 		
 		for(Agent a : agent) {
 			
@@ -50,28 +57,49 @@ public class GameState {
 	    int pick = new Random().nextInt(AgentAction.values().length); 
 	    return AgentAction.values()[pick];
 	}
+	
+	public ItemType GenerateRandomItem() {
+	    int pick = new Random().nextInt(ItemType.values().length); 
+	    return ItemType.values()[pick];
+	}
 
+	public int GenerateRandomNumber() {
+	    int pick = new Random().nextInt(100); 
+	    return pick;
+	}
+	
 	public void takeTurn() {
 		takeTurnEnemies();
 		takeTurnBomberman();
+		checkIfEnemieIsOnBomberman();
 		bombTurn();
 		game.notifyObservers();
 	}
-	
+
 	public void takeTurnEnemies() {
+		ArrayList<Agent> enemieSupprime = new ArrayList<>();
 		for (Agent enemie : enemies) {
 			AgentAction aa=GenerateRandomMove();
 			enemie.setAgentAction(aa);
 			if(enemie.isLegalMove(map)) {
 				enemie.executeAction();
 			}
-		}		
+			if(enemie.isDead()==true) {
+				enemieSupprime.add(enemie);
+			}
+		}
+		//Remove dead Enemies from list
+		for(Agent a: enemieSupprime) {
+			enemies.remove(a);
+		}
 	}
 	
 	public void takeTurnBomberman() {
+		ArrayList<Agent> bombermanSupprime = new ArrayList<>();
 		for (Agent bomberman : bombermans) {
 			Bomberman b = (Bomberman) bomberman;
 			AgentAction aa = GenerateRandomMove();
+			b.checkForItem(items);
 			b.setAgentAction(aa);
 			if(b.isLegalMove(map)) {
 				b.executeAction();
@@ -86,7 +114,15 @@ public class GameState {
 					bombs.add(new InfoBomb(bomberman.getX(), bomberman.getY(), b.getRange(), StateBomb.Step1,b.getId()));
 				}
 			}
-		}		
+			if(b.isDead()==true) {
+				bombermanSupprime.add(b);
+			}
+		}
+		
+		//Remove dead Enemies from list
+		for(Agent a: bombermanSupprime) {
+			bombermans.remove(a);
+		}
 	}
 	
 	public void bombTurn() {
@@ -103,7 +139,7 @@ public class GameState {
 				break;
 			case Boom :
 				bombsSupprime.add(bomb);
-				isLegalExplosion(bomb.getX(),bomb.getY(),bomb.getRange());
+				isLegalExplosion(bomb);
 					
 				break;
 			default :
@@ -117,7 +153,43 @@ public class GameState {
 		bombsSupprime.clear();
 	}
 	
-	public void isLegalExplosion(int x, int y, int range) {
+	
+	private void checkIfEnemieIsOnBomberman() {
+		for(Agent bomberman : bombermans) {
+			for(Agent enemie : enemies) {
+				if(bomberman.getX()==enemie.getX() && bomberman.getY()==enemie.getY())
+					bomberman.setDead(true);
+			}
+		}
+	}
+	
+	/*
+	 * Check if Enemies And Bombermans Are touches by a bomb
+	 */
+	public void checkIfEnemiesAndBombermansAreTouchedByFlames(int x, int y,InfoBomb bomb) {
+		for(Agent bomberman : bombermans) {
+			if(bomberman.getX()==x && bomberman.getY()==y && !bomberman.isInvincible() && bomberman.getId()!=bomb.getBombermanId()) {
+				bomberman.setDead(true);
+			}
+			break;
+		}
+		for(Agent enemie : enemies) {
+			if(enemie.getX()==x && enemie.getY()==y && !enemie.isInvincible()) {
+				enemie.setDead(true);
+				System.out.println("true");
+				break;
+			}
+		}
+	}
+	
+	
+	/*
+	 * Check if a wall is broken or an ennemi is killed by a flame 
+	 */
+	public void isLegalExplosion(InfoBomb bomb) {
+		int x = bomb.getX();
+		int y = bomb.getY();
+		int range = bomb.getRange();
 		
 		for(int i = x; i <= x+range; i++ ) {
 			
@@ -125,10 +197,15 @@ public class GameState {
 				if(map.get_walls()[i][y]) {
 					break;
 				}
-				else if(this.brokable_walls[i][y]) {
+				if(this.brokable_walls[i][y]) {
 					this.brokable_walls[i][y] =false;
+					if(this.GenerateRandomNumber()<MAX_RANDOM_GENERATE_ITEM) {
+						ItemType type = GenerateRandomItem();
+						items.add(new InfoItem(i,y,type));
+					}
 					break;
 				}
+				checkIfEnemiesAndBombermansAreTouchedByFlames(i,y,bomb);
 			}
 			
 		}
@@ -141,8 +218,13 @@ public class GameState {
 				}
 				if(this.brokable_walls[i][y]) {
 					this.brokable_walls[i][y] =false;
+					if(this.GenerateRandomNumber()<MAX_RANDOM_GENERATE_ITEM) {
+						ItemType type = GenerateRandomItem();
+						items.add(new InfoItem(i,y,type));
+					}
 					break;
 				}
+				checkIfEnemiesAndBombermansAreTouchedByFlames(i,y,bomb);
 			}
 		}
 		
@@ -154,8 +236,13 @@ public class GameState {
 				}
 				if(this.brokable_walls[x][i]) {
 					this.brokable_walls[x][i] =false;
+					if(this.GenerateRandomNumber()<MAX_RANDOM_GENERATE_ITEM) {
+						ItemType type = GenerateRandomItem();
+						items.add(new InfoItem(x,i,type));
+					}
 					break;
 				}
+				checkIfEnemiesAndBombermansAreTouchedByFlames(x,i,bomb);
 			}
 		}
 		
@@ -167,8 +254,13 @@ public class GameState {
 				}
 				if(this.brokable_walls[x][i]) {
 					this.brokable_walls[x][i] =false;
+					if(this.GenerateRandomNumber()<MAX_RANDOM_GENERATE_ITEM) {
+						ItemType type = GenerateRandomItem();
+						items.add(new InfoItem(x,i,type));
+					}
 					break;
 				}
+				checkIfEnemiesAndBombermansAreTouchedByFlames(x,i,bomb);
 			}
 		}
 	}	
@@ -221,6 +313,18 @@ public class GameState {
 	public void setBrokable_walls(boolean[][] brokable_walls) {
 		this.brokable_walls = brokable_walls;
 	}
+
+
+	public ArrayList<InfoItem> getItems() {
+		return items;
+	}
+
+
+	public void setItems(ArrayList<InfoItem> items) {
+		this.items = items;
+	}
 	//###########################################################################
+
+
 	
 }

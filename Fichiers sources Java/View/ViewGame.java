@@ -52,7 +52,7 @@ public class ViewGame extends JFrame implements Observer{
 	@Override
 	public void update(Observable o, Object arg) {
 
-		jeu_bomberman.setInfoGame(game.etatJeu.getBrokable_walls(), game.etatJeu.getAgents(), new ArrayList<InfoItem>(), game.etatJeu.getBombs());
+		jeu_bomberman.setInfoGame(game.etatJeu.getBrokable_walls(), game.etatJeu.getAgents(), game.etatJeu.getItems(), game.etatJeu.getBombs());
 		this.jeu_bomberman.repaint();
 	}
 	

@@ -8,19 +8,19 @@ import Item.InfoItem;
 import Item.StateBomb;
 import View.Map;
 
+
 public class Bomberman extends Agent{
 	private int range;
-	int numberOfBombs;
+	private int numberOfBombs;
 	
 	public Bomberman(int x, int y, AgentAction agentAction, ColorAgent color) {
 		super(x, y, agentAction, 'B', color, false, false);
-		this.setRange(1);
+		this.setRange(15);
 		numberOfBombs =1;
 	}
 	
 	public void executeAction() {
 		super.executeAction();
-		System.out.println("My color is " + this.getColor());
 		
 		int x = getX();
 		int y = getY();
@@ -107,8 +107,10 @@ public class Bomberman extends Agent{
 				default:
 					break;
 				}
+				items.remove(i);
 			}
 		}
+		
 
 	}
 
