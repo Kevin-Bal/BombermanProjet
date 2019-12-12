@@ -1,13 +1,11 @@
-package Strtegies;
+package Strategies;
 
 import Agent.Agent;
 import Agent.AgentAction;
-import Agent.Bomberman;
 import Agent.Rajion;
 import Controler.GameState;
 
 import java.util.ArrayList;
-import java.util.Map;
 
 public class StrategyRajion implements Strategy{
 

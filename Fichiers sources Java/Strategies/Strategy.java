@@ -1,7 +1,6 @@
-package Strtegies;
+package Strategies;
 
 import Agent.Agent;
-import Agent.AgentAction;
 import Controler.GameState;
 
 public interface Strategy {
