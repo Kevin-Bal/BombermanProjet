@@ -30,7 +30,7 @@ public class PanelCommande implements Observer{
 ///////////----Attributs de la classe----///////////
 	private ControleurBombermanGame ControleurBombermanGame;
 	private JPanel jPanelView;
-	
+
 
 
 	private JPanel jPanelButtons;
@@ -79,7 +79,7 @@ public class PanelCommande implements Observer{
 	public void createView(){
 		
 	//Boutons
-		jPanelButtons.setLayout(new GridLayout(1,4));
+		jPanelButtons.setLayout(new GridLayout(1,5));
 		
 		//Bouton Restart
 		Icon icon_restart = new ImageIcon("Icones/icon_restart.png");
@@ -141,6 +141,8 @@ public class PanelCommande implements Observer{
 			}
 		});
 		jPanelButtons.add(jb_pause);
+
+
 		
 		//Default button state
 		jb_restart.setEnabled(true);
@@ -185,6 +187,15 @@ public class PanelCommande implements Observer{
 
 	public void setjPanelView(JPanel jPanelView) {
 		this.jPanelView = jPanelView;
+	}
+
+	///////////////////////GETTER SETTER///////////////////////////
+	public JPanel getjPanelButtons() {
+		return jPanelButtons;
+	}
+
+	public void setjPanelButtons(JPanel jPanelButtons) {
+		this.jPanelButtons = jPanelButtons;
 	}
 
 }
