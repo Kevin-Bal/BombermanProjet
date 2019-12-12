@@ -1,4 +1,4 @@
-package Strtegies;
+package Strategies;
 
 import Agent.Agent;
 import Agent.AgentAction;
@@ -78,44 +78,46 @@ public class StrategyBird implements Strategy {
                 int new_ec = 0;
                 int aux_ecart = 0;
                 int ecart = 40000;
-                for(Agent bomberman: bombermans) {
+                	for(Agent bomberman: bombermans) {
 
-                    int xb = bomberman.getX();
-                    int yb = bomberman.getY();
+                        int xb = bomberman.getX();
+                        int yb = bomberman.getY();
 
-                    int xecb = Math.abs(xb-x);
-                    int yecb = Math.abs(yb-y);
-                    aux_ecart = xecb + yecb;
+                        int xecb = Math.abs(xb-x);
+                        int yecb = Math.abs(yb-y);
+                        aux_ecart = xecb + yecb;
 
-                    System.out.println("Ecart : "+aux_ecart);
+                        System.out.println("Ecart : "+aux_ecart);
 
-                    if(aux_ecart < ecart) {
-                        ecart = aux_ecart;
-                        int depx = Math.abs(x+ax-xb);
-                        int depy = Math.abs(y+ay-yb);
-                        System.out.println("Ecart : "+ax+" , "+ay);
-                        new_ec = depx + depy;
+                        if(aux_ecart < ecart) {
+                            ecart = aux_ecart;
+                            int depx = Math.abs(x+ax-xb);
+                            int depy = Math.abs(y+ay-yb);
+                            System.out.println("Ecart : "+ax+" , "+ay);
+                            new_ec = depx + depy;
+                        }
+
+                        if(new_ec <= ecart){
+                            actions_strat.add(act);
+                        }
+
+                        if(ecart > 8)
+                            bird.setEndormie(true);
                     }
-
-                    if(new_ec <= ecart){
-                        actions_strat.add(act);
-                    }
-
-                    if(ecart > 8)
-                        bird.setEndormie(true);
-                }
-
-
             }
         }
 
-        //System.out.println("Taille des actions performante:"+actions_strat.size());
 
-        AgentAction act = actions_strat.get((int) (Math.random() * actions_strat.size()));
+        if(bombermans.size()>0) {
+            AgentAction act = actions_strat.get((int) (Math.random() * actions_strat.size()));
 
-        bird.setAgentAction(act);
-        if(bird.isLegalMove(game.getMap())) {
-            bird.executeAction();
+            bird.setAgentAction(act);
+            if(bird.isLegalMove(game.getMap())) {
+                bird.executeAction();
+            }
+        }
+        else {
+        	bird.setAgentAction(AgentAction.STOP);
         }
     }
 }

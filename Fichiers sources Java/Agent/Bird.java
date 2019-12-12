@@ -1,7 +1,7 @@
 package Agent;
 
-import Strtegies.Strategy;
-import Strtegies.StrategyBird;
+import Strategies.Strategy;
+import Strategies.StrategyBird;
 import View.Map;
 
 public class Bird extends Agent {
