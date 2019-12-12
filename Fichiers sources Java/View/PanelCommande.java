@@ -5,12 +5,14 @@ import java.awt.GridLayout;
 import java.awt.Point;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.File;
 import java.util.Observable;
 import java.util.Observer;
 
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
+import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -19,36 +21,34 @@ import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
 import Controler.ControleurBombermanGame;
-import Model.Game;
+import Model.BombermanGame;
 
 
-public class ViewCommand implements Observer{
+public class PanelCommande implements Observer{
 
+	
+///////////----Attributs de la classe----///////////
 	private ControleurBombermanGame ControleurBombermanGame;
-	private JFrame jFrame;
 	private JPanel jPanelView;
+
+
+
 	private JPanel jPanelButtons;
 	private JPanel jPanelSlider;
 	private JLabel jLabel;
 	int tours;
-	Game game;
+	BombermanGame game;
+////////////////////////////////////////////////////
+	
 	
 	//Constructeur + Ouvre la fenetre JFrame
-	public ViewCommand(Game game) throws Exception{
+	public PanelCommande(BombermanGame game) throws Exception{
 		tours = 0;
 		this.game=game;
-		this.ControleurBombermanGame=new ControleurBombermanGame(game, this);
 		this.game.addObserver(this);
-		
-		jFrame = new JFrame();
-		jFrame.setTitle("Game");
-		jFrame.setSize(new Dimension(600, 200));
-		Dimension windowSize = jFrame.getSize();
-		GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
-		Point centerPoint = ge.getCenterPoint();		
-		int dx = centerPoint.x - windowSize.width / 2 ;
-		int dy = centerPoint.y - windowSize.height / 2 - 350;
-		jFrame.setLocation(dx, dy);
+		 
+			
+		this.ControleurBombermanGame = new ControleurBombermanGame(game);
 		
 		//Instanciations des JPanels/JLabels
 		jPanelView = new JPanel();
@@ -64,10 +64,6 @@ public class ViewCommand implements Observer{
 		//Ajouter tous les JPanels à la Frame
 		jPanelView.add(jPanelButtons);
 		jPanelView.add(jPanelSlider);
-		jFrame.add(jPanelView);
-
-		
-		jFrame.setVisible(true);
 	}
 	
 	//afficher le compteur de tours à chaque fois qu'il est notifié
@@ -76,14 +72,14 @@ public class ViewCommand implements Observer{
 		tours = game.getTurn(); 
 		jLabel.setText("Tours : "+Integer.toString(tours));
 		jLabel.setHorizontalAlignment(JLabel.CENTER);
-
 	}
+	
 	
 	//Ajoute les boutons et le slider à la vue
 	public void createView(){
 		
 	//Boutons
-		jPanelButtons.setLayout(new GridLayout(1,4));
+		jPanelButtons.setLayout(new GridLayout(1,5));
 		
 		//Bouton Restart
 		Icon icon_restart = new ImageIcon("Icones/icon_restart.png");
@@ -99,7 +95,7 @@ public class ViewCommand implements Observer{
 		JButton jb_pause = new JButton(icon_pause);
 		
 		
-		//Listeners
+	//Listeners
 		//Bouton Restart
 		jb_restart.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent evenement) {
@@ -145,6 +141,8 @@ public class ViewCommand implements Observer{
 			}
 		});
 		jPanelButtons.add(jb_pause);
+
+
 		
 		//Default button state
 		jb_restart.setEnabled(true);
@@ -152,7 +150,7 @@ public class ViewCommand implements Observer{
 		jb_step.setEnabled(false);
 		jb_run.setEnabled(false);
 		
-	//SliderPanelButtons.setLayout(new GridLayout(1,4));
+		//SliderPanelButtons.setLayout(new GridLayout(1,4));
 		JPanel jPanelHor = new JPanel();
 		
 		jPanelSlider.setLayout(new GridLayout(1,2));
@@ -181,9 +179,23 @@ public class ViewCommand implements Observer{
 		
 	//Turn
 		jPanelSlider.add(jLabel);
-		
-		
 	}
 	
+	public JPanel getjPanelView() {
+		return jPanelView;
+	}
+
+	public void setjPanelView(JPanel jPanelView) {
+		this.jPanelView = jPanelView;
+	}
+
+	///////////////////////GETTER SETTER///////////////////////////
+	public JPanel getjPanelButtons() {
+		return jPanelButtons;
+	}
+
+	public void setjPanelButtons(JPanel jPanelButtons) {
+		this.jPanelButtons = jPanelButtons;
+	}
 
 }

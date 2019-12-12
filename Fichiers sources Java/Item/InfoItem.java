@@ -1,4 +1,5 @@
-package View;
+package Item;
+
 public class InfoItem {
 	
 	private int x;

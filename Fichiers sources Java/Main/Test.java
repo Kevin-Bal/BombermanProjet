@@ -1,20 +1,12 @@
 package Main;
 import Model.BombermanGame;
-import View.ViewBombermanGame;
-import View.ViewCommand;
+import View.Menu;
+import View.PanelCommande;
+import View.ViewGame;
 
 public class Test {
 
 	public static void main(String[] args) throws Exception {
-		BombermanGame sg = new BombermanGame();
-		ViewBombermanGame game = new ViewBombermanGame(sg);
-		ViewCommand vc = new ViewCommand(sg);
-
-		sg.init();
-		//sg.run();
-
-		
-		
+		Menu menu = new Menu();
 	}
-
 }

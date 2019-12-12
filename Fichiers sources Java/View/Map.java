@@ -1,6 +1,5 @@
 package View;
 
-
 import java.io.BufferedReader;
 import java.io.FileInputStream;
 import java.io.InputStream;
@@ -10,8 +9,8 @@ import java.io.Serializable;
 import java.util.ArrayList;
 
 import Agent.ColorAgent;
-import Agent.InfoAgent;
-import Controler.AgentAction;
+import Agent.Agent;
+import Agent.AgentAction;
 
 
 
@@ -34,7 +33,7 @@ public class Map implements Serializable {
 	private boolean walls[][];
 	private boolean start_brokable_walls[][];
 
-	private ArrayList<InfoAgent> start_agents;
+	private ArrayList<Agent> start_agents;
 	
 
 	public Map(String filename) throws Exception{
@@ -75,7 +74,7 @@ public class Map implements Serializable {
 		ColorAgent[] color = ColorAgent.values();
 		int cpt_col = 0;
 		
-		start_agents = new ArrayList<InfoAgent>();
+		start_agents = new ArrayList<Agent>();
 		
 		while ((ligne=tampon.readLine())!=null)
 		{
@@ -94,14 +93,14 @@ public class Map implements Serializable {
 				else start_brokable_walls[x][y]=false;
 				
 				if (ligne.charAt(x)=='E' || ligne.charAt(x)=='V' || ligne.charAt(x)=='R') {
-					start_agents.add(new InfoAgent(x,y,AgentAction.STOP,ligne.charAt(x),ColorAgent.DEFAULT,false,false));	
+					start_agents.add(new Agent(x,y,AgentAction.STOP,ligne.charAt(x),ColorAgent.DEFAULT,false,false));	
 				}
 				
 				if (ligne.charAt(x)=='B') {
 					ColorAgent col;
 					if (cpt_col < color.length) col = color[cpt_col];
 					else col = ColorAgent.DEFAULT;	
-					start_agents.add(new InfoAgent(x,y,AgentAction.STOP, ligne.charAt(x),col,false,false));
+					start_agents.add(new Agent(x,y,AgentAction.STOP, ligne.charAt(x),col,false,false));
 					cpt_col++;
 				}
 					
@@ -144,7 +143,7 @@ public class Map implements Serializable {
 	}
 	
 	
-	public ArrayList<InfoAgent> getStart_agents() {
+	public ArrayList<Agent> getStart_agents() {
 		return start_agents;
 	}
 

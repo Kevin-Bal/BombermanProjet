@@ -1,18 +1,17 @@
 package Controler;
 
+import Model.BombermanGame;
 import Model.Game;
-import View.ViewBombermanGame;
-import View.ViewCommand;
+import View.ViewGame;
+import View.PanelCommande;
 
 
 public class ControleurBombermanGame implements InterfaceControleur {
 
-	private Game game;
+	private BombermanGame game;
 	
-	public ControleurBombermanGame(Game g, ViewCommand vc) throws Exception {
+	public ControleurBombermanGame(BombermanGame g) throws Exception {
 		this.game=g;
-		ViewCommand viewCommand =  vc;
-		ViewBombermanGame viewJeu = new ViewBombermanGame(game); 
 	}
 	
 	@Override
