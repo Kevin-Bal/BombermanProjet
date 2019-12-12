@@ -95,4 +95,5 @@ public class StrategyRajion implements Strategy{
 			}
 		}
 	}
+
 }
