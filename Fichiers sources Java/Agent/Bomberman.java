@@ -13,10 +13,13 @@ public class Bomberman extends Agent{
 	private int range;
 	private int numberOfBombs;
 	
+	int numberOfInvincibleTurns;
+	
 	public Bomberman(int x, int y, AgentAction agentAction, ColorAgent color) {
 		super(x, y, agentAction, 'B', color, false, false);
 		this.setRange(15);
 		numberOfBombs =1;
+		numberOfInvincibleTurns=0;
 	}
 	
 	public void executeAction() {
@@ -45,6 +48,9 @@ public class Bomberman extends Agent{
 		}
 			setX(x);
 			setY(y);
+			
+			
+		IterateInvincibleCountdown();
 		
 	}
 	
@@ -100,6 +106,7 @@ public class Bomberman extends Agent{
 					break;
 				case FIRE_SUIT:
 					setInvincible(true);
+					numberOfInvincibleTurns=0;
 					break;
 				case SKULL:
 					setSick(true);
@@ -114,6 +121,13 @@ public class Bomberman extends Agent{
 
 	}
 
+
+	private void IterateInvincibleCountdown() {
+		if(numberOfInvincibleTurns>3)
+			setInvincible(false);
+		else
+			numberOfInvincibleTurns++;
+	}
 
 	//##########################################################
 	//				GETTERS AND SETTERS

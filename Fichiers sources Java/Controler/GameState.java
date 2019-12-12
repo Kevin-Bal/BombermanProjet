@@ -18,7 +18,7 @@ import Model.BombermanGame;
 import View.Map;
 
 public class GameState {
-	private int MAX_RANDOM_GENERATE_ITEM=20;
+	private int MAX_RANDOM_GENERATE_ITEM=100;
 	
 	private ArrayList<Agent> bombermans = new ArrayList<>();
 	private ArrayList<Agent> enemies = new ArrayList<>();
@@ -81,12 +81,12 @@ public class GameState {
 	public void takeTurnEnemies() {
 		ArrayList<Agent> enemieSupprime = new ArrayList<>();
 		for (Agent enemie : enemies) {
-			if (enemie instanceof Bird)
-				((Bird) enemie).getStrategyBird().chooseAction(enemie, this);
-
-			if (enemie instanceof Rajion) {
-				((Rajion) enemie).getStrategyRajion().chooseAction(enemie, this);
-			} else {
+			if(enemie instanceof Bird)
+				((Bird) enemie).getStrategyBird().chooseAction(enemie,this);
+			else if(enemie instanceof Rajion){
+					((Rajion) enemie).getStrategyRajion().chooseAction(enemie,this);
+			}
+			else{
 				AgentAction aa = GenerateRandomMove();
 				enemie.setAgentAction(aa);
 				if (enemie.isLegalMove(map)) {

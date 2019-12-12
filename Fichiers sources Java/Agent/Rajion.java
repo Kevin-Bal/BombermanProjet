@@ -1,5 +1,6 @@
 package Agent;
 
+import Strategies.StrategyBird;
 import Strategies.StrategyRajion;
 import View.Map;
 
