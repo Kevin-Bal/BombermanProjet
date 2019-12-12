@@ -3,6 +3,7 @@ package Strtegies;
 import Agent.Agent;
 import Agent.AgentAction;
 import Agent.Bomberman;
+import Agent.Rajion;
 import Controler.GameState;
 
 import java.util.ArrayList;
@@ -10,98 +11,87 @@ import java.util.Map;
 
 public class StrategyRajion implements Strategy{
 
+	private ArrayList<AgentAction> actions = new ArrayList<>();
+
 	@Override
-	public AgentAction chooseAction(Agent agent, GameState game) {
+	public void chooseAction(Agent agent, GameState game) {
 
-		ArrayList<AgentAction> listAction = new ArrayList<AgentAction>();
 		ArrayList<Agent> bombermans = game.getBombermans();
+		ArrayList<AgentAction> actions_strat = new ArrayList<>() ;
+		actions.add(AgentAction.MOVE_DOWN);
+		actions.add(AgentAction. MOVE_LEFT);
+		actions.add(AgentAction.STOP);
+		actions.add(AgentAction.MOVE_RIGHT);
+		actions.add(AgentAction.MOVE_UP);
 
-		int x = agent.getX();
-		int y = agent.getY();
+		Rajion rajion = (Rajion) agent;
+
+		AgentAction action = null;;
+
+		int x = rajion.getX();
+		int y = rajion.getY();
 
 
-		//liste de bombermans triée du plus proche au plus lointain par rapport au bomberman
-		ArrayList<Agent> bbms_proche = new ArrayList<>();
-		if (bombermans.size() != 0) bbms_proche.add(bombermans.get(0));
-		else bbms_proche.add(bombermans.get(1));
+		for(AgentAction act : actions){
+			int ax = 0;
+			int ay = 0;
 
-		//Gère les bomberman mort dans le jeu
-		/*for (Agent bomberman: bombermans) {
-
-			if( !bomberman.isDead()) {
-
-				int bbm_x = bomberman.getX();
-				int bbm_y = bomberman.getY();
-
-				Bomberman bbm_p =  bbms_proche.get(0);
-
-				int bbm_px = bbm_p.getX();
-				int bbm_py = bbm_p.getY();
-
-				if( Math.abs(bbm_x - x) +  Math.abs(bbm_y - y)  <  Math.abs(bbm_px - x) +  Math.abs(bbm_py - y))
-					bbms_proche.set(0,bomberman);
-				else bbms_proche.add(bomberman);
+			switch(act) {
+				case MOVE_UP:
+					ay--;
+					break;
+				case MOVE_DOWN:
+					ay++;
+					break;
+				case MOVE_LEFT:
+					ax--;
+					break;
+				case MOVE_RIGHT:
+					ay++;
+					break;
+				case STOP:
+					break;
+				default :
+					break;
 			}
 
-		}*/
+			int new_ec = 0;
+			int aux_ecart = 0;
+			int ecart = 40000;
+			for(Agent bomberman: bombermans) {
 
-		for (Agent bomberman: bombermans) {
+				int xb = bomberman.getX();
+				int yb = bomberman.getY();
 
+				int xecb = Math.abs(xb-x);
+				int yecb = Math.abs(yb-y);
+				aux_ecart = xecb + yecb;
 
-			int bbm_x = bomberman.getX();
-			int bbm_y = bomberman.getY();
+				System.out.println("Ecart : "+aux_ecart);
 
-			int portee = 100;
-
-			if ( (bbm_x >= x-portee) & (bbm_x <= x+portee)  & (bbm_y >= y-portee) & (bbm_y <= y+portee)){
-
-
-				if( (bbm_x > x) & (bbm_x <= x + portee) ){
-					if (getEtat().isLegalMove(new AgentAction(Map.EAST),getAgent())) return new AgentAction(Map.EAST);
-					else if(getEtat().isLegalMove(new AgentAction(Map.NORTH),getAgent())) return new AgentAction(Map.NORTH);
-					else if(getEtat().isLegalMove(new AgentAction(Map.SOUTH),getAgent())) return new AgentAction(Map.SOUTH);
-					else if(getEtat().isLegalMove(new AgentAction(Map.WEST),getAgent())) return new AgentAction(Map.WEST);
-
-					else return new AgentAction(Map.STOP);
+				if(aux_ecart < ecart) {
+					ecart = aux_ecart;
+					int depx = Math.abs(x+ax-xb);
+					int depy = Math.abs(y+ay-yb);
+					System.out.println("Ecart : "+ax+" , "+ay);
+					new_ec = depx + depy;
 				}
 
-				if( (bbm_x < x) & (bbm_x >= x - portee) ){
-					if (getEtat().isLegalMove(new AgentAction(Map.WEST),getAgent())) return new AgentAction(Map.WEST);
-					else if(getEtat().isLegalMove(new AgentAction(Map.SOUTH),getAgent())) return new AgentAction(Map.SOUTH);
-					else if(getEtat().isLegalMove(new AgentAction(Map.NORTH),getAgent())) return new AgentAction(Map.NORTH);
-					else if(getEtat().isLegalMove(new AgentAction(Map.EAST),getAgent())) return new AgentAction(Map.EAST);
-					else return new AgentAction(Map.STOP);
-				}
-
-				if(	(bbm_y < y)& (bbm_y >= y - portee)){
-					if (getEtat().isLegalMove(new AgentAction(Map.NORTH),getAgent())) return new AgentAction(Map.NORTH);
-					else if(getEtat().isLegalMove(new AgentAction(Map.WEST),getAgent())) return new AgentAction(Map.WEST);
-					else if(getEtat().isLegalMove(new AgentAction(Map.EAST),getAgent())) return new AgentAction(Map.EAST);
-					else if(getEtat().isLegalMove(new AgentAction(Map.SOUTH),getAgent())) return new AgentAction(Map.SOUTH);
-					else return new AgentAction(Map.STOP);
-				}
-
-				if(	(bbm_y > y)& (bbm_y <= y + portee)){
-					if (getEtat().isLegalMove(new AgentAction(Map.SOUTH),getAgent())) return new AgentAction(Map.SOUTH);
-					else if(getEtat().isLegalMove(new AgentAction(Map.EAST),getAgent())) return new AgentAction(Map.EAST);
-					else if(getEtat().isLegalMove(new AgentAction(Map.WEST),getAgent())) return new AgentAction(Map.WEST);
-					else if(getEtat().isLegalMove(new AgentAction(Map.NORTH),getAgent())) return new AgentAction(Map.NORTH);
-					else return new AgentAction(Map.STOP);
+				if(new_ec <= ecart){
+					actions_strat.add(act);
 				}
 			}
 		}
 
+		//System.out.println("Taille des actions performante:"+actions_strat.size());
 
-		//Choisi une action aléatoire
-		for(int i=0;i<=5;i++) {
-			if (getEtat().isLegalMove(new AgentAction(i), getAgent()))
-				listAction.add(new AgentAction(i));
+		AgentAction act = actions_strat.get((int) (Math.random() * actions_strat.size()));
+
+		rajion.setAgentAction(act);
+		if(rajion.isLegalMove(game.getMap())) {
+			rajion.executeAction();
 		}
-		if(listAction.size() == 0) return new AgentAction(Map.STOP);
-		else return(listAction.get((int)(Math.random()*listAction.size())));
-		//return new AgentAction(Map.STOP);
-		return AgentAction.MOVE_DOWN;
-
 	}
+
 
 }

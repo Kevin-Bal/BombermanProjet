@@ -1,10 +1,14 @@
 package Agent;
 
+import Strtegies.Strategy;
+import Strtegies.StrategyBird;
 import View.Map;
 
 public class Bird extends Agent {
 
 	private boolean endormie = true;
+
+	private StrategyBird strategyBird = new StrategyBird();
 
 	public Bird(int x, int y, AgentAction agentAction) {
 		super(x, y, agentAction, 'V', ColorAgent.DEFAULT, false, false);
@@ -12,23 +16,22 @@ public class Bird extends Agent {
 
 	public void executeAction() {
 		super.executeAction();
-		System.out.println("My color is " + this.getColor());
 		
 		int x = getX();
 		int y = getY();
 		
 		switch(getAgentAction()) {
 		case MOVE_UP: 
-			x --;
+			y --;
 			break;
 		case MOVE_DOWN:
-			x ++;
+			y ++;
 			break;
 		case MOVE_LEFT:
-			y--;
+			x--;
 			break;
 		case MOVE_RIGHT:
-			y++;
+			x++;
 			break;
 		case STOP:
 			break;
@@ -48,16 +51,16 @@ public class Bird extends Agent {
 		
 		switch(getAgentAction()) {
 		case MOVE_UP: 
-			x --;
+			y --;
 			break;
 		case MOVE_DOWN:
-			x ++;
+			y ++;
 			break;
 		case MOVE_LEFT:
-			y--;
+			x--;
 			break;
 		case MOVE_RIGHT:
-			y++;
+			x++;
 			break;
 		case STOP:
 			break;
@@ -66,13 +69,13 @@ public class Bird extends Agent {
 		default :
 			break;
 		}
-		
-		if(x<map.getSizeX() && x>0 && y<map.getSizeY() && y>0) {
-			System.out.println(map.getSizeX());
+
+		if(map.getStart_brokable_walls()[x][y] )
 			return true;
+		else if(map.get_walls()[x][y] ){
+			return false;
 		}
-			
-		return false;
+		else return true;
 		
 	}
 
@@ -82,6 +85,14 @@ public class Bird extends Agent {
 
 	public void setEndormie(boolean endormie) {
 		this.endormie = endormie;
+	}
+
+	public StrategyBird getStrategyBird() {
+		return strategyBird;
+	}
+
+	public void setStrategyBird(StrategyBird strategyBird) {
+		this.strategyBird = strategyBird;
 	}
 
 }

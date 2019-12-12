@@ -20,7 +20,7 @@ public class Bomberman extends Agent{
 	
 	public void executeAction() {
 		super.executeAction();
-		System.out.println("My color is " + this.getColor());
+		//System.out.println("My color is " + this.getColor());
 		
 		int x = getX();
 		int y = getY();

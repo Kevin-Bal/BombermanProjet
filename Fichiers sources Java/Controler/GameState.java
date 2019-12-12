@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.Random;
 
 import Agent.Agent;
+import Agent.Bird;
+import Agent.Rajion;
 import Agent.AgentAction;
 import Agent.Bomberman;
 import Agent.BombermanFactory;
@@ -60,11 +62,20 @@ public class GameState {
 	
 	public void takeTurnEnemies() {
 		for (Agent enemie : enemies) {
-			AgentAction aa=GenerateRandomMove();
-			enemie.setAgentAction(aa);
-			if(enemie.isLegalMove(map)) {
-				enemie.executeAction();
+			if(enemie instanceof Bird){
+				((Bird) enemie).getStrategyBird().chooseAction(enemie,this);
 			}
+			if(enemie instanceof Rajion){
+				((Rajion) enemie).getStrategyRajion().chooseAction(enemie,this);
+			}
+			else{
+				AgentAction aa = GenerateRandomMove();
+				enemie.setAgentAction(aa);
+				if(enemie.isLegalMove(map)) {
+					enemie.executeAction();
+				}
+			}
+
 		}		
 	}
 	

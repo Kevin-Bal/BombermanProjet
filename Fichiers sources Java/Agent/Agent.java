@@ -34,7 +34,7 @@ public class Agent {
 	}
 	
 	public void executeAction() {
-        System.out.println("Agent " + id + " en position (" + x + "," + y + ")");        
+
     }
 
 	
