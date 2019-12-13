@@ -23,5 +23,5 @@ Projet de design pattern
    - [ ] Penser à remettre les murs en rechargement
    - [ ] Firesuit limiter le nombre de tour
    - [ ] Perceptron 
-   - [ ] Jeu qui rest actif
+   - [ ] Jeu qui rest actif apres reload
    
