@@ -1,7 +1,7 @@
 package Agent;
 
-import Strtegies.StrategyBird;
-import Strtegies.StrategyRajion;
+import Strategies.StrategyBird;
+import Strategies.StrategyRajion;
 import View.Map;
 
 public class Rajion extends Agent {
