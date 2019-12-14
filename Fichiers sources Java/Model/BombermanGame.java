@@ -5,23 +5,37 @@ import View.Map;
 
 public class BombermanGame extends Game{
 
+	private boolean endgame;
 	private Map map;
+	private GameMode gameMode;
 	public GameState etatJeu;
 	
 	@Override
 	public boolean gameContinue() {
 		//System.out.println("Jeu en cours...");
-		return this.getMaxturn()>this.getTurn();
+		//Trouver le mode de jeu (PVP/PVE) au début de la partie pour déterminer la fin, créer un énum GameMode
+		
+		if (this.getMaxturn()>this.getTurn() && etatJeu.getBombermans().size()!=0) {
+			if(gameMode==GameMode.PVE && etatJeu.getAgents().size()<=1) {
+				return false;
+			}
+			if(gameMode==GameMode.PVP && etatJeu.getBombermans().size()==1) {
+				return false;
+			}
+			
+			return true;
+		}
+		return false;
 	}
 
 	@Override
 	public void gameOver() {		
-		//System.out.println("Fin du jeu");
+		System.out.println("Fin du jeu");
+		endgame=true;
 	}
 
 	@Override
 	public void takeTurn() {		
-		//System.out.println("Tour"+ this.getTurn()+"du jeu en cours");
 		this.etatJeu.takeTurn();
 		this.notifyObservers();	
 	}
@@ -29,17 +43,26 @@ public class BombermanGame extends Game{
 	@Override
 	public void initializeGame() {
 		this.etatJeu = new GameState(this.map,this);
+		findGameMode();
+		System.out.println(gameMode);
 	}
 
+	public void findGameMode() {
+		if(etatJeu.getBombermans().size()==1)
+			gameMode=GameMode.PVE;
+		else
+			gameMode=GameMode.PVP;
+	}
 	
 	//################################################################################
-	//			Getters and Setters
-	public Map getMap() {
-		return map;
-	}
-
-	public void setMap(Map map) {
-		this.map = map;
-	}
+	//			GETTERS AND SETTERS
+	public Map getMap() { return map; }
+	public void setMap(Map map) { this.map = map; }
+	public boolean isEndgame() { return endgame; }
+	public void setEndgame(boolean endgame) { this.endgame = endgame; }
+	public GameMode getGameMode() { return gameMode;}
+	public void setGameMode(GameMode gameMode) { this.gameMode = gameMode;}
+	public GameState getEtatJeu() { return etatJeu;	}
+	public void setEtatJeu(GameState etatJeu) { this.etatJeu = etatJeu; }
 	//################################################################################
 }

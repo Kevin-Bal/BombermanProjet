@@ -18,9 +18,10 @@ import Model.BombermanGame;
 import View.Map;
 
 public class GameState {
-	private static int MAX_RANDOM_GENERATE_ITEM=25;
-
+	private int MAX_RANDOM_GENERATE_ITEM=20;
+	
 	private ArrayList<Agent> bombermans = new ArrayList<>();
+	private ArrayList<Agent> deadBombermans = new ArrayList<>();
 	private ArrayList<Agent> enemies = new ArrayList<>();
 	private ArrayList<InfoBomb> bombs = new ArrayList<>();
 	private ArrayList<InfoBomb> bombsSupprime = new ArrayList<>();
@@ -53,22 +54,6 @@ public class GameState {
 		}
 	}
 	
-	
-	public AgentAction GenerateRandomMove() {
-	    int pick = new Random().nextInt(AgentAction.values().length); 
-	    return AgentAction.values()[pick];
-	}
-	
-	public ItemType GenerateRandomItem() {
-	    int pick = new Random().nextInt(ItemType.values().length); 
-	    return ItemType.values()[pick];
-	}
-
-	public int GenerateRandomNumber() {
-	    int pick = new Random().nextInt(100); 
-	    return pick;
-	}
-	
 	public void takeTurn() {
 		takeTurnEnemies();
 		takeTurnBomberman();
@@ -77,13 +62,21 @@ public class GameState {
 		game.notifyObservers();
 	}
 
+	
+	
+	//###########################################################################
+	//				TAKE TURNS
+	
+	/*
+	 * Au tour de l'ennemie de jouer
+	 */
 	public void takeTurnEnemies() {
 		ArrayList<Agent> enemieSupprime = new ArrayList<>();
 		for (Agent enemie : enemies) {
 			if(enemie instanceof Bird)
 				((Bird) enemie).getStrategyBird().chooseAction(enemie,this);
 			else if(enemie instanceof Rajion){
-					((Rajion) enemie).getStrategyRajion().chooseAction(enemie,this);
+				((Rajion) enemie).getStrategyRajion().chooseAction(enemie,this);
 			}
 			else{
 				AgentAction aa = GenerateRandomMove();
@@ -105,32 +98,22 @@ public class GameState {
         
 	}
 	
+	/*
+	 * Au tour des bombermans de jouer
+	 */
 	public void takeTurnBomberman() {
 		ArrayList<Agent> bombermanSupprime = new ArrayList<>();
 		for (Agent bomberman : bombermans) {
 
 			Bomberman b = (Bomberman) bomberman;
-			AgentAction aa = GenerateRandomMove();
 			b.checkForItem(items);
-			b.setAgentAction(aa);
 
 			b.getStrat().chooseAction(b,this);
-
-			if(b.isLegalMove(map)) {
-				b.executeAction();
-			}
-			if(aa == AgentAction.PUT_BOMB) {
-				int nbOfBombsPerBomberman = 0;
-				for(InfoBomb bomb : bombs) {
-					if(b.getId()==bomb.getBombermanId())
-						nbOfBombsPerBomberman++;
-				}
-				if(b.getNumberOfBombs()>nbOfBombsPerBomberman) {
-					bombs.add(new InfoBomb(bomberman.getX(), bomberman.getY(), b.getRange(), StateBomb.Step1,b.getId()));
-				}
-			}
+				
+			//Si il est mort
 			if(b.isDead()==true) {
 				bombermanSupprime.add(b);
+				deadBombermans.add(b);
 			}
 		}
 		
@@ -168,7 +151,8 @@ public class GameState {
 		bombsSupprime.clear();
 	}
 	
-	
+	//###########################################################################
+	//				CHECKS
 	private void checkIfEnemieIsOnBomberman() {
 		for(Agent bomberman : bombermans) {
 			for(Agent enemie : enemies) {
@@ -177,29 +161,28 @@ public class GameState {
 			}
 		}
 	}
-	
-	/*
-	 * Check if Enemies And Bombermans Are touches by a bomb
-	 */
 	public void checkIfEnemiesAndBombermansAreTouchedByFlames(int x, int y,InfoBomb bomb) {
 		for(Agent bomberman : bombermans) {
-			if(bomberman.getX()==x && bomberman.getY()==y && !bomberman.isInvincible() && bomberman.getId()!=bomb.getBombermanId()) {
+			if(bomberman.getX()==x && bomberman.getY()==y && !bomberman.isInvincible() && bomberman.getId()!=bomb.getBomberman().getId()) {
 				bomberman.setDead(true);
+				System.out.print(bomb.getBomberman().getId()+"	"+bomb.getBomberman().score);
+				bomb.getBomberman().score += 200;
+				System.out.println("	"+bomb.getBomberman().score);
 			}
 			break;
 		}
 		for(Agent enemie : enemies) {
 			if(enemie.getX()==x && enemie.getY()==y && !enemie.isInvincible()) {
 				enemie.setDead(true);
-				System.out.println("true");
+				bomb.getBomberman().score += 100;
 				break;
 			}
 		}
 	}
-	
-	
+	//###########################################################################
+	//				IS LEGAL EXPLOSION
 	/*
-	 * Check if a wall is broken or an ennemi is killed by a flame 
+	 * Check if a wall is broken or an enemy is killed by a flame 
 	 */
 	public void isLegalExplosion(InfoBomb bomb) {
 		int x = bomb.getX();
@@ -281,6 +264,22 @@ public class GameState {
 	}	
 	
 	//###########################################################################
+	//				GENERATE RANDOM
+	public AgentAction GenerateRandomMove() {
+	    int pick = new Random().nextInt(AgentAction.values().length); 
+	    return AgentAction.values()[pick];
+	}
+	
+	public ItemType GenerateRandomItem() {
+	    int pick = new Random().nextInt(ItemType.values().length); 
+	    return ItemType.values()[pick];
+	}
+
+	public int GenerateRandomNumber() {
+	    int pick = new Random().nextInt(100); 
+	    return pick;
+	}
+	//###########################################################################
 	//				GETTERS AND SETTERS
 	public ArrayList<Agent> getBombermans() {
 		return bombermans;
@@ -338,6 +337,16 @@ public class GameState {
 	public void setItems(ArrayList<InfoItem> items) {
 		this.items = items;
 	}
+
+	public ArrayList<Agent> getDeadBombermans() {
+		return deadBombermans;
+	}
+
+	public void setDeadBombermans(ArrayList<Agent> deadBombermans) {
+		this.deadBombermans = deadBombermans;
+	}
+	
+	
 	//###########################################################################
 
 

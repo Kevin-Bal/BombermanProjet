@@ -13,14 +13,20 @@ import View.Map;
 public class Bomberman extends Agent{
 	private int range;
 	private int numberOfBombs;
-	private StrategyBomberman strat = new StrategyBomberman();
+	public int score;
+  private StrategyBomberman strat = new StrategyBomberman();
+	
+	//Variables Iterations
 	int numberOfInvincibleTurns;
+	int numberOfSickTurns;
 	
 	public Bomberman(int x, int y, AgentAction agentAction, ColorAgent color) {
 		super(x, y, agentAction, 'B', color, false, false);
 		this.setRange(1);
 		numberOfBombs =1;
 		numberOfInvincibleTurns=0;
+		numberOfSickTurns=0;
+		score=0;
 	}
 	
 	public void executeAction() {
@@ -50,13 +56,16 @@ public class Bomberman extends Agent{
 			setX(x);
 			setY(y);
 			
-			
+		
 		IterateInvincibleCountdown();
+		IterateSickCountdown();
 		
 	}
 	
-	//Vérifie si on le déplacement est possible ou non, en fonction des murs
-	public boolean isLegalMove(Map map) {
+	/*
+	 * Vérifie si on le déplacement est possible ou non, en fonction des murs
+	 */
+	public boolean isLegalMove(Map map, ArrayList<Agent> bombermans) {
 		int x = getX();
 		int y = getY();
 		
@@ -81,11 +90,20 @@ public class Bomberman extends Agent{
 		
 		if(map.get_walls()[x][y] || map.getStart_brokable_walls()[x][y] )
 			return false;
-		else return true;
+		else {
+			for(Agent b:bombermans) {
+				if(b.getX()==x && b.getY()==y)
+					return false;
+			}
+			
+			return true;
+		}
 	}
 	
 	
-	//Vérifie si le perso entre en contact avec un item
+	/*
+	 * Vérifie si le perso entre en contact avec un item
+	 */
 	public void checkForItem(ArrayList<InfoItem> items) {
 		for(int i=0; i<items.size();++i) {
 			InfoItem item = items.get(i);
@@ -107,10 +125,14 @@ public class Bomberman extends Agent{
 					break;
 				case FIRE_SUIT:
 					setInvincible(true);
+					setSick(false);
 					numberOfInvincibleTurns=0;
 					break;
 				case SKULL:
-					setSick(true);
+					if(isInvincible()) {
+						setSick(true);
+						numberOfSickTurns=0;
+					}	
 					break;
 				default:
 					break;
@@ -123,13 +145,21 @@ public class Bomberman extends Agent{
 	}
 
 
+	//##########################################################
+	//				COUNTDOWNS
 	private void IterateInvincibleCountdown() {
-		if(numberOfInvincibleTurns>3)
+		if(numberOfInvincibleTurns>4)
 			setInvincible(false);
 		else
 			numberOfInvincibleTurns++;
 	}
 
+	private void IterateSickCountdown() {
+		if(numberOfSickTurns>4)
+			setSick(false);
+		else
+			numberOfSickTurns++;
+	}
 	//##########################################################
 	//				GETTERS AND SETTERS
 	public int getRange() {
