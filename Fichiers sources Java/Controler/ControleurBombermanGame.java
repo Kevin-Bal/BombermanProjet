@@ -2,6 +2,7 @@ package Controler;
 
 import Model.BombermanGame;
 import Model.Game;
+import View.Map;
 import View.ViewGame;
 import View.PanelCommande;
 
@@ -36,6 +37,13 @@ public class ControleurBombermanGame implements InterfaceControleur {
 	
 	@Override
 	public void restart() {
+		Map map = null;
+		try {
+			map = new Map(game.getMap().getFilename());
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		game.setMap(map);
 		game.init();
 		game.launch();
 	}

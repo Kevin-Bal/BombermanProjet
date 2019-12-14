@@ -39,7 +39,6 @@ public class GameState {
 		BombermanFactory bFactory = new BombermanFactory();
 		EnemyFactory eFactory = new EnemyFactory();
 		brokable_walls = map.getStart_brokable_walls();
-		items = new ArrayList<>();
 		
 		
 		for(Agent a : agent) {
@@ -105,24 +104,12 @@ public class GameState {
 	public void takeTurnBomberman() {
 		ArrayList<Agent> bombermanSupprime = new ArrayList<>();
 		for (Agent bomberman : bombermans) {
+
 			Bomberman b = (Bomberman) bomberman;
 			b.checkForItem(items);
-			AgentAction aa = GenerateRandomMove();
-			b.setAgentAction(aa);
-			if(b.isLegalMove(map,bombermans)) {
-				b.executeAction();
-			}
-			//Si il pose une bombe, on l'ajoute à la liste et on la lie au bomberman
-			if(aa == AgentAction.PUT_BOMB) {
-				int nbOfBombsPerBomberman = 0;
-				for(InfoBomb bomb : bombs) {
-					if(b.getId()==bomb.getBomberman().getId())
-						nbOfBombsPerBomberman++;
-				}
-				if(b.getNumberOfBombs()>nbOfBombsPerBomberman) {
-					bombs.add(new InfoBomb(bomberman.getX(), bomberman.getY(), b.getRange(), StateBomb.Step1,b));
-				}
-			}
+
+			b.getStrat().chooseAction(b,this);
+				
 			//Si il est mort
 			if(b.isDead()==true) {
 				bombermanSupprime.add(b);
@@ -201,7 +188,7 @@ public class GameState {
 		int x = bomb.getX();
 		int y = bomb.getY();
 		int range = bomb.getRange();
-		
+
 		for(int i = x; i <= x+range; i++ ) {
 			
 			if( i > 0 && i < map.getSizeX() ) {
@@ -209,7 +196,7 @@ public class GameState {
 					break;
 				}
 				if(this.brokable_walls[i][y]) {
-					this.brokable_walls[i][y] =false;
+					this.brokable_walls[i][y] = false;
 					if(this.GenerateRandomNumber()<MAX_RANDOM_GENERATE_ITEM) {
 						ItemType type = GenerateRandomItem();
 						items.add(new InfoItem(i,y,type));
@@ -242,7 +229,7 @@ public class GameState {
 		for(int i = y; i <= y+range; i++ ) {
 			
 			if( i > 0 && i < map.getSizeY() ) {
-				if(map.get_walls()[i][y]) {
+				if(map.get_walls()[x][i]) {
 					break;
 				}
 				if(this.brokable_walls[x][i]) {
@@ -260,7 +247,7 @@ public class GameState {
 		for(int i = y; i >= y-range; i-- ) {
 			
 			if( i > 0 && i < map.getSizeY() ) {
-				if(map.get_walls()[i][y]) {
+				if(map.get_walls()[x][i]) {
 					break;
 				}
 				if(this.brokable_walls[x][i]) {

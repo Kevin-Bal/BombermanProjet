@@ -4,7 +4,7 @@ import Agent.Agent;
 import Agent.AgentAction;
 import Controler.GameState;
 import Agent.Bird;
-import com.sun.corba.se.spi.legacy.connection.GetEndPointInfoAgainException;
+//import com.sun.corba.se.spi.legacy.connection.GetEndPointInfoAgainException;
 
 import java.util.ArrayList;
 import java.util.Random;

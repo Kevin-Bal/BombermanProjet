@@ -42,7 +42,8 @@ public class ViewGame extends JFrame implements Observer{
 		creerBouton(this);
 		
 		this.setTitle("Game");
-		this.setSize(new Dimension(this.game.getMap().getSizeX()*50, this.game.getMap().getSizeY()*40+250));
+		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		this.setSize(new Dimension(this.game.getMap().getSizeX()*30, this.game.getMap().getSizeY()*20+250));
 		Dimension windowSize = jeu_bomberman.getSize();
 		this.setLocationRelativeTo(null);
 		this.setLayout(new BorderLayout());
