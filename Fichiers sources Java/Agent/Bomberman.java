@@ -17,7 +17,7 @@ public class Bomberman extends Agent{
 	
 	public Bomberman(int x, int y, AgentAction agentAction, ColorAgent color) {
 		super(x, y, agentAction, 'B', color, false, false);
-		this.setRange(15);
+		this.setRange(1);
 		numberOfBombs =1;
 		numberOfInvincibleTurns=0;
 	}

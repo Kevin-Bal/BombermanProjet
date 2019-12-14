@@ -18,8 +18,8 @@ import Model.BombermanGame;
 import View.Map;
 
 public class GameState {
-	private int MAX_RANDOM_GENERATE_ITEM=100;
-	
+	private static int MAX_RANDOM_GENERATE_ITEM=25;
+
 	private ArrayList<Agent> bombermans = new ArrayList<>();
 	private ArrayList<Agent> enemies = new ArrayList<>();
 	private ArrayList<InfoBomb> bombs = new ArrayList<>();
@@ -38,7 +38,6 @@ public class GameState {
 		BombermanFactory bFactory = new BombermanFactory();
 		EnemyFactory eFactory = new EnemyFactory();
 		brokable_walls = map.getStart_brokable_walls();
-		items = new ArrayList<>();
 		
 		
 		for(Agent a : agent) {
@@ -202,7 +201,7 @@ public class GameState {
 		int x = bomb.getX();
 		int y = bomb.getY();
 		int range = bomb.getRange();
-		
+
 		for(int i = x; i <= x+range; i++ ) {
 			
 			if( i > 0 && i < map.getSizeX() ) {
@@ -210,7 +209,7 @@ public class GameState {
 					break;
 				}
 				if(this.brokable_walls[i][y]) {
-					this.brokable_walls[i][y] =false;
+					this.brokable_walls[i][y] = false;
 					if(this.GenerateRandomNumber()<MAX_RANDOM_GENERATE_ITEM) {
 						ItemType type = GenerateRandomItem();
 						items.add(new InfoItem(i,y,type));
@@ -265,6 +264,7 @@ public class GameState {
 					break;
 				}
 				if(this.brokable_walls[x][i]) {
+					System.out.println("test vers le haut : "+bomb.getBombermanId());
 					this.brokable_walls[x][i] =false;
 					if(this.GenerateRandomNumber()<MAX_RANDOM_GENERATE_ITEM) {
 						ItemType type = GenerateRandomItem();

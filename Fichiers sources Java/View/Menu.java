@@ -25,7 +25,7 @@ public class Menu extends JFrame {
         this.setTitle("Menu Jeu Bomberman");
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setLayout(new BorderLayout());
-        this.setLocationRelativeTo(null);
+
         top = new JPanel();
         top.setLayout(new GridLayout(2,1));
         game = new BombermanGame();
@@ -56,7 +56,8 @@ public class Menu extends JFrame {
             e.printStackTrace();
         }
 
-        setSize(map.getSizeX()*40, map.getSizeY()*40+100);
+        setSize(map.getSizeX()*30, map.getSizeY()*20+100);
+        this.setLocationRelativeTo(null);
         creer_button(this);
         this.setVisible(true);
 
