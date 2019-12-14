@@ -108,10 +108,14 @@ public class GameState {
 	public void takeTurnBomberman() {
 		ArrayList<Agent> bombermanSupprime = new ArrayList<>();
 		for (Agent bomberman : bombermans) {
+
 			Bomberman b = (Bomberman) bomberman;
 			AgentAction aa = GenerateRandomMove();
 			b.checkForItem(items);
 			b.setAgentAction(aa);
+
+			b.getStrat().chooseAction(b,this);
+
 			if(b.isLegalMove(map)) {
 				b.executeAction();
 			}
@@ -242,7 +246,7 @@ public class GameState {
 		for(int i = y; i <= y+range; i++ ) {
 			
 			if( i > 0 && i < map.getSizeY() ) {
-				if(map.get_walls()[i][y]) {
+				if(map.get_walls()[x][i]) {
 					break;
 				}
 				if(this.brokable_walls[x][i]) {
@@ -260,11 +264,10 @@ public class GameState {
 		for(int i = y; i >= y-range; i-- ) {
 			
 			if( i > 0 && i < map.getSizeY() ) {
-				if(map.get_walls()[i][y]) {
+				if(map.get_walls()[x][i]) {
 					break;
 				}
 				if(this.brokable_walls[x][i]) {
-					System.out.println("test vers le haut : "+bomb.getBombermanId());
 					this.brokable_walls[x][i] =false;
 					if(this.GenerateRandomNumber()<MAX_RANDOM_GENERATE_ITEM) {
 						ItemType type = GenerateRandomItem();
