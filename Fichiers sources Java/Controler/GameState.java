@@ -82,12 +82,12 @@ public class GameState {
 			else{
 				AgentAction aa = GenerateRandomMove();
 				enemie.setAgentAction(aa);
-				if(enemie.isLegalMove(map)) {
+				if (enemie.isLegalMove(map)) {
 					enemie.executeAction();
 				}
 			}
 
-			if(enemie.isDead()==true) {
+			if (enemie.isDead() == true) {
 				enemieSupprime.add(enemie);
 			}
 		}
@@ -136,7 +136,7 @@ public class GameState {
 		}
 	}
 	
-	public void bombTurn() {
+	public void bombTurn(){
 		for(InfoBomb bomb : bombs) {
 			switch(bomb.getStateBomb()) {
 			case Step1 :

@@ -118,6 +118,7 @@ public class StrategyBird implements Strategy {
         }
         else {
         	bird.setAgentAction(AgentAction.STOP);
+
         }
     }
 }
