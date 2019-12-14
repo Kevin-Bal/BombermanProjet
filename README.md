@@ -15,13 +15,14 @@ Projet de design pattern
 
 
 ## Deuxième Séance
-  -Initialisation de l'environnement
+  * Initialisation de l'environnement
 
-  -Affichage du jeu
+  * Affichage du jeu
   
 ## A faire :
-   - [ ] Penser à remettre les murs en rechargement
+   - [x] Penser à remettre les murs en rechargement
    - [ ] Firesuit limiter le nombre de tour
    - [ ] Perceptron 
-   - [ ] Jeu qui rest actif apres reload
+   - [x] Jeu qui rest actif apres reload
+   - [x] Problème d'explosion de murs
    

@@ -6,18 +6,19 @@ import java.util.ArrayList;
 import Item.InfoBomb;
 import Item.InfoItem;
 import Item.StateBomb;
+import Strategies.StrategyBomberman;
 import View.Map;
 
 
 public class Bomberman extends Agent{
 	private int range;
 	private int numberOfBombs;
-	
+	private StrategyBomberman strat = new StrategyBomberman();
 	int numberOfInvincibleTurns;
 	
 	public Bomberman(int x, int y, AgentAction agentAction, ColorAgent color) {
 		super(x, y, agentAction, 'B', color, false, false);
-		this.setRange(15);
+		this.setRange(1);
 		numberOfBombs =1;
 		numberOfInvincibleTurns=0;
 	}
@@ -30,16 +31,16 @@ public class Bomberman extends Agent{
 		
 		switch(getAgentAction()) {
 		case MOVE_UP: 
-			x --;
+			y --;
 			break;
 		case MOVE_DOWN:
-			x ++;
+			y ++;
 			break;
 		case MOVE_LEFT:
-			y--;
+			x--;
 			break;
 		case MOVE_RIGHT:
-			y++;
+			x++;
 			break;
 		case STOP:
 			break;
@@ -61,16 +62,16 @@ public class Bomberman extends Agent{
 		
 		switch(getAgentAction()) {
 		case MOVE_UP: 
-			x --;
+			y --;
 			break;
 		case MOVE_DOWN:
-			x ++;
+			y ++;
 			break;
 		case MOVE_LEFT:
-			y--;
+			x--;
 			break;
 		case MOVE_RIGHT:
-			y++;
+			x++;
 			break;
 		case STOP:
 			break;
@@ -145,6 +146,14 @@ public class Bomberman extends Agent{
 	}
 	public void setNumberOfBombs(int numberOfBombs) {
 		this.numberOfBombs = numberOfBombs;
+	}
+
+	public StrategyBomberman getStrat() {
+		return strat;
+	}
+
+	public void setStrat(StrategyBomberman strat) {
+		this.strat = strat;
 	}
 	//##########################################################
 }
