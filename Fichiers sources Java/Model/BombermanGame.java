@@ -13,7 +13,7 @@ public class BombermanGame extends Game{
 	@Override
 	public boolean gameContinue() {
 		//System.out.println("Jeu en cours...");
-		//Trouver le mode de jeu (PVP/PVE) au début de la partie pour déterminer la fin, créer un énum GameMode
+		//Trouver le mode de jeu (PVP/PVE) au début de la partie pour déterminer la fin
 		
 		if (this.getMaxturn()>this.getTurn() && etatJeu.getBombermans().size()!=0) {
 			if(gameMode==GameMode.PVE && etatJeu.getAgents().size()<=1) {
@@ -42,6 +42,7 @@ public class BombermanGame extends Game{
 
 	@Override
 	public void initializeGame() {
+		endgame = false;
 		this.etatJeu = new GameState(this.map,this);
 		findGameMode();
 		System.out.println(gameMode);
