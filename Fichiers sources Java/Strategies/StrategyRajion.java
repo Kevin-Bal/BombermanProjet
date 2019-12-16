@@ -86,8 +86,7 @@ public class StrategyRajion implements Strategy{
 		if(bombermans.size()>0) {
 			AgentAction act = actions_strat.get((int) (Math.random() * actions_strat.size()));
 
-
-			if(rajion.isLegalMove(game.getMap())) {
+			if(rajion.isLegalMove(game.getMap(), act)) {
 				return act;
 			}
 		}

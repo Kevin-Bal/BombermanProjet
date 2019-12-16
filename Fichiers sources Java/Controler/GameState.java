@@ -15,10 +15,7 @@ import Item.InfoItem;
 import Item.ItemType;
 import Item.StateBomb;
 import Model.BombermanGame;
-import Strategies.Strategy;
-import Strategies.StrategyBird;
-import Strategies.StrategyBomberman;
-import Strategies.StrategyRajion;
+import Strategies.*;
 import View.Map;
 
 public class GameState {
@@ -39,15 +36,17 @@ public class GameState {
 		this.game = game;
 		this.map = map;
 		
-		ArrayList<Agent> agent = map.getStart_agents();
+		ArrayList<Agent> agents = map.getStart_agents();
 		BombermanFactory bFactory = new BombermanFactory();
 		EnemyFactory eFactory = new EnemyFactory();
 		brokable_walls = map.getStart_brokable_walls();
+
 		StrategyBomberman stratB = new StrategyBomberman();
 		StrategyBird stratBird = new StrategyBird();
 		StrategyRajion stratRajion = new StrategyRajion();
+		StrategyEnemy stratEnemy = new StrategyEnemy();
 		
-		for(Agent a : agent) {
+		for(Agent a : agents) {
 			
 			switch(a.getType()) {
 			case 'B':
@@ -60,10 +59,9 @@ public class GameState {
 				enemies.add( eFactory.createAgent(a.getX(), a.getY(), a.getType(), a.getAgentAction(), a.getColor(), stratBird));
 				break;
 			case 'E':
-				enemies.add( eFactory.createAgent(a.getX(), a.getY(), a.getType(), a.getAgentAction(), a.getColor(), stratRajion));
+				enemies.add( eFactory.createAgent(a.getX(), a.getY(), a.getType(), a.getAgentAction(), a.getColor(), stratEnemy));
 				break;
 			default:
-				enemies.add( eFactory.createAgent(a.getX(), a.getY(), a.getType(), a.getAgentAction(), a.getColor(), stratRajion));
 				break;
 				
 			}

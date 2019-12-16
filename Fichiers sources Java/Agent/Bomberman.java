@@ -32,7 +32,6 @@ public class Bomberman extends Agent{
 	
 	public void executeAction(GameState game) {
 
-
 		AgentAction aa = this.getStrategy().chooseAction(this, game);
 
 		if(aa == AgentAction.PUT_BOMB){
