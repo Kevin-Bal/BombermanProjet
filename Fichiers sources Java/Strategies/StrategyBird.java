@@ -38,16 +38,16 @@ public class StrategyBird implements Strategy {
 
             switch(act) {
                 case MOVE_UP:
-                    ay--;
+                    ay --;
                     break;
                 case MOVE_DOWN:
-                    ay++;
+                    ay ++;
                     break;
                 case MOVE_LEFT:
-                    ax--;
+                    ax --;
                     break;
                 case MOVE_RIGHT:
-                    ay++;
+                    ax ++;
                     break;
                 case STOP:
                     break;

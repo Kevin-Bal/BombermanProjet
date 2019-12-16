@@ -108,7 +108,7 @@ public class GameState {
 			Bomberman b = (Bomberman) bomberman;
 			b.checkForItem(items);
 
-			b.getStrat().chooseAction(b,this);
+			b.executeAction();
 				
 			//Si il est mort
 			if(b.isDead()==true) {

@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import Item.InfoBomb;
 import Item.InfoItem;
 import Item.StateBomb;
+import Strategies.Strategy;
 import Strategies.StrategyBomberman;
 import View.Map;
 
@@ -14,7 +15,7 @@ public class Bomberman extends Agent{
 	private int range;
 	private int numberOfBombs;
 	public int score;
-  private StrategyBomberman strat = new StrategyBomberman();
+  	private StrategyBomberman strat = new StrategyBomberman();
 	
 	//Variables Iterations
 	int numberOfInvincibleTurns;
