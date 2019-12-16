@@ -3,6 +3,7 @@ package Agent;
 
 import java.util.ArrayList;
 
+import Controler.GameState;
 import Item.InfoBomb;
 import Item.InfoItem;
 import Item.StateBomb;
@@ -15,14 +16,13 @@ public class Bomberman extends Agent{
 	private int range;
 	private int numberOfBombs;
 	public int score;
-  	private StrategyBomberman strat = new StrategyBomberman();
 	
 	//Variables Iterations
 	int numberOfInvincibleTurns;
 	int numberOfSickTurns;
 	
-	public Bomberman(int x, int y, AgentAction agentAction, ColorAgent color) {
-		super(x, y, agentAction, 'B', color, false, false);
+	public Bomberman(int x, int y, AgentAction agentAction, ColorAgent color, Strategy strategy) {
+		super(x, y, agentAction, 'B', color, false, false, strategy);
 		this.setRange(1);
 		numberOfBombs =1;
 		numberOfInvincibleTurns=0;
@@ -30,34 +30,25 @@ public class Bomberman extends Agent{
 		score=0;
 	}
 	
-	public void executeAction() {
-		super.executeAction();
-		
-		int x = getX();
-		int y = getY();
-		
-		switch(getAgentAction()) {
-		case MOVE_UP: 
-			y --;
-			break;
-		case MOVE_DOWN:
-			y ++;
-			break;
-		case MOVE_LEFT:
-			x--;
-			break;
-		case MOVE_RIGHT:
-			x++;
-			break;
-		case STOP:
-			break;
-		default :
-			break;
+	public void executeAction(GameState game) {
+
+
+		AgentAction aa = this.getStrategy().chooseAction(this, game);
+
+		if(aa == AgentAction.PUT_BOMB){
+			int nbOfBombsPerBomberman = 0;
+			for(InfoBomb bomb : game.getBombs()) {
+				if(this.getId()==bomb.getBomberman().getId())
+					nbOfBombsPerBomberman++;
+			}
+			if(this.getNumberOfBombs()>nbOfBombsPerBomberman) {
+				game.getBombs().add(new InfoBomb(this.getX(), this.getY(), this.getRange(), StateBomb.Step1,this));
+			}
 		}
-			setX(x);
-			setY(y);
-			
-		
+		else{
+			super.executeAction(game);
+		}
+
 		IterateInvincibleCountdown();
 		IterateSickCountdown();
 		
@@ -66,11 +57,11 @@ public class Bomberman extends Agent{
 	/*
 	 * Vérifie si on le déplacement est possible ou non, en fonction des murs
 	 */
-	public boolean isLegalMove(Map map, ArrayList<Agent> bombermans) {
+	public boolean isLegalMove(Map map, ArrayList<Agent> bombermans, AgentAction aa) {
 		int x = getX();
 		int y = getY();
 		
-		switch(getAgentAction()) {
+		switch(aa) {
 		case MOVE_UP: 
 			y --;
 			break;
@@ -84,7 +75,7 @@ public class Bomberman extends Agent{
 			x++;
 			break;
 		case STOP:
-			break;
+
 		default :
 			break;
 		}
@@ -179,12 +170,5 @@ public class Bomberman extends Agent{
 		this.numberOfBombs = numberOfBombs;
 	}
 
-	public StrategyBomberman getStrat() {
-		return strat;
-	}
-
-	public void setStrat(StrategyBomberman strat) {
-		this.strat = strat;
-	}
 	//##########################################################
 }

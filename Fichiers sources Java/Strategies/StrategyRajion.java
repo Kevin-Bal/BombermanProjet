@@ -14,7 +14,7 @@ public class StrategyRajion implements Strategy{
 	private ArrayList<AgentAction> actions = new ArrayList<>();
 
 	@Override
-	public void chooseAction(Agent agent, GameState game) {
+	public AgentAction chooseAction(Agent agent, GameState game) {
 
 		ArrayList<Agent> bombermans = game.getBombermans();
 		ArrayList<AgentAction> actions_strat = new ArrayList<>() ;
@@ -86,11 +86,12 @@ public class StrategyRajion implements Strategy{
 		if(bombermans.size()>0) {
 			AgentAction act = actions_strat.get((int) (Math.random() * actions_strat.size()));
 
-			rajion.setAgentAction(act);
+
 			if(rajion.isLegalMove(game.getMap())) {
-				rajion.executeAction();
+				return act;
 			}
 		}
+		return AgentAction.STOP;
 	}
 
 }

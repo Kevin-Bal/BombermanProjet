@@ -15,6 +15,10 @@ import Item.InfoItem;
 import Item.ItemType;
 import Item.StateBomb;
 import Model.BombermanGame;
+import Strategies.Strategy;
+import Strategies.StrategyBird;
+import Strategies.StrategyBomberman;
+import Strategies.StrategyRajion;
 import View.Map;
 
 public class GameState {
@@ -39,16 +43,28 @@ public class GameState {
 		BombermanFactory bFactory = new BombermanFactory();
 		EnemyFactory eFactory = new EnemyFactory();
 		brokable_walls = map.getStart_brokable_walls();
-		
+		StrategyBomberman stratB = new StrategyBomberman();
+		StrategyBird stratBird = new StrategyBird();
+		StrategyRajion stratRajion = new StrategyRajion();
 		
 		for(Agent a : agent) {
 			
 			switch(a.getType()) {
 			case 'B':
-				bombermans.add( bFactory.createAgent(a.getX(),a.getY(),a.getType(),a.getAgentAction(),a.getColor()));
+				bombermans.add( bFactory.createAgent(a.getX(), a.getY(), a.getType(), a.getAgentAction(), a.getColor(), stratB));
+				break;
+			case 'R':
+				enemies.add( eFactory.createAgent(a.getX(), a.getY(), a.getType(), a.getAgentAction(), a.getColor(), stratRajion));
+				break;
+			case 'V':
+				enemies.add( eFactory.createAgent(a.getX(), a.getY(), a.getType(), a.getAgentAction(), a.getColor(), stratBird));
+				break;
+			case 'E':
+				enemies.add( eFactory.createAgent(a.getX(), a.getY(), a.getType(), a.getAgentAction(), a.getColor(), stratRajion));
 				break;
 			default:
-				enemies.add( eFactory.createAgent(a.getX(),a.getY(),a.getType(),a.getAgentAction(),a.getColor()));
+				enemies.add( eFactory.createAgent(a.getX(), a.getY(), a.getType(), a.getAgentAction(), a.getColor(), stratRajion));
+				break;
 				
 			}
 		}
@@ -73,18 +89,8 @@ public class GameState {
 	public void takeTurnEnemies() {
 		ArrayList<Agent> enemieSupprime = new ArrayList<>();
 		for (Agent enemie : enemies) {
-			if(enemie instanceof Bird)
-				((Bird) enemie).getStrategyBird().chooseAction(enemie,this);
-			else if(enemie instanceof Rajion){
-				((Rajion) enemie).getStrategyRajion().chooseAction(enemie,this);
-			}
-			else{
-				AgentAction aa = GenerateRandomMove();
-				enemie.setAgentAction(aa);
-				if (enemie.isLegalMove(map)) {
-					enemie.executeAction();
-				}
-			}
+
+			enemie.executeAction(this);
 
 			if (enemie.isDead() == true) {
 				enemieSupprime.add(enemie);
@@ -108,7 +114,7 @@ public class GameState {
 			Bomberman b = (Bomberman) bomberman;
 			b.checkForItem(items);
 
-			b.executeAction();
+			b.executeAction(this);
 				
 			//Si il est mort
 			if(b.isDead()==true) {

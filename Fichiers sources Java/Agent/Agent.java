@@ -1,6 +1,8 @@
 package Agent;
 
 
+import Controler.GameState;
+import Strategies.Strategy;
 import View.Map;
 
 public class Agent {
@@ -10,6 +12,7 @@ public class Agent {
 	private AgentAction agentAction;
 	private ColorAgent color;
 	private char type;
+	private Strategy strategy;
 	
 	
 	private int id;
@@ -20,7 +23,7 @@ public class Agent {
 	private boolean isSick;
 	private boolean isDead;
 	
-	public Agent(int x, int y, AgentAction agentAction, char type, ColorAgent color, boolean isInvincible, boolean isSick) {
+	public Agent(int x, int y, AgentAction agentAction, char type, ColorAgent color, boolean isInvincible, boolean isSick, Strategy strategy) {
 		this.x=x;
 		this.y=y;
 		this.agentAction = agentAction;
@@ -30,13 +33,42 @@ public class Agent {
 		this.isInvincible = isInvincible;
 		this.isSick = isSick;
 		this.isDead=false;
+		this.strategy = strategy;
 		
 		this.id = iter_id;
 		iter_id++;
 	}
 	
 
-	public void executeAction() {}
+	public void executeAction(GameState game) {
+		AgentAction aa = this.getStrategy().chooseAction(this, game);
+
+		int x = getX();
+		int y = getY();
+
+		switch(aa) {
+			case MOVE_UP:
+				y --;
+				break;
+			case MOVE_DOWN:
+				y ++;
+				break;
+			case MOVE_LEFT:
+				x--;
+				break;
+			case MOVE_RIGHT:
+				x++;
+				break;
+			case STOP:
+				break;
+			default :
+				break;
+		}
+		setX(x);
+		setY(y);
+
+		setAgentAction(aa);
+	}
 
 	
 	public int getX() { return x;}
@@ -68,6 +100,14 @@ public class Agent {
 	public int getId() {return id;}
 	public void setId(int id) {this.id = id;}
 
+
+	public Strategy getStrategy() {
+		return strategy;
+	}
+
+	public void setStrategy(Strategy strategy) {
+		this.strategy = strategy;
+	}
 
 	public boolean isLegalMove(Map map) {return false;}
 
