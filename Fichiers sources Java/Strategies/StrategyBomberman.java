@@ -24,9 +24,9 @@ public class StrategyBomberman implements Strategy {
         int range = bomberman.getRange();
 
         //Comportement pour éviter les bombes adverses
-        for(InfoBomb bombe : bombes){
+        /*for(InfoBomb bombe : bombes){
 
-            if (bombe.getBombermanId() != bomberman.getId()) {
+            if (bombe.getBomberman().getId() != bomberman.getId()) {
                 int bombe_x = bombe.getX();
                 int bombe_y = bombe.getY();
 
@@ -95,11 +95,11 @@ public class StrategyBomberman implements Strategy {
 
                     int nbOfBombsPerBomberman = 0;
                     for(InfoBomb bomb : bombes) {
-                        if(bomberman.getId()==bomb.getBombermanId())
+                        if(bomberman.getId()==bomb.getBomberman().getId() )
                             nbOfBombsPerBomberman++;
                     }
                     if(bomberman.getNumberOfBombs()>nbOfBombsPerBomberman) {
-                        bombes.add(new InfoBomb(bomberman.getX(), bomberman.getY(), bomberman.getRange(), StateBomb.Step1,bomberman.getId()));
+                        bombes.add(new InfoBomb(bomberman.getX(), bomberman.getY(), bomberman.getRange(), StateBomb.Step1,bomberman));
                     }
 
                     bomberman.executeAction();
@@ -109,29 +109,30 @@ public class StrategyBomberman implements Strategy {
 
                     int nbOfBombsPerBomberman = 0;
                     for(InfoBomb bomb : bombes) {
-                        if(bomberman.getId()==bomb.getBombermanId())
+                        if(bomberman.getId()==bomb.getBomberman().getId() )
                             nbOfBombsPerBomberman++;
                     }
                     if(bomberman.getNumberOfBombs()>nbOfBombsPerBomberman) {
-                        bombes.add(new InfoBomb(bomberman.getX(), bomberman.getY(), bomberman.getRange(), StateBomb.Step1,bomberman.getId()));
+                        bombes.add(new InfoBomb(bomberman.getX(), bomberman.getY(), bomberman.getRange(), StateBomb.Step1,bomberman));
                     }
 
                     bomberman.executeAction();
                 }
             }
-        }
+        }*/
 
         //Choisi une action aléatoire
-        AgentAction aa = game.GenerateRandomMove();
+        AgentAction aa = AgentAction.MOVE_DOWN;
         bomberman.setAgentAction(aa);
-        if(aa == AgentAction.PUT_BOMB) {
+        /*if(aa == AgentAction.PUT_BOMB) {
             bomberman.setAgentAction(AgentAction.STOP);
             bomberman.executeAction();
-        }else{
+        }else{*/
+            System.out.println("test mouvement : "+aa);
             if(bomberman.isLegalMove(game.getMap())) {
                 bomberman.executeAction();
             }
-        }
+       // }
 
     }
 }

@@ -106,10 +106,22 @@ public class GameState {
 		for (Agent bomberman : bombermans) {
 
 			Bomberman b = (Bomberman) bomberman;
+			AgentAction aa = GenerateRandomMove();
 			b.checkForItem(items);
-
-			b.getStrat().chooseAction(b,this);
-				
+			b.setAgentAction(aa);
+			if(b.isLegalMove(map)) {
+				b.executeAction();
+			}
+			if(aa == AgentAction.PUT_BOMB) {
+				int nbOfBombsPerBomberman = 0;
+				for(InfoBomb bomb : bombs) {
+					if(b.getId()==bomb.getBomberman().getId())
+						nbOfBombsPerBomberman++;
+				}
+				if(b.getNumberOfBombs()>nbOfBombsPerBomberman) {
+					bombs.add(new InfoBomb(bomberman.getX(), bomberman.getY(), b.getRange(), StateBomb.Step1,b));
+				}
+			}
 			//Si il est mort
 			if(b.isDead()==true) {
 				bombermanSupprime.add(b);

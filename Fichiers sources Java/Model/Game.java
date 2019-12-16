@@ -4,7 +4,7 @@ import java.util.Observable;
 public abstract class Game extends Observable implements Runnable{
 	private int turn;
 
-	private int maxturn=1000;
+	private int maxturn=100;
 	private boolean isRunning;
 	private Thread thread;
 	private double default_time =1000;

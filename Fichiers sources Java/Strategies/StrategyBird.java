@@ -72,7 +72,6 @@ public class StrategyBird implements Strategy {
                     }
                 }
                 actions_strat.add(AgentAction.STOP);
-                //System.out.println("Taille des actions Endormie:"+actions_strat.size());
             }
             else {
                 int new_ec = 0;
@@ -86,8 +85,6 @@ public class StrategyBird implements Strategy {
                         int xecb = Math.abs(xb-x);
                         int yecb = Math.abs(yb-y);
                         aux_ecart = xecb + yecb;
-
-                        System.out.println("Ecart : "+aux_ecart);
 
                         if(aux_ecart < ecart) {
                             ecart = aux_ecart;

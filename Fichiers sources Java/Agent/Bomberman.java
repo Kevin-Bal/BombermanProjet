@@ -53,8 +53,8 @@ public class Bomberman extends Agent{
 		default :
 			break;
 		}
-			setX(x);
-			setY(y);
+		setX(x);
+		setY(y);
 			
 		
 		IterateInvincibleCountdown();

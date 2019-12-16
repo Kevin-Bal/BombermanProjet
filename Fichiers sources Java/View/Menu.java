@@ -56,7 +56,8 @@ public class Menu extends JFrame {
             e.printStackTrace();
         }
 
-        setSize(map.getSizeX()*30, map.getSizeY()*20+100);
+        this.setSize(30,40);
+        this.setSize(map.getSizeX()*30, map.getSizeY()*20+100);
         this.setLocationRelativeTo(null);
         creer_button(this);
         this.setVisible(true);
