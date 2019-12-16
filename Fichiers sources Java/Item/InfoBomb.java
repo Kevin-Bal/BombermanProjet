@@ -1,20 +1,22 @@
 package Item;
 
+import Agent.Bomberman;
+
 public class InfoBomb {
 	
 	private int x;
 	private int y;
 	private int range;
-	private int bombermanId;
+	private Bomberman bomberman;
 		
 	StateBomb stateBomb;
 
-	public InfoBomb(int x, int y, int range, StateBomb stateBomb, int bId) {
+	public InfoBomb(int x, int y, int range, StateBomb stateBomb, Bomberman b) {
 		this.x=x;
 		this.y=y;
 		this.range=range;
 		this.stateBomb = stateBomb;
-		this.setBombermanId(bId);
+		this.setBomberman(b);
 
 	}
 
@@ -54,12 +56,12 @@ public class InfoBomb {
 		this.range = range;
 	}
 
-	public int getBombermanId() {
-		return bombermanId;
+	public Bomberman getBomberman() {
+		return bomberman;
 	}
 
-	public void setBombermanId(int bombermanId) {
-		this.bombermanId = bombermanId;
+	public void setBomberman(Bomberman bombermanId) {
+		this.bomberman = bombermanId;
 	}
 	//#########################################################################
 	

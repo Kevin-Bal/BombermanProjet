@@ -1,8 +1,5 @@
 package Main;
-import Model.BombermanGame;
 import View.Menu;
-import View.PanelCommande;
-import View.ViewGame;
 
 public class Test {
 
