@@ -26,7 +26,7 @@ public class StrategyBomberman implements Strategy {
         //Comportement pour éviter les bombes adverses
         for(InfoBomb bombe : bombes){
 
-            if (bombe.getBombermanId() != bomberman.getId()) {
+            if (bombe.getBomberman().getId() != bomberman.getId()) {
                 int bombe_x = bombe.getX();
                 int bombe_y = bombe.getY();
 
@@ -34,17 +34,17 @@ public class StrategyBomberman implements Strategy {
 
                 if((bombe_y == y) & ( x >= bombe_x-bombe_range & x <= bombe_x+bombe_range)){
                     bomberman.setAgentAction(AgentAction.MOVE_UP);
-                    if (bomberman.isLegalMove(game.getMap())) listAction.add(AgentAction.MOVE_UP);
+                    if (bomberman.isLegalMove(game.getMap(), bombermans)) listAction.add(AgentAction.MOVE_UP);
 
                     bomberman.setAgentAction(AgentAction.MOVE_DOWN);
-                    if (bomberman.isLegalMove(game.getMap())) listAction.add(AgentAction.MOVE_DOWN);
+                    if (bomberman.isLegalMove(game.getMap(), bombermans)) listAction.add(AgentAction.MOVE_DOWN);
 
                     bomberman.setAgentAction(AgentAction.MOVE_RIGHT);
-                    if((x == bombe_x-bombe_range) & bomberman.isLegalMove(game.getMap()))
+                    if((x == bombe_x-bombe_range) & bomberman.isLegalMove(game.getMap(), bombermans))
                         listAction.add(AgentAction.MOVE_RIGHT);
 
                     bomberman.setAgentAction(AgentAction.MOVE_LEFT);
-                    if((x == bombe_x+bombe_range) & bomberman.isLegalMove(game.getMap()))
+                    if((x == bombe_x+bombe_range) & bomberman.isLegalMove(game.getMap(), bombermans))
                         listAction.add(AgentAction.MOVE_LEFT);
 
                     bomberman.setAgentAction(AgentAction.STOP);
@@ -58,17 +58,17 @@ public class StrategyBomberman implements Strategy {
                 }else
                     if((bombe_x == x) & ( y >= bombe_y-bombe_range & y <= bombe_y+bombe_range)){
                         bomberman.setAgentAction(AgentAction.MOVE_UP);
-                        if (bomberman.isLegalMove(game.getMap())) listAction.add(AgentAction.MOVE_UP);
+                        if (bomberman.isLegalMove(game.getMap(), bombermans)) listAction.add(AgentAction.MOVE_UP);
 
                         bomberman.setAgentAction(AgentAction.MOVE_DOWN);
-                        if (bomberman.isLegalMove(game.getMap())) listAction.add(AgentAction.MOVE_DOWN);
+                        if (bomberman.isLegalMove(game.getMap(), bombermans)) listAction.add(AgentAction.MOVE_DOWN);
 
                         bomberman.setAgentAction(AgentAction.MOVE_RIGHT);
-                        if((x == bombe_x-bombe_range) & bomberman.isLegalMove(game.getMap()))
+                        if((x == bombe_x-bombe_range) & bomberman.isLegalMove(game.getMap(), bombermans))
                             listAction.add(AgentAction.MOVE_RIGHT);
 
                         bomberman.setAgentAction(AgentAction.MOVE_LEFT);
-                        if((x == bombe_x+bombe_range) & bomberman.isLegalMove(game.getMap()))
+                        if((x == bombe_x+bombe_range) & bomberman.isLegalMove(game.getMap(), bombermans))
                             listAction.add(AgentAction.MOVE_LEFT);
 
                         bomberman.setAgentAction(AgentAction.STOP);
@@ -95,11 +95,11 @@ public class StrategyBomberman implements Strategy {
 
                     int nbOfBombsPerBomberman = 0;
                     for(InfoBomb bomb : bombes) {
-                        if(bomberman.getId()==bomb.getBombermanId())
+                        if(bomberman.getId()==bomb.getBomberman().getId())
                             nbOfBombsPerBomberman++;
                     }
                     if(bomberman.getNumberOfBombs()>nbOfBombsPerBomberman) {
-                        bombes.add(new InfoBomb(bomberman.getX(), bomberman.getY(), bomberman.getRange(), StateBomb.Step1,bomberman.getId()));
+                        bombes.add(new InfoBomb(bomberman.getX(), bomberman.getY(), bomberman.getRange(), StateBomb.Step1,bomberman));
                     }
 
                     bomberman.executeAction();
@@ -109,11 +109,11 @@ public class StrategyBomberman implements Strategy {
 
                     int nbOfBombsPerBomberman = 0;
                     for(InfoBomb bomb : bombes) {
-                        if(bomberman.getId()==bomb.getBombermanId())
+                        if(bomberman.getId()==bomb.getBomberman().getId())
                             nbOfBombsPerBomberman++;
                     }
                     if(bomberman.getNumberOfBombs()>nbOfBombsPerBomberman) {
-                        bombes.add(new InfoBomb(bomberman.getX(), bomberman.getY(), bomberman.getRange(), StateBomb.Step1,bomberman.getId()));
+                        bombes.add(new InfoBomb(bomberman.getX(), bomberman.getY(), bomberman.getRange(), StateBomb.Step1,bomberman));
                     }
 
                     bomberman.executeAction();
@@ -128,7 +128,7 @@ public class StrategyBomberman implements Strategy {
             bomberman.setAgentAction(AgentAction.STOP);
             bomberman.executeAction();
         }else{
-            if(bomberman.isLegalMove(game.getMap())) {
+            if(bomberman.isLegalMove(game.getMap(), bombermans)) {
                 bomberman.executeAction();
             }
         }
