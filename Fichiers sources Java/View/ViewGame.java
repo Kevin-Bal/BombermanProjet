@@ -18,6 +18,7 @@ import Agent.Bomberman;
 import Item.InfoItem;
 import Model.BombermanGame;
 import Model.GameMode;
+import Strategies.Strategy;
 
 public class ViewGame extends JFrame implements Observer{
 	private PanelBomberman jeu_bomberman;
