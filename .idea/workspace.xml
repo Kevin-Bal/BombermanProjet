@@ -1,13 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="9a503e73-10f0-42f5-8c10-9e4fa72101a1" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Fichiers sources Java/Controler/GameState.java" beforeDir="false" afterPath="$PROJECT_DIR$/Fichiers sources Java/Controler/GameState.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Fichiers sources Java/Model/Game.java" beforeDir="false" afterPath="$PROJECT_DIR$/Fichiers sources Java/Model/Game.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Fichiers sources Java/View/Menu.java" beforeDir="false" afterPath="$PROJECT_DIR$/Fichiers sources Java/View/Menu.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Fichiers sources Java/View/ViewGame.java" beforeDir="false" afterPath="$PROJECT_DIR$/Fichiers sources Java/View/ViewGame.java" afterDir="false" />
-    </list>
+    <list default="true" id="9a503e73-10f0-42f5-8c10-9e4fa72101a1" name="Default Changelist" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -89,7 +83,7 @@
       <workItem from="1576145376979" duration="3121000" />
       <workItem from="1576323668773" duration="5120000" />
       <workItem from="1576569615462" duration="788000" />
-      <workItem from="1576585044273" duration="5156000" />
+      <workItem from="1576585044273" duration="5633000" />
     </task>
     <servers />
   </component>
