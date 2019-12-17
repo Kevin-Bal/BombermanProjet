@@ -33,7 +33,7 @@ public class Bomberman extends Agent{
 	public void executeAction(GameState game) {
 
 		AgentAction aa = this.getStrategy().chooseAction(this, game);
-
+		
 		if(aa == AgentAction.PUT_BOMB){
 			int nbOfBombsPerBomberman = 0;
 			for(InfoBomb bomb : game.getBombs()) {
@@ -74,7 +74,8 @@ public class Bomberman extends Agent{
 			x++;
 			break;
 		case STOP:
-
+		case PUT_BOMB:
+			return true;
 		default :
 			break;
 		}
@@ -86,9 +87,8 @@ public class Bomberman extends Agent{
 				if(b.getX()==x && b.getY()==y)
 					return false;
 			}
-			
-			return true;
 		}
+		return true;
 	}
 	
 	

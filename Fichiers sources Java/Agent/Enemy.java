@@ -23,16 +23,16 @@ public class Enemy extends Agent {
 		
 		switch(aa) {
 		case MOVE_UP: 
-			x --;
+			y --;
 			break;
 		case MOVE_DOWN:
-			x ++;
+			y ++;
 			break;
 		case MOVE_LEFT:
-			y--;
+			x--;
 			break;
 		case MOVE_RIGHT:
-			y++;
+			x++;
 			break;
 		case STOP:
 			break;

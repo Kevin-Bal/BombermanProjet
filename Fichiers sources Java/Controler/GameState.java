@@ -1,5 +1,6 @@
 package Controler;
 
+import java.awt.event.KeyListener;
 import java.util.ArrayList;
 import java.util.Random;
 
@@ -27,12 +28,14 @@ public class GameState {
 	private ArrayList<InfoBomb> bombs = new ArrayList<>();
 	private ArrayList<InfoBomb> bombsSupprime = new ArrayList<>();
 	private ArrayList<InfoItem> items = new ArrayList<>();
+	public StrategyBombermanInteractif stratInt = new StrategyBombermanInteractif();
 	private boolean brokable_walls[][];
 
 	private BombermanGame game;
 	private Map map;
 	
 	public GameState(Map map, BombermanGame game) {
+		System.out.println("Création de GameState");
 		this.game = game;
 		this.map = map;
 		
@@ -40,26 +43,20 @@ public class GameState {
 		BombermanFactory bFactory = new BombermanFactory();
 		EnemyFactory eFactory = new EnemyFactory();
 		brokable_walls = map.getStart_brokable_walls();
-
-		StrategyBomberman stratB = new StrategyBomberman();
-		StrategyBird stratBird = new StrategyBird();
-		StrategyRajion stratRajion = new StrategyRajion();
-		StrategyEnemy stratEnemy = new StrategyEnemy();
 		
 		for(Agent a : agents) {
-			
 			switch(a.getType()) {
 			case 'B':
-				bombermans.add( bFactory.createAgent(a.getX(), a.getY(), a.getType(), a.getAgentAction(), a.getColor(), stratB));
+				bombermans.add( bFactory.createAgent(a.getX(), a.getY(), a.getType(), a.getAgentAction(), a.getColor(), stratInt));
 				break;
 			case 'R':
-				enemies.add( eFactory.createAgent(a.getX(), a.getY(), a.getType(), a.getAgentAction(), a.getColor(), stratRajion));
+				enemies.add( eFactory.createAgent(a.getX(), a.getY(), a.getType(), a.getAgentAction(), a.getColor(), new StrategyRajion()));
 				break;
 			case 'V':
-				enemies.add( eFactory.createAgent(a.getX(), a.getY(), a.getType(), a.getAgentAction(), a.getColor(), stratBird));
+				enemies.add( eFactory.createAgent(a.getX(), a.getY(), a.getType(), a.getAgentAction(), a.getColor(), new StrategyBird()));
 				break;
 			case 'E':
-				enemies.add( eFactory.createAgent(a.getX(), a.getY(), a.getType(), a.getAgentAction(), a.getColor(), stratEnemy));
+				enemies.add( eFactory.createAgent(a.getX(), a.getY(), a.getType(), a.getAgentAction(), a.getColor(), new StrategyEnemy()));
 				break;
 			default:
 				break;
@@ -268,12 +265,7 @@ public class GameState {
 	}	
 	
 	//###########################################################################
-	//				GENERATE RANDOM
-	public AgentAction GenerateRandomMove() {
-	    int pick = new Random().nextInt(AgentAction.values().length); 
-	    return AgentAction.values()[pick];
-	}
-	
+	//				GENERATE RANDOM	
 	public ItemType GenerateRandomItem() {
 	    int pick = new Random().nextInt(ItemType.values().length); 
 	    return ItemType.values()[pick];

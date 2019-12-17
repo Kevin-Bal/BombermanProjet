@@ -28,6 +28,7 @@ import Item.StateBomb;
 
 public class PanelBomberman extends JPanel{
 
+
 	private static final long serialVersionUID = 1L;
 	protected Color wallColor=Color.GRAY;
 	protected Color brokable_walls_Color=Color.lightGray;
