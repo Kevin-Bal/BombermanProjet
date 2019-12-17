@@ -27,6 +27,7 @@ public class GameState {
 	private ArrayList<InfoBomb> bombs = new ArrayList<>();
 	private ArrayList<InfoBomb> bombsSupprime = new ArrayList<>();
 	private ArrayList<InfoItem> items = new ArrayList<>();
+	private ArrayList<Strategy> strategies_bombermans = new ArrayList<>();
 	private boolean brokable_walls[][];
 
 	private BombermanGame game;
@@ -41,7 +42,6 @@ public class GameState {
 		EnemyFactory eFactory = new EnemyFactory();
 		brokable_walls = map.getStart_brokable_walls();
 
-		StrategyBomberman stratB = new StrategyBomberman();
 		StrategyBird stratBird = new StrategyBird();
 		StrategyRajion stratRajion = new StrategyRajion();
 		StrategyEnemy stratEnemy = new StrategyEnemy();
@@ -50,7 +50,7 @@ public class GameState {
 			
 			switch(a.getType()) {
 			case 'B':
-				bombermans.add( bFactory.createAgent(a.getX(), a.getY(), a.getType(), a.getAgentAction(), a.getColor(), stratB));
+				bombermans.add( bFactory.createAgent(a.getX(), a.getY(), a.getType(), a.getAgentAction(), a.getColor(), null));
 				break;
 			case 'R':
 				enemies.add( eFactory.createAgent(a.getX(), a.getY(), a.getType(), a.getAgentAction(), a.getColor(), stratRajion));
@@ -66,6 +66,8 @@ public class GameState {
 				
 			}
 		}
+
+
 	}
 	
 	public void takeTurn() {
@@ -349,8 +351,19 @@ public class GameState {
 	public void setDeadBombermans(ArrayList<Agent> deadBombermans) {
 		this.deadBombermans = deadBombermans;
 	}
-	
-	
+
+	public ArrayList<Strategy> getStrategies_bombermans() {
+		return strategies_bombermans;
+	}
+
+	public void setStrategies_bombermans(ArrayList<Strategy> strategies_bombermans) {
+		this.strategies_bombermans = strategies_bombermans;
+		for(int i = 0; i < bombermans.size(); i++){
+			Strategy strat = strategies_bombermans.get(i);
+			bombermans.get(i).setStrategy(strat);
+		}
+	}
+
 	//###########################################################################
 
 
