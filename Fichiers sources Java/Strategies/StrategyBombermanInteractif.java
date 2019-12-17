@@ -7,24 +7,25 @@ import Agent.Agent;
 import Agent.AgentAction;
 import Agent.Bomberman;
 import Controler.GameState;
+import View.ViewInput;
 
-public class StrategyBombermanInteractif implements Strategy,KeyListener {
-
-	private AgentAction currentAction;
+public class StrategyBombermanInteractif implements Strategy {
+	ViewInput vi;
 	
 	//Par défaut, le Bomberman est à l'arrêt au départ
 	public StrategyBombermanInteractif() {
-		this.currentAction = AgentAction.STOP;
+		vi = new ViewInput();
 	}
 
 	@Override
 	public AgentAction chooseAction(Agent agent, GameState game) {
 		Bomberman bomberman = (Bomberman) agent;
-        if(bomberman.isLegalMove(game.getMap(),game.getBombermans(), currentAction))
-            return currentAction;
+        if(bomberman.isLegalMove(game.getMap(),game.getBombermans(), vi.getCurrentAction()))
+            return vi.getCurrentAction();
         else return  AgentAction.STOP;
 	}
 
+	/*
 	@Override
 	public void keyPressed(KeyEvent arg0) {
 		System.out.println(arg0.getKeyChar());
@@ -47,17 +48,6 @@ public class StrategyBombermanInteractif implements Strategy,KeyListener {
 		}
 		
 	}
-
-	@Override
-	public void keyReleased(KeyEvent arg0) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void keyTyped(KeyEvent arg0) {
-		// TODO Auto-generated method stub
-		
-	}
+	*/
 
 }

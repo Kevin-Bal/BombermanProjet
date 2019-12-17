@@ -3,11 +3,8 @@ package View;
 import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.GridLayout;
-import java.awt.HeadlessException;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.KeyListener;
-import java.io.File;
 import java.util.ArrayList;
 import java.util.Observable;
 import java.util.Observer;
@@ -16,7 +13,6 @@ import javax.swing.*;
 
 import Agent.Agent;
 import Agent.Bomberman;
-import Item.InfoItem;
 import Model.BombermanGame;
 import Model.GameMode;
 
@@ -51,8 +47,6 @@ public class ViewGame extends JFrame implements Observer{
 		this.setLayout(new BorderLayout());
         this.add("North",jeu_commande.getjPanelView());
         this.add("Center",jeu_bomberman);
-        KeyListener key = this.game.etatJeu.stratInt;
-        this.addKeyListener(key);
 		this.setVisible(true);
 
 	}

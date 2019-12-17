@@ -1,13 +1,9 @@
 package Controler;
 
-import java.awt.event.KeyListener;
 import java.util.ArrayList;
 import java.util.Random;
 
 import Agent.Agent;
-import Agent.Bird;
-import Agent.Rajion;
-import Agent.AgentAction;
 import Agent.Bomberman;
 import Agent.BombermanFactory;
 import Agent.EnemyFactory;
@@ -28,7 +24,6 @@ public class GameState {
 	private ArrayList<InfoBomb> bombs = new ArrayList<>();
 	private ArrayList<InfoBomb> bombsSupprime = new ArrayList<>();
 	private ArrayList<InfoItem> items = new ArrayList<>();
-	public StrategyBombermanInteractif stratInt = new StrategyBombermanInteractif();
 	private boolean brokable_walls[][];
 
 	private BombermanGame game;
@@ -47,7 +42,7 @@ public class GameState {
 		for(Agent a : agents) {
 			switch(a.getType()) {
 			case 'B':
-				bombermans.add( bFactory.createAgent(a.getX(), a.getY(), a.getType(), a.getAgentAction(), a.getColor(), stratInt));
+				bombermans.add( bFactory.createAgent(a.getX(), a.getY(), a.getType(), a.getAgentAction(), a.getColor(), new StrategyBombermanInteractif()));
 				break;
 			case 'R':
 				enemies.add( eFactory.createAgent(a.getX(), a.getY(), a.getType(), a.getAgentAction(), a.getColor(), new StrategyRajion()));
