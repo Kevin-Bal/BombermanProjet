@@ -3,6 +3,7 @@ package View;
 import Model.BombermanGame;
 import Strategies.Strategy;
 import Strategies.StrategyBomberman;
+import Strategies.StrategyBombermanInteractif;
 import Strategies.StrategyBombermanRandom;
 
 import javax.swing.*;
@@ -27,7 +28,7 @@ public class Menu extends JFrame {
     private PanelCommande pc = null;
     private JButton jouer = null;
 
-    private String[] names_strategies = {"Bomberman IA 1","Bomberman Aléatoire"};
+    private String[] names_strategies = {"Bomberman IA 1","Bomberman Aléatoire","Bomberman Interactif"};
     private ArrayList<Strategy> objets_strategies = new ArrayList<>();
     private ArrayList<JComboBox<String>> j_strategies = new ArrayList<>();
 
@@ -143,6 +144,9 @@ public class Menu extends JFrame {
                             break;
                         case "Bomberman Aléatoire":
                             objets_strategies.add(new StrategyBombermanRandom());
+                            break;
+                        case "Bomberman Interactif":
+                            objets_strategies.add(new StrategyBombermanInteractif());
                             break;
                     }
                 }

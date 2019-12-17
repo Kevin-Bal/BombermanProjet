@@ -32,6 +32,7 @@ public class ViewInput extends JFrame implements KeyListener{
 		panel.add(new JLabel("<html><p> S -> pour vous déplacer vers le bas</p></html>"));
 		panel.add(new JLabel("<html><p> Q -> pour vous déplacer vers la gauche</p></html>"));
 		panel.add(new JLabel("<html><p> D -> pour vous déplacer vers la droite</p></html>"));
+		panel.add(new JLabel("<html><p> F -> pour poser une bombe</p></html>"));
 		panel.add(new JLabel(""));
 
 		panel.add(new JLabel("<html><p style=\"color:gray;\">Cliquer sur cette fenêtre pour revenir en mode intéractif </p></html>"));
