@@ -4,9 +4,6 @@ import java.util.ArrayList;
 import java.util.Random;
 
 import Agent.Agent;
-import Agent.Bird;
-import Agent.Rajion;
-import Agent.AgentAction;
 import Agent.Bomberman;
 import Agent.BombermanFactory;
 import Agent.EnemyFactory;
@@ -34,6 +31,7 @@ public class GameState {
 	private Map map;
 	
 	public GameState(Map map, BombermanGame game) {
+		System.out.println("Création de GameState");
 		this.game = game;
 		this.map = map;
 		
@@ -42,24 +40,20 @@ public class GameState {
 		EnemyFactory eFactory = new EnemyFactory();
 		brokable_walls = map.getStart_brokable_walls();
 
-		StrategyBird stratBird = new StrategyBird();
-		StrategyRajion stratRajion = new StrategyRajion();
-		StrategyEnemy stratEnemy = new StrategyEnemy();
 		
 		for(Agent a : agents) {
-			
 			switch(a.getType()) {
 			case 'B':
 				bombermans.add( bFactory.createAgent(a.getX(), a.getY(), a.getType(), a.getAgentAction(), a.getColor(), null));
 				break;
 			case 'R':
-				enemies.add( eFactory.createAgent(a.getX(), a.getY(), a.getType(), a.getAgentAction(), a.getColor(), stratRajion));
+				enemies.add( eFactory.createAgent(a.getX(), a.getY(), a.getType(), a.getAgentAction(), a.getColor(), new StrategyRajion()));
 				break;
 			case 'V':
-				enemies.add( eFactory.createAgent(a.getX(), a.getY(), a.getType(), a.getAgentAction(), a.getColor(), stratBird));
+				enemies.add( eFactory.createAgent(a.getX(), a.getY(), a.getType(), a.getAgentAction(), a.getColor(), new StrategyBird()));
 				break;
 			case 'E':
-				enemies.add( eFactory.createAgent(a.getX(), a.getY(), a.getType(), a.getAgentAction(), a.getColor(), stratEnemy));
+				enemies.add( eFactory.createAgent(a.getX(), a.getY(), a.getType(), a.getAgentAction(), a.getColor(), new StrategyEnemy()));
 				break;
 			default:
 				break;
@@ -270,12 +264,7 @@ public class GameState {
 	}	
 	
 	//###########################################################################
-	//				GENERATE RANDOM
-	public AgentAction GenerateRandomMove() {
-	    int pick = new Random().nextInt(AgentAction.values().length); 
-	    return AgentAction.values()[pick];
-	}
-	
+	//				GENERATE RANDOM	
 	public ItemType GenerateRandomItem() {
 	    int pick = new Random().nextInt(ItemType.values().length); 
 	    return ItemType.values()[pick];
