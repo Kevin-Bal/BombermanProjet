@@ -15,6 +15,7 @@ import Agent.Agent;
 import Agent.Bomberman;
 import Model.BombermanGame;
 import Model.GameMode;
+import Strategies.Strategy;
 
 public class ViewGame extends JFrame implements Observer{
 	private PanelBomberman jeu_bomberman;
@@ -144,10 +145,9 @@ public class ViewGame extends JFrame implements Observer{
 			labelText.setText(t);
 			panel.add(labelText);
 		}
-		
-		
+
 		frame.add(panel);
-	    frame.setSize(400, 200);
+	    frame.setSize(200, 40*text.size());
 	    frame.setLocationRelativeTo(null);
 	    frame.setVisible(true);
 	}
@@ -185,9 +185,10 @@ public class ViewGame extends JFrame implements Observer{
 			labelText2.setText("<html><p style=\"color:"+color+";\">"+t+"</p></html>");
 			panel.add(labelText2);
 		}
-		
+
+
 		frame.add(panel);
-	    frame.setSize(800, 400);
+		frame.setSize(300, 100*text.size()+1+text2.size()+1);
 	    frame.setLocationRelativeTo(null);
 	    frame.setVisible(true);
 	}

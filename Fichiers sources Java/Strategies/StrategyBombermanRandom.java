@@ -11,6 +11,7 @@ public class StrategyBombermanRandom implements Strategy{
 
 	@Override
 	public AgentAction chooseAction(Agent agent, GameState game) {
+
         Bomberman bomberman = (Bomberman) agent;
         AgentAction aa = GenerateRandomMove();
         if(bomberman.isLegalMove(game.getMap(),game.getBombermans(), aa))
