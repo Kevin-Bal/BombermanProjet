@@ -32,7 +32,7 @@ public class PanelCommande implements Observer{
 	private JPanel jPanelView;
 
 
-
+	public JButton restart;
 	private JPanel jPanelButtons;
 	private JPanel jPanelSlider;
 	private JLabel jLabel;
@@ -84,6 +84,7 @@ public class PanelCommande implements Observer{
 		//Bouton Restart
 		Icon icon_restart = new ImageIcon("Icones/icon_restart.png");
 		JButton jb_restart= new JButton(icon_restart);
+		restart = jb_restart;
 		//Bouton Run
 		Icon icon_run = new ImageIcon("Icones/icon_run.png");
 		JButton jb_run= new JButton(icon_run);
