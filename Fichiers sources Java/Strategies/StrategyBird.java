@@ -4,7 +4,7 @@ import Agent.Agent;
 import Agent.AgentAction;
 import Controler.GameState;
 import Agent.Bird;
-import com.sun.corba.se.spi.legacy.connection.GetEndPointInfoAgainException;
+//import com.sun.corba.se.spi.legacy.connection.GetEndPointInfoAgainException;
 
 import java.util.ArrayList;
 import java.util.Random;
@@ -14,7 +14,7 @@ public class StrategyBird implements Strategy {
     private ArrayList<AgentAction> actions = new ArrayList<>();
 
     @Override
-    public void chooseAction(Agent agent, GameState game) {
+    public AgentAction chooseAction(Agent agent, GameState game) {
 
         ArrayList<Agent> bombermans = game.getBombermans();
         ArrayList<AgentAction> actions_strat = new ArrayList<>() ;
@@ -38,16 +38,16 @@ public class StrategyBird implements Strategy {
 
             switch(act) {
                 case MOVE_UP:
-                    ay--;
+                    ay --;
                     break;
                 case MOVE_DOWN:
-                    ay++;
+                    ay ++;
                     break;
                 case MOVE_LEFT:
-                    ax--;
+                    ax --;
                     break;
                 case MOVE_RIGHT:
-                    ay++;
+                    ax ++;
                     break;
                 case STOP:
                     break;
@@ -71,8 +71,7 @@ public class StrategyBird implements Strategy {
 
                     }
                 }
-                actions_strat.add(AgentAction.STOP);
-                //System.out.println("Taille des actions Endormie:"+actions_strat.size());
+                return AgentAction.STOP;
             }
             else {
                 int new_ec = 0;
@@ -87,13 +86,11 @@ public class StrategyBird implements Strategy {
                         int yecb = Math.abs(yb-y);
                         aux_ecart = xecb + yecb;
 
-                        System.out.println("Ecart : "+aux_ecart);
 
                         if(aux_ecart < ecart) {
                             ecart = aux_ecart;
                             int depx = Math.abs(x+ax-xb);
                             int depy = Math.abs(y+ay-yb);
-                            System.out.println("Ecart : "+ax+" , "+ay);
                             new_ec = depx + depy;
                         }
 
@@ -111,14 +108,14 @@ public class StrategyBird implements Strategy {
         if(bombermans.size()>0) {
             AgentAction act = actions_strat.get((int) (Math.random() * actions_strat.size()));
 
-            bird.setAgentAction(act);
-            if(bird.isLegalMove(game.getMap())) {
-                bird.executeAction();
+            if(bird.isLegalMove(game.getMap(), act)) {
+                return act;
             }
         }
         else {
-        	bird.setAgentAction(AgentAction.STOP);
-
+            return AgentAction.STOP;
         }
+
+        return AgentAction.STOP;
     }
 }

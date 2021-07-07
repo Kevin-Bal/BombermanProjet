@@ -1,5 +1,6 @@
 package Agent;
 
+import Controler.GameState;
 import Strategies.Strategy;
 import Strategies.StrategyBird;
 import View.Map;
@@ -10,12 +11,13 @@ public class Bird extends Agent {
 
 	private StrategyBird strategyBird = new StrategyBird();
 
-	public Bird(int x, int y, AgentAction agentAction) {
-		super(x, y, agentAction, 'V', ColorAgent.DEFAULT, false, false);
+	public Bird(int x, int y, AgentAction agentAction, Strategy strategy) {
+
+		super(x, y, agentAction, 'V', ColorAgent.DEFAULT, false, false, strategy);
 	}
 
-	public void executeAction() {
-		super.executeAction();
+	public void executeAction(GameState game) {
+		super.executeAction(game);
 		
 		int x = getX();
 		int y = getY();
@@ -45,11 +47,11 @@ public class Bird extends Agent {
 		
 	}
 	
-	public boolean isLegalMove(Map map) {
+	public boolean isLegalMove(Map map, AgentAction aa) {
 		int x = getX();
 		int y = getY();
 		
-		switch(getAgentAction()) {
+		switch(aa) {
 		case MOVE_UP: 
 			y --;
 			break;

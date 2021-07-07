@@ -3,9 +3,12 @@ package Agent;
 
 import java.util.ArrayList;
 
+import Controler.GameState;
 import Item.InfoBomb;
 import Item.InfoItem;
 import Item.StateBomb;
+import Strategies.Strategy;
+import Strategies.StrategyBomberman;
 import View.Map;
 
 
@@ -18,43 +21,33 @@ public class Bomberman extends Agent{
 	int numberOfInvincibleTurns;
 	int numberOfSickTurns;
 	
-	public Bomberman(int x, int y, AgentAction agentAction, ColorAgent color) {
-		super(x, y, agentAction, 'B', color, false, false);
-		this.setRange(15);
+	public Bomberman(int x, int y, AgentAction agentAction, ColorAgent color, Strategy strategy) {
+		super(x, y, agentAction, 'B', color, false, false, strategy);
+		this.setRange(1);
 		numberOfBombs =1;
 		numberOfInvincibleTurns=0;
 		numberOfSickTurns=0;
 		score=0;
 	}
 	
-	public void executeAction() {
-		super.executeAction();
-		
-		int x = getX();
-		int y = getY();
-		
-		switch(getAgentAction()) {
-		case MOVE_UP: 
-			x --;
-			break;
-		case MOVE_DOWN:
-			x ++;
-			break;
-		case MOVE_LEFT:
-			y--;
-			break;
-		case MOVE_RIGHT:
-			y++;
-			break;
-		case STOP:
-			break;
-		default :
-			break;
+	public void executeAction(GameState game) {
+
+		AgentAction aa = this.getStrategy().chooseAction(this, game);
+
+		if(aa == AgentAction.PUT_BOMB){
+			int nbOfBombsPerBomberman = 0;
+			for(InfoBomb bomb : game.getBombs()) {
+				if(this.getId()==bomb.getBomberman().getId())
+					nbOfBombsPerBomberman++;
+			}
+			if(this.getNumberOfBombs()>nbOfBombsPerBomberman) {
+				game.getBombs().add(new InfoBomb(this.getX(), this.getY(), this.getRange(), StateBomb.Step1,this));
+			}
 		}
-			setX(x);
-			setY(y);
-			
-		
+		else{
+			super.executeAction(game);
+		}
+
 		IterateInvincibleCountdown();
 		IterateSickCountdown();
 		
@@ -63,25 +56,25 @@ public class Bomberman extends Agent{
 	/*
 	 * Vérifie si on le déplacement est possible ou non, en fonction des murs
 	 */
-	public boolean isLegalMove(Map map, ArrayList<Agent> bombermans) {
+	public boolean isLegalMove(Map map, ArrayList<Agent> bombermans, AgentAction aa) {
 		int x = getX();
 		int y = getY();
 		
-		switch(getAgentAction()) {
+		switch(aa) {
 		case MOVE_UP: 
-			x --;
+			y --;
 			break;
 		case MOVE_DOWN:
-			x ++;
+			y ++;
 			break;
 		case MOVE_LEFT:
-			y--;
+			x--;
 			break;
 		case MOVE_RIGHT:
-			y++;
+			x++;
 			break;
 		case STOP:
-			break;
+
 		default :
 			break;
 		}
@@ -175,5 +168,6 @@ public class Bomberman extends Agent{
 	public void setNumberOfBombs(int numberOfBombs) {
 		this.numberOfBombs = numberOfBombs;
 	}
+
 	//##########################################################
 }

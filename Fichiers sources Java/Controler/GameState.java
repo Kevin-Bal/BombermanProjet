@@ -15,6 +15,7 @@ import Item.InfoItem;
 import Item.ItemType;
 import Item.StateBomb;
 import Model.BombermanGame;
+import Strategies.*;
 import View.Map;
 
 public class GameState {
@@ -26,6 +27,7 @@ public class GameState {
 	private ArrayList<InfoBomb> bombs = new ArrayList<>();
 	private ArrayList<InfoBomb> bombsSupprime = new ArrayList<>();
 	private ArrayList<InfoItem> items = new ArrayList<>();
+	private ArrayList<Strategy> strategies_bombermans = new ArrayList<>();
 	private boolean brokable_walls[][];
 
 	private BombermanGame game;
@@ -35,24 +37,37 @@ public class GameState {
 		this.game = game;
 		this.map = map;
 		
-		ArrayList<Agent> agent = map.getStart_agents();
+		ArrayList<Agent> agents = map.getStart_agents();
 		BombermanFactory bFactory = new BombermanFactory();
 		EnemyFactory eFactory = new EnemyFactory();
 		brokable_walls = map.getStart_brokable_walls();
-		items = new ArrayList<>();
+
+		StrategyBird stratBird = new StrategyBird();
+		StrategyRajion stratRajion = new StrategyRajion();
+		StrategyEnemy stratEnemy = new StrategyEnemy();
 		
-		
-		for(Agent a : agent) {
+		for(Agent a : agents) {
 			
 			switch(a.getType()) {
 			case 'B':
-				bombermans.add( bFactory.createAgent(a.getX(),a.getY(),a.getType(),a.getAgentAction(),a.getColor()));
+				bombermans.add( bFactory.createAgent(a.getX(), a.getY(), a.getType(), a.getAgentAction(), a.getColor(), null));
+				break;
+			case 'R':
+				enemies.add( eFactory.createAgent(a.getX(), a.getY(), a.getType(), a.getAgentAction(), a.getColor(), stratRajion));
+				break;
+			case 'V':
+				enemies.add( eFactory.createAgent(a.getX(), a.getY(), a.getType(), a.getAgentAction(), a.getColor(), stratBird));
+				break;
+			case 'E':
+				enemies.add( eFactory.createAgent(a.getX(), a.getY(), a.getType(), a.getAgentAction(), a.getColor(), stratEnemy));
 				break;
 			default:
-				enemies.add( eFactory.createAgent(a.getX(),a.getY(),a.getType(),a.getAgentAction(),a.getColor()));
+				break;
 				
 			}
 		}
+
+
 	}
 	
 	public void takeTurn() {
@@ -74,18 +89,8 @@ public class GameState {
 	public void takeTurnEnemies() {
 		ArrayList<Agent> enemieSupprime = new ArrayList<>();
 		for (Agent enemie : enemies) {
-			if(enemie instanceof Bird)
-				((Bird) enemie).getStrategyBird().chooseAction(enemie,this);
-			else if(enemie instanceof Rajion){
-				((Rajion) enemie).getStrategyRajion().chooseAction(enemie,this);
-			}
-			else{
-				AgentAction aa = GenerateRandomMove();
-				enemie.setAgentAction(aa);
-				if (enemie.isLegalMove(map)) {
-					enemie.executeAction();
-				}
-			}
+
+			enemie.executeAction(this);
 
 			if (enemie.isDead() == true) {
 				enemieSupprime.add(enemie);
@@ -105,24 +110,12 @@ public class GameState {
 	public void takeTurnBomberman() {
 		ArrayList<Agent> bombermanSupprime = new ArrayList<>();
 		for (Agent bomberman : bombermans) {
+
 			Bomberman b = (Bomberman) bomberman;
 			b.checkForItem(items);
-			AgentAction aa = GenerateRandomMove();
-			b.setAgentAction(aa);
-			if(b.isLegalMove(map,bombermans)) {
-				b.executeAction();
-			}
-			//Si il pose une bombe, on l'ajoute à la liste et on la lie au bomberman
-			if(aa == AgentAction.PUT_BOMB) {
-				int nbOfBombsPerBomberman = 0;
-				for(InfoBomb bomb : bombs) {
-					if(b.getId()==bomb.getBomberman().getId())
-						nbOfBombsPerBomberman++;
-				}
-				if(b.getNumberOfBombs()>nbOfBombsPerBomberman) {
-					bombs.add(new InfoBomb(bomberman.getX(), bomberman.getY(), b.getRange(), StateBomb.Step1,b));
-				}
-			}
+
+			b.executeAction(this);
+				
 			//Si il est mort
 			if(b.isDead()==true) {
 				bombermanSupprime.add(b);
@@ -201,7 +194,7 @@ public class GameState {
 		int x = bomb.getX();
 		int y = bomb.getY();
 		int range = bomb.getRange();
-		
+
 		for(int i = x; i <= x+range; i++ ) {
 			
 			if( i > 0 && i < map.getSizeX() ) {
@@ -209,7 +202,7 @@ public class GameState {
 					break;
 				}
 				if(this.brokable_walls[i][y]) {
-					this.brokable_walls[i][y] =false;
+					this.brokable_walls[i][y] = false;
 					if(this.GenerateRandomNumber()<MAX_RANDOM_GENERATE_ITEM) {
 						ItemType type = GenerateRandomItem();
 						items.add(new InfoItem(i,y,type));
@@ -242,7 +235,7 @@ public class GameState {
 		for(int i = y; i <= y+range; i++ ) {
 			
 			if( i > 0 && i < map.getSizeY() ) {
-				if(map.get_walls()[i][y]) {
+				if(map.get_walls()[x][i]) {
 					break;
 				}
 				if(this.brokable_walls[x][i]) {
@@ -260,7 +253,7 @@ public class GameState {
 		for(int i = y; i >= y-range; i-- ) {
 			
 			if( i > 0 && i < map.getSizeY() ) {
-				if(map.get_walls()[i][y]) {
+				if(map.get_walls()[x][i]) {
 					break;
 				}
 				if(this.brokable_walls[x][i]) {
@@ -358,8 +351,19 @@ public class GameState {
 	public void setDeadBombermans(ArrayList<Agent> deadBombermans) {
 		this.deadBombermans = deadBombermans;
 	}
-	
-	
+
+	public ArrayList<Strategy> getStrategies_bombermans() {
+		return strategies_bombermans;
+	}
+
+	public void setStrategies_bombermans(ArrayList<Strategy> strategies_bombermans) {
+		this.strategies_bombermans = strategies_bombermans;
+		for(int i = 0; i < bombermans.size(); i++){
+			Strategy strat = strategies_bombermans.get(i);
+			bombermans.get(i).setStrategy(strat);
+		}
+	}
+
 	//###########################################################################
 
 

@@ -93,14 +93,14 @@ public class Map implements Serializable {
 				else start_brokable_walls[x][y]=false;
 				
 				if (ligne.charAt(x)=='E' || ligne.charAt(x)=='V' || ligne.charAt(x)=='R') {
-					start_agents.add(new Agent(x,y,AgentAction.STOP,ligne.charAt(x),ColorAgent.DEFAULT,false,false));	
+					start_agents.add(new Agent(x,y,AgentAction.STOP,ligne.charAt(x),ColorAgent.DEFAULT,false,false, null));
 				}
 				
 				if (ligne.charAt(x)=='B') {
 					ColorAgent col;
 					if (cpt_col < color.length) col = color[cpt_col];
 					else col = ColorAgent.DEFAULT;	
-					start_agents.add(new Agent(x,y,AgentAction.STOP, ligne.charAt(x),col,false,false));
+					start_agents.add(new Agent(x,y,AgentAction.STOP, ligne.charAt(x),col,false,false, null));
 					cpt_col++;
 				}
 					

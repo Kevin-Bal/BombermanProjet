@@ -2,8 +2,12 @@ package Controler;
 
 import Model.BombermanGame;
 import Model.Game;
+import Strategies.Strategy;
+import View.Map;
 import View.ViewGame;
 import View.PanelCommande;
+
+import java.util.ArrayList;
 
 
 public class ControleurBombermanGame implements InterfaceControleur {
@@ -36,7 +40,16 @@ public class ControleurBombermanGame implements InterfaceControleur {
 	
 	@Override
 	public void restart() {
+		Map map = null;
+		try {
+			map = new Map(game.getMap().getFilename());
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		game.setMap(map);
+		ArrayList<Strategy> strategies =game.getEtatJeu().getStrategies_bombermans();
 		game.init();
+		game.getEtatJeu().setStrategies_bombermans(strategies);
 		game.launch();
 	}
 	

@@ -5,5 +5,5 @@ import Agent.AgentAction;
 import Controler.GameState;
 
 public interface Strategy {
-	public void chooseAction(Agent agent, GameState game);
+	public AgentAction chooseAction(Agent agent, GameState game);
 }
